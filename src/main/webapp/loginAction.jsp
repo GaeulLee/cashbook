@@ -2,7 +2,7 @@
 <%@ page import="java.util.*"%>
 <%@ page import="dao.MemberDao"%>
 <%@ page import="vo.Member"%>
-
+<%@ page import="java.net.URLEncoder" %>
 <%
 	// Controller
 	/*
@@ -15,14 +15,16 @@
 		6. 페이지 이동
 	*/
 	request.setCharacterEncoding("utf-8");
-	
+
+	String msg = null;
 	String memberId = request.getParameter("memberId");
 	String memberPw = request.getParameter("memberPw");
 	String memberName = request.getParameter("memberName");
 		System.out.println("memberId-> "+memberId+", memberPw-> "+memberPw+", memberName-> "+memberName);	
 	if(request.getParameter("memberId") == null || request.getParameter("memberPw") == null || request.getParameter("memberName") == null ||
 	request.getParameter("memberId").equals("") || request.getParameter("memberPw").equals("") || request.getParameter("memberName").equals("")){
-		response.sendRedirect(request.getContextPath()+"/loginForm.jsp");
+		msg = URLEncoder.encode("로그인 정보를 입력하세요.", "utf-8");
+		response.sendRedirect(request.getContextPath()+"/loginForm.jsp?msg="+msg);
 		return;
 	}
 	
@@ -37,7 +39,8 @@
 	Member resultMember = memberDao.login(paramMember);
 	if(resultMember == null){
 		System.out.println("로그인 실패");
-		response.sendRedirect(request.getContextPath()+"/loginForm.jsp");
+		msg = URLEncoder.encode("로그인에 실패하였습니다.", "utf-8");
+		response.sendRedirect(request.getContextPath()+"/loginForm.jsp?msg="+msg);
 		return;
 	} else {
 		System.out.println("로그인 성공");

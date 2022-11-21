@@ -15,6 +15,16 @@
 	<body>
 		<form action="<%=request.getContextPath()%>/loginAction.jsp" method="post">
 			<table>
+				<%
+					String msg = null;
+					if(request.getParameter("msg") != null){
+				%>
+					<tr>
+						<th><%=msg%></th>
+					</tr>	
+				<%
+					}
+				%>
 				<tr>
 					<th>로그인</th>
 				</tr>
