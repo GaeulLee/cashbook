@@ -24,7 +24,7 @@ public class CashDao {
 	ORDER BY c.cash_date ASC;
 	 */
 	
-	// 월별 기계부 출력
+	// 월별 기계부 출력 cashList.jsp
 	public ArrayList<HashMap<String, Object>> selectCashListByMonth(String memberId, int year, int month) throws Exception{
 		
 		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
@@ -63,8 +63,8 @@ public class CashDao {
 		return list;
 	}
 		
-		// 일별 가계부 출력
-		public ArrayList<HashMap<String, Object>> selectCashListByDate(String memberId, int year, int month) throws Exception{
+	// 일별 가계부 출력 cashDateList.jsp
+	public ArrayList<HashMap<String, Object>> selectCashListByDate(String memberId, int year, int month, int date) throws Exception{
 		
 		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
 		
@@ -81,12 +81,13 @@ public class CashDao {
 				+ "		, c.createdate"
 				+ "	FROM cash c INNER JOIN category ct"
 				+ "	ON c.category_no = ct.category_no"
-				+ "	WHERE c.member_id = ? AND YEAR(c.cash_date) = ? AND MONTH(c.cash_date) = ?"
+				+ "	WHERE c.member_id = ? AND YEAR(c.cash_date) = ? AND MONTH(c.cash_date) = ? AND DAY(c.cash_date) = ?"
 				+ "	ORDER BY c.cash_date ASC, ct.category_kind";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setString(1, memberId);
 		stmt.setInt(2, year);
 		stmt.setInt(3, month);
+		stmt.setInt(4, date);
 		ResultSet rs = stmt.executeQuery();
 		while(rs.next()) {
 			HashMap<String, Object> m = new HashMap<String, Object>();
@@ -104,5 +105,48 @@ public class CashDao {
 		stmt.close();
 		conn.close();
 		return list;
-	}	
+	}
+		
+	// 가계부 내역 수정
+	public int updateCash(HashMap<String, Object> paramUpdateCash) throws Exception {
+		
+		int updateCashResult = 0;
+		
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();
+		/*
+		 	update cash c INNER JOIN category ct
+			ON c.category_no = ct.category_no
+			SET
+				c.cash_date = CURDATE()
+				, ct.category_kind = '수입'
+				, ct.category_name = '의복'
+				, c.cash_price = '40000'
+				, c.cash_memo = '테스트 수정'
+				, c.updatedate = CURDATE()
+			WHERE c.cash_no = 1001;
+		*/
+		String sql = "UPDATE cash c INNER JOIN category ct"
+				+ "			ON c.category_no = ct.category_no"
+				+ "			SET"
+				+ "				c.cash_date = ?"
+				+ "				, ct.category_kind = ?"
+				+ "				, ct.category_name = ?"
+				+ "				, c.cash_price = ?"
+				+ "				, c.cash_memo = ?"
+				+ "				, c.updatedate = CURDATE()"
+				+ "			WHERE c.cash_no = ?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, (String)paramUpdateCash.get("cashDate"));
+		stmt.setString(2, (String)paramUpdateCash.get("categoryKind"));
+		stmt.setString(3, (String)paramUpdateCash.get("categoryName"));
+		stmt.setLong(4, (Long)paramUpdateCash.get("cashPrice"));
+		stmt.setString(5, (String)paramUpdateCash.get("cashMemo"));
+		stmt.setInt(6, (Integer)paramUpdateCash.get("cashNo"));
+		
+		return updateCashResult;
+	}
+	
+	// 가계부 내역 삭제
+	
 }

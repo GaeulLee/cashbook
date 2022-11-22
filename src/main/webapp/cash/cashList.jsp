@@ -8,17 +8,18 @@
 	// request : 년, 월
 	
 	// 로그인 유효성 검사
+	String msg = null;
 	if(session.getAttribute("loginMember") == null){
+		msg = URLEncoder.encode("로그인이 필요합니다.", "utf-8");
 		response.sendRedirect(request.getContextPath()+"/loginForm.jsp");
 		return;
 	}
-	// session에 저장된 사용자 정보(현재 로그인 사용자)를 Member 타입에 저장
-	Member loginMember = (Member)session.getAttribute("loginMember");
+	Member loginMember = (Member)session.getAttribute("loginMember"); // session에 저장된 사용자 정보(현재 로그인 사용자)를 Member 타입에 저장
 	
+	// 달력 만드는 알고리즘
 	int year = 0;
 	int month = 0;
-	
-	// 년, 월 구하는 알고리즘
+	// 년, 월 구하기
 	if(request.getParameter("year") == null || request.getParameter("month") == null){ // 넘어온 값이 없으면 오늘 날짜 출력
 		Calendar today = Calendar.getInstance(); // 오늘 날짜
 		year = today.get(Calendar.YEAR);
@@ -37,7 +38,6 @@
 			year = year + 1;
 		}
 	}
-	
 	// 출력하고자 하는 년, 월, 첫째날(1일) 요일 구하기
 	Calendar targetDate = Calendar.getInstance();
 	targetDate.set(Calendar.YEAR, year);
@@ -45,7 +45,6 @@
 	targetDate.set(Calendar.DATE, 1);
 	int firstDay = targetDate.get(Calendar.DAY_OF_WEEK); // 해당 월 1일의 요일
 	int lastDate = targetDate.getActualMaximum(Calendar.DATE); // 해당 월의 마지막 날짜 구하기
-	
 	// 달력 출력 테이블의 시작 공백셀(td)과 마지막 공백셀의 갯수
 	/*
 		일 월 화 수 목 금 토
@@ -83,7 +82,7 @@
 		<div>
 			<a href="<%=request.getContextPath()%>/cash/cashList.jsp?year=<%=year%>&month=<%=month-1%>">&#8701;이전달</a>
 			
-			<%=year%>년 <%=month+1%> 월
+			<%=year%>년 <%=month+1%>월
 			
 			<a href="<%=request.getContextPath()%>/cash/cashList.jsp?year=<%=year%>&month=<%=month+1%>">다음달&#8702;</a>
 		</div>

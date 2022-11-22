@@ -33,8 +33,11 @@
 	}
 	
 	// M
+	CategoryDao categoryDao = new CategoryDao();
+	ArrayList<Category> categoryList = categoryDao.selectCategoryList();
+	
 	CashDao cashDao = new CashDao();
-	ArrayList<HashMap<String, Object>> dateList = cashDao.selectCashListByDate(memberId, year, month);
+	ArrayList<HashMap<String, Object>> dateList = cashDao.selectCashListByDate(memberId, year, month, date);
 	
 	// V
 %>
@@ -45,38 +48,88 @@
 		<title>cashDateList</title>
 	</head>
 	<body>
-		<a href="<%=request.getContextPath()%>/cash/cashList.jsp">back</a>
-		<table>
+		<a href="<%=request.getContextPath()%>/cash/cashList.jsp?year=<%=year%>&month=<%=month-1%>">back</a>
+		<!-- cash 입력 폼 -->
+		<form action="<%=request.getContextPath()%>/cash/insertCashAction.jsp?cashNo=" method="post">
+		<!-- memberId 는 hidden 값으로 넘기기 -->
+		<input type="hidden" name="memberId" value="<%=memberId%>">
+			<table border="1">
+				<tr>
+					<th colspan="2"><%=year%>년 <%=month%>월 <%=date%>일 가계부 입력</th>
+				</tr>
+				<tr>
+					<th>날짜</th>
+					<td>
+						<input type="text" name="cashDate" value="<%=year%>-<%=month%>-<%=date%>" readonly="readonly">
+					</td>
+				</tr>
+				<!-- categoryName 출력 list로-->
+				<tr>
+					<th>구분</th>
+					<td>
+						<select name="categoryNo">
+						<%
+							for(Category c : categoryList){
+						%>
+								<option value="<%=c.getCategoryNo()%>">
+									[<%=c.getCategoryKind()%>]-<%=c.getCategoryName()%>
+								</option>
+						<%
+							}
+						%>
+						</select>
+					</td>
+				</tr>
+				<tr>
+					<th>금액</th>
+					<td>
+						<input type="number" name="cashPrice">
+					</td>
+				</tr>
+				<tr>
+					<th>메모</th>
+					<td>
+						<textarea name="cashMemo" rows="3" cols="50"></textarea>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<button type="submit">추가</button>
+					</td>
+				</tr>
+			</table>
+		</form>
+		<!-- cash 목록 출력 -->
+		<table border="1">
 			<tr>
-				<th colspan="7"><%=year%>년 <%=month%>월 <%=date%>일</th>
+				<th colspan="9"><%=year%>년 <%=month%>월 <%=date%>일</th>
 			</tr>
 			<tr>
-				<th>No</th>
-				<th>날짜</th>
 				<th>구분</th>
 				<th>항목</th>
 				<th>금액</th>
 				<th>메모</th>
 				<th>작성일</th>
 				<th>수정일</th>
+				<th>수정</th>
 			</tr>
 			<%
 				for(HashMap<String, Object> m : dateList){
-					String cashDate = (String)(m.get("cashDate"));
-					if(Integer.parseInt(cashDate.substring(8)) == date){ 
 			%>
 				<tr>
-					<td><%=(Integer)m.get("cashNo")%></td>
-					<td><%=(String)m.get("cashDate")%></td>
 					<td><%=(String)m.get("categoryKind")%></td>
 					<td><%=(String)m.get("categoryName")%></td>
 					<td><%=(Long)m.get("cashPrice")%></td>
 					<td><%=(String)m.get("cashMemo")%></td>
 					<td><%=(String)m.get("updatedate")%></td>
 					<td><%=(String)m.get("createdate")%></td>
+					<td>
+						<a href="<%=request.getContextPath()%>/cash/updateCashForm.jsp?cashNo=<%=(Integer)m.get("cashNo")%>">수정</a>
+						<span> / </span>
+						<a href="<%=request.getContextPath()%>/cash/deleteCashAction.jspcashNo=<%=(Integer)m.get("cashNo")%>">삭제</a>
+					</td>
 				</tr>
 			<%
-					}
 				}
 			%>
 		</table>
