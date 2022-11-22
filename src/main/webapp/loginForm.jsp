@@ -15,25 +15,19 @@
 	<body>
 		<form action="<%=request.getContextPath()%>/loginAction.jsp" method="post">
 			<table>
-				<%
-					String msg = null;
-					if(request.getParameter("msg") != null){
-				%>
-					<tr>
-						<th><%=msg%></th>
-					</tr>	
-				<%
-					}
-				%>
 				<tr>
 					<th>로그인</th>
 				</tr>
-				<tr>
-					<td>이름</td>
-					<td>
-						<input type="text" name="memberName">
-					</td>
-				</tr>
+				<%
+					String msg = request.getParameter("msg");
+					if(msg != null){
+				%>
+						<tr>
+							<th colspan="2"><%=msg%></th>
+						</tr>	
+				<%
+					}
+				%>
 				<tr>
 					<td>회원ID</td>
 					<td>
@@ -49,5 +43,6 @@
 			</table>
 			<button type="submit">로그인</button>
 		</form>
+		<a href="<%=request.getContextPath()%>/signIn.jsp">회원가입</a>
 	</body>
 </html>

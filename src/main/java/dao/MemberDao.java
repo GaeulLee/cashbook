@@ -21,11 +21,10 @@ public class MemberDao { // 값을 받으면 param.. , 값을 리턴하면 resul
 		DBUtil dbutil = new DBUtil();
 		Connection conn = dbutil.getConnection();
 			System.out.println("db 접속 확인");
-		String sql = "SELECT member_id memberId, member_name memberName FROM member WHERE member_id = ? AND member_pw = PASSWORD(?) AND member_name = ?";
+		String sql = "SELECT member_id memberId, member_name memberName FROM member WHERE member_id = ? AND member_pw = PASSWORD(?)";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setString(1, paramMember.getMemberId());
 		stmt.setString(2, paramMember.getMemberPw());
-		stmt.setString(3, paramMember.getMemberName());
 		ResultSet rs = stmt.executeQuery();
 		if(rs.next()) {
 			resultMember = new Member();
