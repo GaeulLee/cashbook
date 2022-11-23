@@ -73,21 +73,31 @@
 	<body>
 		<!-- 로그인 정보(세션에 loginMember 변수) 출력 -->
 		<div>
+			<span>
+				<a href="<%=request.getContextPath()%>/member/memberOne.jsp">내정보</a>
+			</span>
 			<strong><%=loginMember.getMemberName()%></strong>님 반갑습니다.
 			<span>
 				<a href="<%=request.getContextPath()%>/logout.jsp">로그아웃</a>
 			</span>
 		</div>
 		<!-- 달력 출력 -->
-		<div>
-			<a href="<%=request.getContextPath()%>/cash/cashList.jsp?year=<%=year%>&month=<%=month-1%>">&#8701;이전달</a>
-			
-			<%=year%>년 <%=month+1%>월
-			
-			<a href="<%=request.getContextPath()%>/cash/cashList.jsp?year=<%=year%>&month=<%=month+1%>">다음달&#8702;</a>
-		</div>
+		
 		<div>
 			<table border="1">
+				<tr>
+					<th colspan="7">
+						<span>
+							<a href="<%=request.getContextPath()%>/cash/cashList.jsp?year=<%=year%>&month=<%=month-1%>">&#8701;이전달</a>
+						</span>
+						<span>
+							<%=year%>년 <%=month+1%>월
+						</span>
+						<span>
+							<a href="<%=request.getContextPath()%>/cash/cashList.jsp?year=<%=year%>&month=<%=month+1%>">다음달&#8702;</a>
+						</span>
+					</th>
+				</tr>
 				<tr>
 					<th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th>
 				</tr>

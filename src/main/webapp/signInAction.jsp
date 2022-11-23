@@ -47,6 +47,11 @@
 		msg = URLEncoder.encode("가입에 실패했습니다.", "utf-8");
 		response.sendRedirect(request.getContextPath()+"/signInForm.jsp?msg="+msg);
 		return;
+	} else if(resultRow == 2){
+		System.out.println("아이디 중복");
+		msg = URLEncoder.encode("아이디가 중복되었습니다.", "utf-8");
+		response.sendRedirect(request.getContextPath()+"/signInForm.jsp?msg="+msg);
+		return;
 	} else {
 		System.out.println("가입 성공");
 		msg = URLEncoder.encode("가입에 성공했습니다. 로그인을 해주세요.", "utf-8");
