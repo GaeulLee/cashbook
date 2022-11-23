@@ -26,6 +26,7 @@
 	String memberId = loginMember.getMemberId();
 	
 	// 파라메터 유효성 검사
+	// 날짜 정보가 없으면 돌아가게
 	if(request.getParameter("year") == null || request.getParameter("month") == null ||
 	request.getParameter("date") == null || request.getParameter("date") == null){
 		response.sendRedirect(request.getContextPath()+"/cash/cashList.jsp");
@@ -36,6 +37,7 @@
 	int date = Integer.parseInt(request.getParameter("date"));
 	int cashNo = Integer.parseInt(request.getParameter("cashNo"));
 	
+	// 데이터 입력 값이 없으면 돌아가게
 	if(request.getParameter("categoryNo").equals("") || request.getParameter("cashPrice").equals("") || request.getParameter("cashMemo").equals("")){
 		msg = URLEncoder.encode("모든 정보를 입력해주세요.", "utf-8");
 		response.sendRedirect(request.getContextPath()+"/cash/updateCashForm.jsp?cashNo="+cashNo+"&year="+year+"&month="+month+"&date="+date+"&msg="+msg);

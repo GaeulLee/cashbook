@@ -119,11 +119,20 @@
 									<%
 										for(HashMap<String, Object> m : list) {
 											String cashDate = (String)(m.get("cashDate"));
+											String cateKind = (String)(m.get("categoryKind"));
 											if(Integer.parseInt(cashDate.substring(8)) == date){ 
 											// 일별 수입지출 목록을 보기 위해서 -> String 타입의 cashdate 변수를 만들고, 정수타입으로 형변환, 일 숫자 추출 
 											// int를 적으면 안됨 -> int타입의 참조타입형태인 integer로 형변환 왜? hashmap에서 object 타입으로 받아왔기때문
+												if(cateKind.equals("수입")){
 											%>
-												[<%=(String)(m.get("categoryKind"))%>]			
+													<span style="color: skyblue;">[<%=(String)(m.get("categoryKind"))%>]</span>
+											<%
+												} else {
+											%>
+													<span style="color: pink;">[<%=(String)(m.get("categoryKind"))%>]</span>
+											<%
+												}
+											%>	
 												<%=(String)(m.get("categoryName"))%>
 												&nbsp;
 												<%=(Long)(m.get("cashPrice"))%>원

@@ -24,13 +24,13 @@
 	String memberId = loginMember.getMemberId();
 	
 	// 파라메터 유효성 검사
-	int year = Integer.parseInt(request.getParameter("year"));
-	int month = Integer.parseInt(request.getParameter("month"));
-	int date = Integer.parseInt(request.getParameter("date"));
 	if(request.getParameter("year") == null || request.getParameter("month") == null || request.getParameter("date") == null){
 		response.sendRedirect(request.getContextPath()+"/cash/cashList.jsp");
 		return;
 	}
+	int year = Integer.parseInt(request.getParameter("year"));
+	int month = Integer.parseInt(request.getParameter("month"));
+	int date = Integer.parseInt(request.getParameter("date"));
 	
 	// M
 	CategoryDao categoryDao = new CategoryDao();
@@ -54,9 +54,22 @@
 			<!-- memberId 는 hidden 값으로 넘기기 -->
 			<input type="hidden" name="memberId" value="<%=memberId%>">
 			<table border="1">
+				<input type="hidden" name="year" value="<%=year%>">
+				<input type="hidden" name="month" value="<%=month%>">
+				<input type="hidden" name="date" value="<%=date%>">
 				<tr>
 					<th colspan="2"><%=year%>년 <%=month%>월 <%=date%>일 가계부 입력</th>
 				</tr>
+				<%
+					String paramMsg = request.getParameter("msg");
+					if(paramMsg != null){
+				%>
+						<tr>
+							<th colspan="2"><%=paramMsg%></th>
+						</tr>
+				<%
+					}
+				%>
 				<tr>
 					<th>날짜</th>
 					<td>
@@ -114,10 +127,21 @@
 				<th>수정</th>
 			</tr>
 			<%
-				for(HashMap<String, Object> m : dateList){
+				for(HashMap<String, Object> m : dateList){				
 			%>
 				<tr>
-					<td><%=(String)m.get("categoryKind")%></td>
+				<%
+					String cateKind = (String)(m.get("categoryKind"));
+					if(cateKind.equals("수입")){
+					%>
+							<td><span style="color: skyblue;">[<%=(String)(m.get("categoryKind"))%>]</span></td>
+					<%
+						} else {
+					%>
+							<td><span style="color: pink;">[<%=(String)(m.get("categoryKind"))%>]</span></td>
+					<%
+						}
+					%>	
 					<td><%=(String)m.get("categoryName")%></td>
 					<td><%=(Long)m.get("cashPrice")%></td>
 					<td><%=(String)m.get("cashMemo")%></td>
@@ -126,7 +150,7 @@
 					<td>
 						<a href="<%=request.getContextPath()%>/cash/updateCashForm.jsp?cashNo=<%=(Integer)m.get("cashNo")%>&year=<%=year%>&month=<%=month%>&date=<%=date%>">수정</a>
 						<span> / </span>
-						<a href="<%=request.getContextPath()%>/cash/deleteCashAction.jspcashNo=<%=(Integer)m.get("cashNo")%>&year=<%=year%>&month=<%=month%>&date=<%=date%>">삭제</a>
+						<a href="<%=request.getContextPath()%>/cash/deleteCashAction.jsp?cashNo=<%=(Integer)m.get("cashNo")%>&year=<%=year%>&month=<%=month%>&date=<%=date%>">삭제</a>
 					</td>
 				</tr>
 			<%

@@ -123,9 +123,47 @@ public class CashDao {
 		stmt.setString(5, memberId);
 		updateCashResult = stmt.executeUpdate();
 		
+		stmt.close();
+		conn.close();
 		return updateCashResult;
 	}
 	
-	// 가계부 내역 삭제
+	// 가계부 내역 추가 insertCashAction.jsp
+	public int insertCash(String cashDate, int categoryNo, long cashPrice, String cashMemo, String memberId) throws Exception{
+		
+		int insertCashResult = 0;
+		
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();
+		String sql = "INSERT INTO cash (cash_date, category_no, cash_price, cash_memo, member_id, updatedate, createdate) VALUES(?,?,?,?,?,CURDATE(),CURDATE())";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, cashDate);
+		stmt.setInt(2, categoryNo);
+		stmt.setLong(3, cashPrice);
+		stmt.setString(4, cashMemo);
+		stmt.setString(5, memberId);
+		insertCashResult = stmt.executeUpdate();
+		
+		stmt.close();
+		conn.close();
+		return insertCashResult;
+	}
 	
+	// 가계부 내역 삭제 deleteCashAction.jsp
+	public int deleteCash(int cashNo, String memberId) throws Exception{
+		
+		int deleteCashResult = 0;
+		
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection();
+		String sql = "DELETE FROM cash WHERE cash_no = ? AND member_id = ?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, cashNo);
+		stmt.setString(2, memberId);
+		deleteCashResult = stmt.executeUpdate();
+		
+		stmt.close();
+		conn.close();
+		return deleteCashResult;
+	}
 }

@@ -22,10 +22,6 @@
 	String memberId = loginMember.getMemberId();
 	
 	// 파라메터 유효성 검사
-	int cashNo = Integer.parseInt(request.getParameter("cashNo"));
-	int year = Integer.parseInt(request.getParameter("year"));
-	int month = Integer.parseInt(request.getParameter("month"));
-	int date = Integer.parseInt(request.getParameter("date"));
 	if(request.getParameter("cashNo") == null ||
 	request.getParameter("year") == null ||
 	request.getParameter("month") == null ||
@@ -33,12 +29,14 @@
 		response.sendRedirect(request.getContextPath()+"/cash/cashList.jsp");
 		return;
 	}
-	
-	// M
-	
-	// 카테고리 리스트
+	int cashNo = Integer.parseInt(request.getParameter("cashNo"));
+	int year = Integer.parseInt(request.getParameter("year"));
+	int month = Integer.parseInt(request.getParameter("month"));
+	int date = Integer.parseInt(request.getParameter("date"));
+
+	// M	
 	CategoryDao categoryDao = new CategoryDao();
-	ArrayList<Category> categoryList = categoryDao.selectCategoryList();
+	ArrayList<Category> categoryList = categoryDao.selectCategoryList(); // 카테고리 리스트
 	
 	// V
 %>
