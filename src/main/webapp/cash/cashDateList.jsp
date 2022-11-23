@@ -109,8 +109,8 @@
 				<th>항목</th>
 				<th>금액</th>
 				<th>메모</th>
-				<th>작성일</th>
 				<th>수정일</th>
+				<th>작성일</th>
 				<th>수정</th>
 			</tr>
 			<%
@@ -124,9 +124,9 @@
 					<td><%=(String)m.get("updatedate")%></td>
 					<td><%=(String)m.get("createdate")%></td>
 					<td>
-						<a href="<%=request.getContextPath()%>/cash/updateCashForm.jsp?cashNo=<%=(Integer)m.get("cashNo")%>">수정</a>
+						<a href="<%=request.getContextPath()%>/cash/updateCashForm.jsp?cashNo=<%=(Integer)m.get("cashNo")%>&year=<%=year%>&month=<%=month%>&date=<%=date%>">수정</a>
 						<span> / </span>
-						<a href="<%=request.getContextPath()%>/cash/deleteCashAction.jspcashNo=<%=(Integer)m.get("cashNo")%>">삭제</a>
+						<a href="<%=request.getContextPath()%>/cash/deleteCashAction.jspcashNo=<%=(Integer)m.get("cashNo")%>&year=<%=year%>&month=<%=month%>&date=<%=date%>">삭제</a>
 					</td>
 				</tr>
 			<%

@@ -23,7 +23,13 @@
 	
 	// 파라메터 유효성 검사
 	int cashNo = Integer.parseInt(request.getParameter("cashNo"));
-	if(request.getParameter("cashNo") == null){
+	int year = Integer.parseInt(request.getParameter("year"));
+	int month = Integer.parseInt(request.getParameter("month"));
+	int date = Integer.parseInt(request.getParameter("date"));
+	if(request.getParameter("cashNo") == null ||
+	request.getParameter("year") == null ||
+	request.getParameter("month") == null ||
+	request.getParameter("date") == null){
 		response.sendRedirect(request.getContextPath()+"/cash/cashList.jsp");
 		return;
 	}
@@ -43,9 +49,12 @@
 		<title>updateCashForm</title>
 	</head>
 	<body>
-		<a href="<%=request.getContextPath()%>/cash/cashList.jsp">back</a>
+		<a href="<%=request.getContextPath()%>/cash/cashDateList.jsp?year=<%=year%>&month=<%=month%>&date=<%=date%>">back</a>
 		<form action="<%=request.getContextPath()%>/cash/updateCashAction.jsp?cashNo=<%=cashNo%>" method="post">
 			<table border="1">
+				<input type="hidden" name="year" value="<%=year%>">
+				<input type="hidden" name="month" value="<%=month%>">
+				<input type="hidden" name="date" value="<%=date%>">
 				<%
 					String paramMsg = request.getParameter("msg");
 					if(paramMsg != null){
@@ -60,12 +69,6 @@
 					<th>No</th>
 					<td>
 						<input type="text" name="cashNo" value="<%=cashNo%>" readonly="readonly">
-					</td>
-				</tr>
-				<tr>
-					<th>날짜</th>
-					<td>
-						<input type="text" name="cashDate" placeholder="yyyy-mm-dd 형식으로 입력">
 					</td>
 				</tr>
 				<!-- categoryName 출력 list로-->

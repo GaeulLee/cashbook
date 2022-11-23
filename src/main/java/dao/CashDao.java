@@ -108,39 +108,20 @@ public class CashDao {
 	}
 		
 	// 가계부 내역 수정 updateCashAction.jsp
-	public int updateCash(HashMap<String, Object> paramUpdateCash, String memberId) throws Exception {
+	public int updateCash(int cateNo, long cashPrice, String cashMemo, int cashNo, String memberId) throws Exception {
 		
 		int updateCashResult = 0;
 		
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = dbUtil.getConnection();
-		/*
-		 	update cash c INNER JOIN category ct
-				ON c.category_no = ct.category_no
-				SET
-					c.cash_date = CURDATE()
-					, ct.category_no = '6'
-					, c.cash_price = '40000'
-					, c.cash_memo = '테스트 수정'
-					, c.updatedate = CURDATE()
-				WHERE c.cash_no = 1001;
-		*/
-		String sql = "UPDATE cash c INNER JOIN category ct"
-				+ "			ON c.category_no = ct.category_no"
-				+ "			SET"
-				+ "				c.cash_date = ?"
-				+ "				, ct.category_no = ?"
-				+ "				, c.cash_price = ?"
-				+ "				, c.cash_memo = ?"
-				+ "				, c.updatedate = CURDATE()"
-				+ "			WHERE c.cash_no = ? AND c.member_id = ?";
+		String sql = "UPDATE cash SET category_no = ?, cash_price = ?, cash_memo = ?, updatedate = CURDATE() WHERE cash_no = ? AND member_id = ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
-		stmt.setString(1, (String)paramUpdateCash.get("cashDate"));
-		stmt.setInt(2, (Integer)paramUpdateCash.get("categoryNo"));
-		stmt.setLong(3, (Long)paramUpdateCash.get("cashPrice"));
-		stmt.setString(4, (String)paramUpdateCash.get("cashMemo"));
-		stmt.setInt(5, (Integer)paramUpdateCash.get("cashNo"));
-		stmt.setString(6, memberId);
+		stmt.setInt(1, cateNo);
+		stmt.setLong(2, cashPrice);
+		stmt.setString(3, cashMemo);
+		stmt.setInt(4, cashNo);
+		stmt.setString(5, memberId);
+		updateCashResult = stmt.executeUpdate();
 		
 		return updateCashResult;
 	}
