@@ -50,9 +50,9 @@
 	<body>
 		<a href="<%=request.getContextPath()%>/cash/cashList.jsp?year=<%=year%>&month=<%=month-1%>">back</a>
 		<!-- cash 입력 폼 -->
-		<form action="<%=request.getContextPath()%>/cash/insertCashAction.jsp?cashNo=" method="post">
-		<!-- memberId 는 hidden 값으로 넘기기 -->
-		<input type="hidden" name="memberId" value="<%=memberId%>">
+		<form action="<%=request.getContextPath()%>/cash/insertCashAction.jsp" method="post">
+			<!-- memberId 는 hidden 값으로 넘기기 -->
+			<input type="hidden" name="memberId" value="<%=memberId%>">
 			<table border="1">
 				<tr>
 					<th colspan="2"><%=year%>년 <%=month%>월 <%=date%>일 가계부 입력</th>

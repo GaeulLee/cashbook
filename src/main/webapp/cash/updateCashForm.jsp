@@ -28,6 +28,12 @@
 		return;
 	}
 	
+	// M
+	
+	// 카테고리 리스트
+	CategoryDao categoryDao = new CategoryDao();
+	ArrayList<Category> categoryList = categoryDao.selectCategoryList();
+	
 	// V
 %>
 <!DOCTYPE html>
@@ -59,22 +65,24 @@
 				<tr>
 					<th>날짜</th>
 					<td>
-						<input type="date" name="cashDate">
+						<input type="text" name="cashDate" placeholder="yyyy-mm-dd 형식으로 입력">
 					</td>
 				</tr>
+				<!-- categoryName 출력 list로-->
 				<tr>
 					<th>구분</th>
 					<td>
-						<select name="categoryKind">
-							<option>수입</option>
-							<option>지출</option>
+						<select name="categoryNo">
+						<%
+							for(Category c : categoryList){
+						%>
+								<option value="<%=c.getCategoryNo()%>">
+									[<%=c.getCategoryKind()%>]-<%=c.getCategoryName()%>
+								</option>
+						<%
+							}
+						%>
 						</select>
-					</td>
-				</tr>
-				<tr>
-					<th>항목</th>
-					<td>
-						<input type="text" name="categoryName">
 					</td>
 				</tr>
 				<tr>

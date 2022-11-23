@@ -107,8 +107,8 @@ public class CashDao {
 		return list;
 	}
 		
-	// 가계부 내역 수정
-	public int updateCash(HashMap<String, Object> paramUpdateCash) throws Exception {
+	// 가계부 내역 수정 updateCashAction.jsp
+	public int updateCash(HashMap<String, Object> paramUpdateCash, String memberId) throws Exception {
 		
 		int updateCashResult = 0;
 		
@@ -116,33 +116,31 @@ public class CashDao {
 		Connection conn = dbUtil.getConnection();
 		/*
 		 	update cash c INNER JOIN category ct
-			ON c.category_no = ct.category_no
-			SET
-				c.cash_date = CURDATE()
-				, ct.category_kind = '수입'
-				, ct.category_name = '의복'
-				, c.cash_price = '40000'
-				, c.cash_memo = '테스트 수정'
-				, c.updatedate = CURDATE()
-			WHERE c.cash_no = 1001;
+				ON c.category_no = ct.category_no
+				SET
+					c.cash_date = CURDATE()
+					, ct.category_no = '6'
+					, c.cash_price = '40000'
+					, c.cash_memo = '테스트 수정'
+					, c.updatedate = CURDATE()
+				WHERE c.cash_no = 1001;
 		*/
 		String sql = "UPDATE cash c INNER JOIN category ct"
 				+ "			ON c.category_no = ct.category_no"
 				+ "			SET"
 				+ "				c.cash_date = ?"
-				+ "				, ct.category_kind = ?"
-				+ "				, ct.category_name = ?"
+				+ "				, ct.category_no = ?"
 				+ "				, c.cash_price = ?"
 				+ "				, c.cash_memo = ?"
 				+ "				, c.updatedate = CURDATE()"
-				+ "			WHERE c.cash_no = ?";
+				+ "			WHERE c.cash_no = ? AND c.member_id = ?";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setString(1, (String)paramUpdateCash.get("cashDate"));
-		stmt.setString(2, (String)paramUpdateCash.get("categoryKind"));
-		stmt.setString(3, (String)paramUpdateCash.get("categoryName"));
-		stmt.setLong(4, (Long)paramUpdateCash.get("cashPrice"));
-		stmt.setString(5, (String)paramUpdateCash.get("cashMemo"));
-		stmt.setInt(6, (Integer)paramUpdateCash.get("cashNo"));
+		stmt.setInt(2, (Integer)paramUpdateCash.get("categoryNo"));
+		stmt.setLong(3, (Long)paramUpdateCash.get("cashPrice"));
+		stmt.setString(4, (String)paramUpdateCash.get("cashMemo"));
+		stmt.setInt(5, (Integer)paramUpdateCash.get("cashNo"));
+		stmt.setString(6, memberId);
 		
 		return updateCashResult;
 	}

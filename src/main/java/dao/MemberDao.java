@@ -39,12 +39,23 @@ public class MemberDao { // 값을 받으면 param.. , 값을 리턴하면 resul
 		return resultMember;
 	}
 	
-	// 회원가입
+	// 회원가입 signInAction.jsp
 	public int insertMember(Member paramMember) throws Exception {
 		
 		int resultRow = 0;
 		
-		// 회원가입 알고리즘
+		DBUtil dbutil = new DBUtil();
+		Connection conn = dbutil.getConnection();
+			System.out.println("db 접속 확인");
+		String sql = "INSERT INTO member (member_id, member_pw, member_name, updatedate, createdate) VALUES (?,PASSWORD(?),?,CURDATE(),CURDATE())";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, paramMember.getMemberId());
+		stmt.setString(2, paramMember.getMemberPw());
+		stmt.setString(3, paramMember.getMemberName());
+		resultRow = stmt.executeUpdate();
+		
+		stmt.close();
+		conn.close();
 		
 		return resultRow;
 	}
