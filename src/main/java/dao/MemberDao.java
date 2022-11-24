@@ -137,4 +137,21 @@ public class MemberDao { // 값을 받으면 param.. , 값을 리턴하면 resul
 	}
 
 	// 회원정보 삭제
+	public int deleteMember(String memberId) throws Exception{
+		
+		int resultRow = 0;
+		
+		DBUtil dbutil = new DBUtil();
+		Connection conn = dbutil.getConnection();
+			System.out.println("db 접속 확인");
+		String sql = "DELETE FROM member WHERE member_id = ?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, memberId);
+		resultRow = stmt.executeUpdate();
+		
+		dbutil.close(null, stmt, conn);
+		
+		return resultRow;
+	}
+	
 }

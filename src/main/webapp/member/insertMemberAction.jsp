@@ -41,7 +41,6 @@
 	
 	// M
 	MemberDao memberDao = new MemberDao();
-	
 	boolean resultcheck = memberDao.checkId(memberId); // 아이디 중복 확인
 	if(!resultcheck){
 		System.out.println("아이디 중복");
