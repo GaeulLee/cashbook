@@ -10,10 +10,10 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>signInForm</title>
+		<title>insertMemberForm</title>
 	</head>
 	<body>
-		<form action="<%=request.getContextPath()%>/signInAction.jsp" method="post">
+		<form action="<%=request.getContextPath()%>/member/insertMemberAction.jsp" method="post">
 			<table>
 				<tr>
 					<th colspan="2">회원가입</th>

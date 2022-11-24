@@ -35,13 +35,18 @@
 	
 	// M
 	MemberDao memberDao = new MemberDao();
-	int resultRow = memberDao.updatePw(oldPw, newPw, loginMemberId);
+	boolean resultCheck = memberDao.checkPw(oldPw, loginMemberId); // 비밀번호 일치 확인
+	if(!resultCheck){
+		System.out.println("비밀번호 불일치");
+		msg = URLEncoder.encode("비밀번호가 일치하지 않습니다.", "utf-8");
+		response.sendRedirect(request.getContextPath()+"/member/updatePwForm.jsp?msg="+msg);
+		return;
+	}
+
+	int resultRow = memberDao.updatePw(newPw, loginMemberId); // 비밀번호 일치하면 변경
 	if(resultRow == 0){
 		System.out.println("수정 실패");
 		msg = URLEncoder.encode("비밀번호 수정에 실패했습니다.", "utf-8");
-	} else if(resultRow == 2){
-		System.out.println("비밀번호 불일치");
-		msg = URLEncoder.encode("비밀번호가 일치하지 않습니다.", "utf-8");
 	} else {
 		System.out.println("수정 성공");
 		msg = URLEncoder.encode("비밀번호 수정에 성공했습니다.", "utf-8");

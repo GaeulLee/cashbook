@@ -19,7 +19,7 @@ public class MemberDao { // 값을 받으면 param.. , 값을 리턴하면 resul
 		  같은 코드가 계속 반복된다 -> 메서드화 하자 -> 입력값x, 반환값o(Connection 타입)
 		*/
 		DBUtil dbutil = new DBUtil();
-		Connection conn = dbutil.getConnection();
+		Connection conn = dbutil.getConnection(); // 메서드화 된 db연결
 			System.out.println("db 접속 확인");
 		String sql = "SELECT member_id memberId, member_name memberName FROM member WHERE member_id = ? AND member_pw = PASSWORD(?)";
 		PreparedStatement stmt = conn.prepareStatement(sql);
@@ -32,14 +32,32 @@ public class MemberDao { // 값을 받으면 param.. , 값을 리턴하면 resul
 			resultMember.setMemberName(rs.getString("memberName"));
 		}
 		
-		rs.close();
-		stmt.close();
-		conn.close();
-		
+		dbutil.close(rs, stmt, conn); // 메서드화 된 db종료
 		return resultMember;
 	}
 	
-	// 회원가입 signInAction.jsp
+	// 회원가입 insertMemberAction.jsp
+	// 1) 중복확인 -> 반환 값 true이면 아이디 사용가능, false이면 사용불가(중복아이디 존재)
+	public boolean checkId(String memberId) throws Exception {
+		
+		boolean resultCheck = false;
+		
+		DBUtil dbutil = new DBUtil();
+		Connection conn = dbutil.getConnection();
+			System.out.println("db 접속 확인");
+		String sql = "SELECT member_id FROM member WHERE member_id = ?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, memberId);
+		ResultSet rs = stmt.executeQuery();
+		if(!rs.next()) {
+			resultCheck = true;
+		}
+		
+		dbutil.close(rs, stmt, conn);
+		return resultCheck;
+	}
+	
+	// 2) 회원가입 -> 메서드 안에 두개의 쿼리가 있는 것은 사실상 기능이 두 개인 것임 -> 나누자
 	public int insertMember(Member paramMember) throws Exception {
 		
 		int resultRow = 0;
@@ -47,26 +65,15 @@ public class MemberDao { // 값을 받으면 param.. , 값을 리턴하면 resul
 		DBUtil dbutil = new DBUtil();
 		Connection conn = dbutil.getConnection();
 			System.out.println("db 접속 확인");
-			
-		// 분기(아이디 중복 확인 -> 중복o: 메세지 출력, 중복x: 정보수정)
-		String idSql = "SELECT member_id FROM member WHERE member_id = ?";
-		PreparedStatement idStmt = conn.prepareStatement(idSql);
-		idStmt.setString(1, paramMember.getMemberId());
-		ResultSet rs = idStmt.executeQuery();
-		if(rs.next()) {
-			resultRow = 2;
-			rs.close();
-			idStmt.close();
-		} else {
-			String sql = "INSERT INTO member (member_id, member_pw, member_name, updatedate, createdate) VALUES (?,PASSWORD(?),?,CURDATE(),CURDATE())";
-			PreparedStatement stmt = conn.prepareStatement(sql);
-			stmt.setString(1, paramMember.getMemberId());
-			stmt.setString(2, paramMember.getMemberPw());
-			stmt.setString(3, paramMember.getMemberName());
-			resultRow = stmt.executeUpdate();
-			stmt.close();
-		}
-		conn.close();	
+
+		String sql = "INSERT INTO member (member_id, member_pw, member_name, updatedate, createdate) VALUES (?,PASSWORD(?),?,CURDATE(),CURDATE())";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, paramMember.getMemberId());
+		stmt.setString(2, paramMember.getMemberPw());
+		stmt.setString(3, paramMember.getMemberName());
+		resultRow = stmt.executeUpdate();
+		
+		dbutil.close(null, stmt, conn);
 		return resultRow;
 	}
 	
@@ -84,66 +91,48 @@ public class MemberDao { // 값을 받으면 param.. , 값을 리턴하면 resul
 		stmt.setString(2, loginMemberId);
 		resultRow = stmt.executeUpdate();
 		
-		stmt.close();
-		conn.close();
+		dbutil.close(null, stmt, conn);
 		return resultRow;
 	}
-	
-	// 회원 아이디 수정 updateIdAction.jsp
-		public int updateId(Member paramMember, String loginMemberId) throws Exception {
-			
-			int resultRow = 0;
-			
-			DBUtil dbutil = new DBUtil();
-			Connection conn = dbutil.getConnection();
-				System.out.println("db 접속 확인");
-			// 분기(아이디 중복 확인 -> 중복o: 메세지 출력, 중복x: 정보수정)
-			String idSql = "SELECT member_id FROM member WHERE member_id = ?";
-			PreparedStatement idStmt = conn.prepareStatement(idSql);
-			idStmt.setString(1, paramMember.getMemberId());
-			ResultSet rs = idStmt.executeQuery();
-			if(rs.next()) {
-				resultRow = 2;
-				rs.close();
-				idStmt.close();
-			} else {
-				String sql = "UPDATE member SET member_id = ?, updatedate = CURDATE() WHERE member_id = ?";
-				PreparedStatement stmt = conn.prepareStatement(sql);
-				stmt.setString(1, paramMember.getMemberId());
-				stmt.setString(2, loginMemberId);
-				resultRow = stmt.executeUpdate();
-				stmt.close();
-			}
-			conn.close();
-			return resultRow;
-		}
+
 	
 	// 회원 비밀번호 수정 updatePwAction.jsp
-	public int updatePw(String oldPw, String newPw, String loginMemberId) throws Exception {
+	// 1) 비밀번호 확인 -> 일치하면 true, 아니면 false
+	public boolean checkPw(String oldPw, String loginMemberId) throws Exception {
+		
+		boolean resultCheck = false;
+		
+		DBUtil dbutil = new DBUtil();
+		Connection conn = dbutil.getConnection();
+			System.out.println("db 접속 확인");
+		String sql = "SELECT member_pw FROM member WHERE member_pw = PASSWORD(?) AND member_id = ?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, oldPw);
+		stmt.setString(2, loginMemberId);
+		ResultSet rs = stmt.executeQuery();
+		if(rs.next()) {
+			resultCheck = true;
+		}
+
+		dbutil.close(rs, stmt, conn);
+		return resultCheck;
+	}
+	
+	// 2) 비밀번호 수정
+	public int updatePw(String newPw, String loginMemberId) throws Exception {
 		
 		int resultRow = 0;
 		
 		DBUtil dbutil = new DBUtil();
 		Connection conn = dbutil.getConnection();
 			System.out.println("db 접속 확인");
+		String sql = "UPDATE member SET member_pw = PASSWORD(?) ,updatedate = CURDATE() WHERE member_id = ?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, newPw);
+		stmt.setString(2, loginMemberId);
+		resultRow = stmt.executeUpdate();
 		
-		//분기(비민번호 확인 -> 일치: 비밀번호 수정, 불일치: 메세지 출력)
-		String pwSql = "SELECT member_pw FROM member WHERE member_pw = PASSWORD(?)";
-		PreparedStatement pwStmt = conn.prepareStatement(pwSql);
-		pwStmt.setString(1, oldPw);
-		ResultSet rs = pwStmt.executeQuery();
-		if(rs.next() != true) {
-			resultRow = 2;
-			rs.close();
-			pwStmt.close();
-		} else {
-			String sql = "UPDATE member SET member_pw = PASSWORD(?) ,updatedate = CURDATE()";
-			PreparedStatement stmt = conn.prepareStatement(sql);
-			stmt.setString(1, newPw);
-			resultRow = stmt.executeUpdate();
-			stmt.close();
-		}
-		conn.close();
+		dbutil.close(null, stmt, conn);
 		return resultRow;
 	}
 

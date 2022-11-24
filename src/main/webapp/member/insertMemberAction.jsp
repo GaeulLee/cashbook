@@ -30,7 +30,7 @@
 	request.getParameter("memberPw") == null || memberPw.equals("") ||
 	request.getParameter("memberName") == null || memberName.equals("")){
 		msg = URLEncoder.encode("모든 정보를 입력해주세요.", "utf-8");
-		response.sendRedirect(request.getContextPath()+"/signInForm.jsp?msg="+msg);
+		response.sendRedirect(request.getContextPath()+"/member/insertMemberForm.jsp?msg="+msg);
 		return;
 	}
 	// 데이터 묶기
@@ -41,22 +41,23 @@
 	
 	// M
 	MemberDao memberDao = new MemberDao();
-	int resultRow = memberDao.insertMember(member);
+	
+	boolean resultcheck = memberDao.checkId(memberId); // 아이디 중복 확인
+	if(!resultcheck){
+		System.out.println("아이디 중복");
+		msg = URLEncoder.encode("아이디가 중복되었습니다.", "utf-8");
+		response.sendRedirect(request.getContextPath()+"/member/insertMemberForm.jsp?msg="+msg);
+		return;
+	}
+	
+	int resultRow = memberDao.insertMember(member); // 중복 확인 후 가입
 	if(resultRow == 0){
 		System.out.println("가입 실패");
 		msg = URLEncoder.encode("가입에 실패했습니다.", "utf-8");
-		response.sendRedirect(request.getContextPath()+"/signInForm.jsp?msg="+msg);
-		return;
-	} else if(resultRow == 2){
-		System.out.println("아이디 중복");
-		msg = URLEncoder.encode("아이디가 중복되었습니다.", "utf-8");
-		response.sendRedirect(request.getContextPath()+"/signInForm.jsp?msg="+msg);
-		return;
+		response.sendRedirect(request.getContextPath()+"/member/insertMemberForm.jsp?msg="+msg);
 	} else {
 		System.out.println("가입 성공");
 		msg = URLEncoder.encode("가입에 성공했습니다. 로그인을 해주세요.", "utf-8");
 		response.sendRedirect(request.getContextPath()+"/loginForm.jsp");
-	}
-	
-	
+	}	
 %>

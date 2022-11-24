@@ -43,6 +43,6 @@
 			</table>
 			<button type="submit">로그인</button>
 		</form>
-		<a href="<%=request.getContextPath()%>/signInForm.jsp">회원가입</a>
+		<a href="<%=request.getContextPath()%>/member/insertMemberForm.jsp">회원가입</a>
 	</body>
 </html>
