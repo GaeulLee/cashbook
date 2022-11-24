@@ -80,6 +80,15 @@
 			<span>
 				<a href="<%=request.getContextPath()%>/logout.jsp">로그아웃</a>
 			</span>
+			<%
+				if(loginMember.getMemberLevel() > 0){
+			%>
+					<span>
+						<a href="<%=request.getContextPath()%>/admin/adminMain.jsp">관리자 페이지</a>
+					</span>
+			<%
+				}
+			%>
 		</div>
 		<!-- 달력 출력 -->
 		

@@ -18,10 +18,10 @@ public class MemberDao { // 값을 받으면 param.. , 값을 리턴하면 resul
 		  Connection conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/cashbook", "root", "java1234");
 		  같은 코드가 계속 반복된다 -> 메서드화 하자 -> 입력값x, 반환값o(Connection 타입)
 		*/
-		DBUtil dbutil = new DBUtil();
-		Connection conn = dbutil.getConnection(); // 메서드화 된 db연결
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = dbUtil.getConnection(); // 메서드화 된 db연결
 			System.out.println("db 접속 확인");
-		String sql = "SELECT member_id memberId, member_name memberName FROM member WHERE member_id = ? AND member_pw = PASSWORD(?)";
+		String sql = "SELECT member_id memberId, member_name memberName, member_level memberLevel FROM member WHERE member_id = ? AND member_pw = PASSWORD(?)";
 		PreparedStatement stmt = conn.prepareStatement(sql);
 		stmt.setString(1, paramMember.getMemberId());
 		stmt.setString(2, paramMember.getMemberPw());
@@ -30,9 +30,10 @@ public class MemberDao { // 값을 받으면 param.. , 값을 리턴하면 resul
 			resultMember = new Member();
 			resultMember.setMemberId(rs.getString("memberId"));
 			resultMember.setMemberName(rs.getString("memberName"));
+			resultMember.setMemberLevel(rs.getInt("memberLevel"));
 		}
 		
-		dbutil.close(rs, stmt, conn); // 메서드화 된 db종료
+		dbUtil.close(rs, stmt, conn); // 메서드화 된 db종료
 		return resultMember;
 	}
 	

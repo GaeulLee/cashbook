@@ -36,11 +36,11 @@
 	
 	// 분리된 M(model) 호출
 	MemberDao memberDao = new MemberDao();
-	Member resultMember = memberDao.login(paramMember);
+	Member resultMember = memberDao.login(paramMember); // 사용자가 입력한 id, pw 값을 받고, db와 비교하여 결과가 있다면 db에 저장된 id, pw, level 값 받기
 	
 	if(resultMember != null){
 		System.out.println("로그인 성공");
-		session.setAttribute("loginMember", resultMember);
+		session.setAttribute("loginMember", resultMember); // db에서 받은 id,pw,level 값(resultMember)을 member 타입의 loginMember 변수를 만들어 세션에 저장
 		targetPage = "/cash/cashList.jsp";
 	} else {
 		msg = URLEncoder.encode("로그인에 실패하였습니다.", "utf-8");
