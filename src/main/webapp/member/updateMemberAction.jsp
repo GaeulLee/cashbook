@@ -21,6 +21,7 @@
 	}
 	Member loginMember = (Member)session.getAttribute("loginMember");
 	String loginMemberId = loginMember.getMemberId();
+	int loginMemberLevel = loginMember.getMemberLevel();
 	
 	// 파라메터 값 유효성 검사
 	String msg = null;
@@ -34,6 +35,7 @@
 	// 데이터 묶기
 	Member member = new Member();
 	member.setMemberId(loginMemberId); // 기존 세션에 있는 아이디 값
+	member.setMemberLevel(loginMemberLevel); // 기존 세션에 있는 레벨 값
 	member.setMemberName(memberName); // 새로 받은 회원정보(이름) 값
 	
 	// M

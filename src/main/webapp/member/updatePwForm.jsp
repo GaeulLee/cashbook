@@ -23,7 +23,7 @@
 		<form action="<%=request.getContextPath()%>/member/updatePwAction.jsp" method="post">
 			<table border="1">
 				<tr>
-					<th colspan="2">내 정보</th>
+					<th colspan="2">비밀번호 변경</th>
 				</tr>
 				<%
 					String msg = request.getParameter("msg");

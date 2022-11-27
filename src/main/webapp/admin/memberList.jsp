@@ -53,6 +53,7 @@
 			<li><a href="<%=request.getContextPath()%>/admin/noticeList.jsp">공지 관리</a></li>
 			<li><a href="<%=request.getContextPath()%>/admin/categoryList.jsp">카테고리 관리</a></li>
 			<li><a href="<%=request.getContextPath()%>/admin/memberList.jsp">멤버 관리</a></li><!-- 레벨 수정, 멤버 목록, 강제 회원탈퇴 -->
+			<li><a href="<%=request.getContextPath()%>/admin/adminMain.jsp">back</a></li>
 		</ul>
 		<!-- 멤버목록 페이징 -->
 		<div>
@@ -86,30 +87,6 @@
 					}
 				%>
 			</table>
-			<!-- paging -->
-			<ul style="list-style: none;">				
-				<li>
-					<a href="<%=request.getContextPath()%>/admin/memberList.jsp?currentPage=1">처음</a>
-				<%
-					if(currentPage > 1){
-				%>
-						<a href="<%=request.getContextPath()%>/admin/memberList.jsp?currentPage=<%=currentPage-1%>">이전</a>
-				<%
-					}
-					for(int i=beginPage; i<=endPage; i++){
-				%>
-						<a href="<%=request.getContextPath()%>/admin/memberList.jsp?currentPage=<%=i%>"><%=i%></a>
-				<%	
-					}
-					if(currentPage < lastPage){
-				%>
-						<a href="<%=request.getContextPath()%>/admin/memberList.jsp?currentPage=<%=currentPage+1%>">다음</a>
-				<%
-					}
-				%>
-					<a href="<%=request.getContextPath()%>/admin/memberList.jsp?currentPage=<%=lastPage%>">마지막</a>	
-				</li>
-			</ul>
 		</div>
 	</body>
 </html>

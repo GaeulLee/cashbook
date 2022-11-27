@@ -23,7 +23,7 @@
 		<form action="<%=request.getContextPath()%>/member/updateMemberAction.jsp" method="post">
 			<table border="1">
 				<tr>
-					<th colspan="2">내 정보</th>
+					<th colspan="2">정보 수정</th>
 				</tr>
 				<%
 					String msg = request.getParameter("msg");
