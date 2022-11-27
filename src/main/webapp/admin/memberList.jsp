@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="vo.Member"%>
-<%@ page import="vo.Notice"%>
-<%@ page import="dao.NoticeDao"%>
+<%@ page import="vo.*"%>
+<%@ page import="dao.*"%>
 <%@ page import="java.util.*"%>
 <%
 	// C
@@ -22,8 +21,8 @@
 	if(request.getParameter("currentPage") != null){
 		currentPage = Integer.parseInt(request.getParameter("currentPage"));
 	}
-	NoticeDao noticeDao = new NoticeDao();
-	int cnt = noticeDao.selectNoticeCount();
+	MemberDao memberDao = new MemberDao();
+	int cnt = memberDao.selectMemberCount();
 	final int ROW_PER_PAGE = 15;
 	int beginRow = (currentPage-1)*ROW_PER_PAGE;
 	final int PAGE_COUNT = 10;
@@ -39,7 +38,7 @@
 	}
 	
 	// M
-	ArrayList<Notice> noticeList = noticeDao.selectNoticeListByPage(beginRow, ROW_PER_PAGE);
+	ArrayList<Member> memberList = memberDao.selectMemberListByPage(beginRow, ROW_PER_PAGE);
 	
 	// V
 %>
@@ -47,7 +46,7 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>noticeList</title>
+		<title>memberList</title>
 	</head>
 	<body>
 		<ul>
@@ -55,57 +54,60 @@
 			<li><a href="<%=request.getContextPath()%>/admin/categoryList.jsp">카테고리 관리</a></li>
 			<li><a href="<%=request.getContextPath()%>/admin/memberList.jsp">멤버 관리</a></li><!-- 레벨 수정, 멤버 목록, 강제 회원탈퇴 -->
 		</ul>
-		<!-- 공지목록 페이징 (상세보기 없음 타이틀만 보이게, 댓글 기능) -->
+		<!-- 멤버목록 페이징 -->
 		<div>
-			<h3><strong>공지사항</strong></h3>
+			<h3><strong>멤버목록</strong></h3>
 			<table border="1">
 				<tr>
-					<th>공지번호</th>
-					<th>내용</th>
-					<th>날짜</th>
+					<th>회원번호</th>
+					<th>아이디</th>
+					<th>회원레벨</th>
+					<th>이름</th>
+					<th>수정일</th>
+					<th>회원 생성일</th>
 					<th>편집</th>
 				</tr>
 				<%
-					for(Notice n : noticeList){
+					for(Member m : memberList){
 				%>
 						<tr>
-							<td><%=n.getNoticeNo()%></td>
-							<td><%=n.getNoticeMemo()%></td>
-							<td><%=n.getCreatedate()%></td>
+							<td><%=m.getMemberNo()%></td>
+							<td><%=m.getMemberId()%></td>
+							<td><%=m.getMemberLevel()%></td>
+							<td><%=m.getMemberName()%></td>
+							<td><%=m.getUpdatedate()%></td>
+							<td><%=m.getCreatedate()%></td>
 							<td>
-								<a href="<%=request.getContextPath()%>/admin/notice/UpdateNoticeForm/jsp?noticeNo=<%=n.getNoticeNo()%>">수정</a>
-								<a href="<%=request.getContextPath()%>/admin/notice/deleteNoticeAction/jsp?noticeNo=<%=n.getNoticeNo()%>">삭제</a>
+								<a href="<%=request.getContextPath()%>/admin/member/updateMemberLevelForm.jsp?memberNo=<%=m.getMemberNo()%>">레벨수정</a>
+								<a href="<%=request.getContextPath()%>/admin/member/deleteMemberAction.jsp?memberNo=<%=m.getMemberNo()%>">삭제</a>
 							</td>
 						</tr>
 				<%
 					}
 				%>
 			</table>
-			<div>
-				<a href="<%=request.getContextPath()%>/admin/notice/insertNoticeForm/jsp">공지 추가</a>
-			</div>
 			<!-- paging -->
 			<ul style="list-style: none;">				
 				<li>
-					<a href="<%=request.getContextPath()%>/admin/noticeList.jsp?currentPage=1">처음</a>
+					<a href="<%=request.getContextPath()%>/admin/memberList.jsp?currentPage=1">처음</a>
 				<%
 					if(currentPage > 1){
 				%>
-						<a href="<%=request.getContextPath()%>/admin/noticeList.jsp?currentPage=<%=currentPage-1%>">이전</a>
+						<a href="<%=request.getContextPath()%>/admin/memberList.jsp?currentPage=<%=currentPage-1%>">이전</a>
 				<%
 					}
 					for(int i=beginPage; i<=endPage; i++){
 				%>
-						<a href="<%=request.getContextPath()%>/admin/noticeList.jsp?currentPage=<%=i%>"><%=i%></a>
+						<a href="<%=request.getContextPath()%>/admin/memberList.jsp?currentPage=<%=i%>"><%=i%></a>
 				<%	
 					}
 					if(currentPage < lastPage){
 				%>
-						<a href="<%=request.getContextPath()%>/admin/noticeList.jsp?currentPage=<%=currentPage+1%>">다음</a>
+						<a href="<%=request.getContextPath()%>/admin/memberList.jsp?currentPage=<%=currentPage+1%>">다음</a>
 				<%
 					}
 				%>
-					<a href="<%=request.getContextPath()%>/admin/noticeList.jsp?currentPage=<%=lastPage%>">마지막</a>	
+					<a href="<%=request.getContextPath()%>/admin/memberList.jsp?currentPage=<%=lastPage%>">마지막</a>	
 				</li>
 			</ul>
 		</div>

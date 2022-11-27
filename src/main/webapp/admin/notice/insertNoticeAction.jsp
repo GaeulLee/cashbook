@@ -37,13 +37,11 @@
 	
 	// M
 	NoticeDao noticeDao = new NoticeDao();
-	int resultInsert = noticeDao.updateNotice(notice);
+	int resultInsert = noticeDao.insertNotice(notice);
 	if(resultInsert == 0){
 		System.out.println("공지 추가 실패");
-		msg = URLEncoder.encode("공지 추가에 실패하였습니다.", "utf-8");
 	} else {
 		System.out.println("공지 추가 성공");
-		msg = URLEncoder.encode("공지를 성공적으로 추가하였습니다.", "utf-8");
 	}
 	response.sendRedirect(request.getContextPath()+"/admin/noticeList.jsp?msg="+msg);
 %>
