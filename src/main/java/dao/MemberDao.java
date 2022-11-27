@@ -3,11 +3,88 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 import util.DBUtil;
 import vo.Member;
 
 public class MemberDao { // 값을 받으면 param.. , 값을 리턴하면 result..
+	
+	// admin memberList 출력
+	public ArrayList<Member> selectMemberListByPage(int beginRow, int ROW_PER_PAGE) throws Exception{
+		
+		ArrayList<Member> list = new ArrayList<Member>();
+		
+		DBUtil dbutil = new DBUtil();
+		Connection conn = dbutil.getConnection();
+			System.out.println("selectMemberListByPage db 접속 확인");
+		String sql = "SELECT"
+				+ " member_no memberNo"
+				+ ", member_id memberId"
+				+ ", member_name memberName"
+				+ ", member_level memberLevel"
+				+ ", createdate"
+				+ ", updatedate"
+				+ " FROM member"
+				+ " ORDER BY createdate DESC"
+				+ " LIMIT ?,?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, beginRow);
+		stmt.setInt(2, ROW_PER_PAGE);
+		ResultSet rs = stmt.executeQuery();
+		while(rs.next()) {
+			Member m = new Member();
+			m.setMemberNo(rs.getInt("memberNo"));
+			m.setMemberId(rs.getString("memberId"));
+			m.setMemberName(rs.getString("memberName"));
+			m.setMemberLevel(rs.getInt("memberLevel"));
+			m.setCreatedate(rs.getString("createdate"));
+			m.setUpdatedate(rs.getString("updatedate"));
+			list.add(m);
+		}
+		dbutil.close(rs, stmt, conn);
+		return list;
+	}
+	
+	// 관리자 멤버 리스트 출력 카운트
+	
+	// 관리자 멤버 레벨 수정
+	
+	// 회원정보 삭제
+	public int deleteMember(String memberId) throws Exception{ // member type으로 수정 -> memberId로 쿼리입력
+		
+		int resultRow = 0;
+		
+		DBUtil dbutil = new DBUtil();
+		Connection conn = dbutil.getConnection();
+			System.out.println("db 접속 확인");
+		String sql = "DELETE FROM member WHERE member_id = ?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, memberId);
+		resultRow = stmt.executeUpdate();
+		
+		dbutil.close(null, stmt, conn);
+		
+		return resultRow;
+	}
+	
+	// 관리자 회원정보 삭제
+	public int deleteMemberByAdmin(String memberId) throws Exception{ // member type으로 수정 -> memberNo 로 쿼리입력
+		
+		int resultRow = 0;
+		
+		DBUtil dbutil = new DBUtil();
+		Connection conn = dbutil.getConnection();
+			System.out.println("db 접속 확인");
+		String sql = "DELETE FROM member WHERE member_id = ?";
+		PreparedStatement stmt = conn.prepareStatement(sql);
+		stmt.setString(1, memberId);
+		resultRow = stmt.executeUpdate();
+		
+		dbutil.close(null, stmt, conn);
+		
+		return resultRow;
+	}
 	
 	// 로그인
 	public Member login(Member paramMember) throws Exception {
@@ -137,22 +214,6 @@ public class MemberDao { // 값을 받으면 param.. , 값을 리턴하면 resul
 		return resultRow;
 	}
 
-	// 회원정보 삭제
-	public int deleteMember(String memberId) throws Exception{
-		
-		int resultRow = 0;
-		
-		DBUtil dbutil = new DBUtil();
-		Connection conn = dbutil.getConnection();
-			System.out.println("db 접속 확인");
-		String sql = "DELETE FROM member WHERE member_id = ?";
-		PreparedStatement stmt = conn.prepareStatement(sql);
-		stmt.setString(1, memberId);
-		resultRow = stmt.executeUpdate();
-		
-		dbutil.close(null, stmt, conn);
-		
-		return resultRow;
-	}
+
 	
 }

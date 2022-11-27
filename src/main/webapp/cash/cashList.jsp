@@ -15,6 +15,7 @@
 		return;
 	}
 	Member loginMember = (Member)session.getAttribute("loginMember"); // session에 저장된 사용자 정보(현재 로그인 사용자)를 Member 타입에 저장
+		System.out.println("cashList : memberID-> "+loginMember.getMemberId()+", memberLevel-> "+loginMember.getMemberLevel());
 	
 	// 달력 만드는 알고리즘
 	int year = 0;
