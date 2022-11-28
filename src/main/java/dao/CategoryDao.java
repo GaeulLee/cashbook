@@ -16,6 +16,15 @@ public class CategoryDao {
 		ArrayList<Category> categoryList = null;
 		categoryList = new ArrayList<Category>();
 		
+		String sql = "SELECT"
+				+ " category_no categoryNo"
+				+ ", category_kind categoryKind"
+				+ ", category_name categoryName"
+				+ ", createdate"
+				+ ", updatedate"
+				+ " FROM category"
+				+ " ORDER BY createdate DESC";
+		
 		// db자원(jdbc API자원) 초기화
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = null;
@@ -24,14 +33,6 @@ public class CategoryDao {
 		
 		conn = dbUtil.getConnection();
 			System.out.println("selectCategoryListByAdmin db 접속 확인");
-		String sql = "SELECT"
-				+ " category_no categoryNo"
-				+ ", category_kind categoryKind"
-				+ ", category_name categoryName"
-				+ ", createdate"
-				+ ", updatedate"
-				+ " FROM category"
-				+ " ORDER BY createdate";
 		stmt = conn.prepareStatement(sql);
 		rs = stmt.executeQuery();
 		while(rs.next()) {
@@ -79,5 +80,112 @@ public class CategoryDao {
 		}
 		dbUtil.close(rs, stmt, conn);
 		return categoryList;
+	}
+	
+	// 카테고리 추가 insertCategoryAction.jsp
+	public int insertCategory(Category paramCategory) throws Exception { // 입력값 있음 알아서 적으셈
+		
+		int resultInsert = 0;
+		
+		String sql = "INSERT INTO category("
+				+ " category_kind"
+				+ ", category_name"
+				+ ", updatedate"
+				+ ", createdate"
+				+ ") VALUES (?,?,NOW(),NOW())";
+		
+		DBUtil dbUtil = new DBUtil(); 
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		
+		conn = dbUtil.getConnection();
+			System.out.println("insertCategory db 접속 확인");
+		stmt = conn.prepareStatement(sql);
+		stmt.setString(1, paramCategory.getCategoryKind());
+		stmt.setString(2, paramCategory.getCategoryName());
+		resultInsert = stmt.executeUpdate();
+		
+		dbUtil.close(null, stmt, conn);
+		return resultInsert;
+	}
+	
+	// 카테고리 삭제 deleteCategoryAction.jsp
+	public int deleteCategory(Category paramCategory) throws Exception {
+		
+		int resultDelete = 0;
+		
+		String sql = "DELETE FROM category WHERE category_no = ?";
+		
+		DBUtil dbUtil = new DBUtil(); 
+		Connection conn = null;
+		PreparedStatement stmt = null;
+
+		conn = dbUtil.getConnection();
+			System.out.println("deleteCategory db 접속 확인");
+		stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, paramCategory.getCategoryNo());
+		resultDelete = stmt.executeUpdate();
+		
+		dbUtil.close(null, stmt, conn);
+		return resultDelete;
+	}
+	
+	// 카테고리 수정(기존 카테고리 불러오기) updateCategoryForm.jsp
+	public Category selectCategoryOne(Category paramCategory) throws Exception {
+		
+		Category oldCategory = null;
+		
+		String sql = "SELECT category_no categoryNo"
+				+ ", category_kind categoryKind"
+				+ ", category_name categoryName"
+				+ ", createdate"
+				+ " FROM category"
+				+ " WHERE category_no = ?";
+		
+		DBUtil dbUtil = new DBUtil(); 
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		conn = dbUtil.getConnection();
+			System.out.println("selectCategoryOne db 접속 확인");
+		stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, paramCategory.getCategoryNo());
+		rs = stmt.executeQuery();
+		if(rs.next()) {
+			oldCategory = new Category();
+			oldCategory.setCategoryNo(rs.getInt("categoryNo"));
+			oldCategory.setCategoryKind(rs.getString("categoryKind"));
+			oldCategory.setCategoryName(rs.getString("categoryName"));
+			oldCategory.setCreatedate(rs.getString("createdate"));
+		}
+		
+		dbUtil.close(rs, stmt, conn);
+		return oldCategory;
+	}
+	
+	// 카테고리 수정(이름만) updateCategoryAction.jsp
+	public int updateCategory(Category paramCategory) throws Exception{
+		
+		int resultUpdate = 0;
+		
+		String sql = "UPDATE category SET"
+				+ " category_name = ?"
+				+ ", updatedate = NOW()"
+				+ " WHERE category_no = ?";
+		
+		DBUtil dbUtil = new DBUtil(); 
+		Connection conn = null;
+		PreparedStatement stmt = null;
+
+		conn = dbUtil.getConnection();
+			System.out.println("updateCategory db 접속 확인");
+		stmt = conn.prepareStatement(sql);
+		stmt.setString(1, paramCategory.getCategoryName());
+		stmt.setInt(2, paramCategory.getCategoryNo());
+		resultUpdate = stmt.executeUpdate();
+		
+		dbUtil.close(null, stmt, conn);
+		return resultUpdate;
 	}
 }
