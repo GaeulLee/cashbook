@@ -17,13 +17,75 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>deleteMemberForm</title>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/bootswatch@5.2.2/dist/sandstone/bootstrap.min.css,npm/bootswatch@5.2.2/dist/sandstone/bootstrap.min.css">
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <style>
+			th{
+				text-align: center;
+			}
+			
+			#align_center{
+				text-align: center;
+			}
+			table{
+				border-radius: 8px;
+				height: 300px;
+			}
+		</style>
 	</head>
 	<body>
+	<!-- header -->
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<div class="container">
+			<div class="container-fluid">
+				<div class="collapse navbar-collapse" id="navbarColor01">
+					<ul class="navbar-nav me-auto">
+						<li class="nav-item">
+							<a class="nav-link" href="<%=request.getContextPath()%>/cash/cashList.jsp">Home</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#">Help</a>
+						</li>
+						<%
+							if(loginMember.getMemberLevel() > 0){
+						%>
+								<li class="nav-item">
+									<a class="nav-link" href="<%=request.getContextPath()%>/admin/adminMain.jsp">Admin</a>
+								</li>
+						<%
+							}
+						%>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle active" data-toggle="dropdown" href="#">My page</a>
+							<span class="visually-hidden">(current)</span>
+							<ul class="dropdown-menu">
+								<li>
+									<a class="dropdown-item" href="<%=request.getContextPath()%>/member/memberOne.jsp">내 정보</a>
+								</li>
+								<li>
+									<div class="dropdown-divider"></div>
+								</li>
+								<li>
+									<a class="dropdown-item" href="<%=request.getContextPath()%>/logout.jsp">로그아웃</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</nav>
+	<div class="container">
 		<form action="<%=request.getContextPath()%>/member/deleteMemberAction.jsp" method="post">
-			<table border="1">
+			<table class="table table-borderless w-50 mx-auto align-middle shadow-sm mt-3">
 				<input type="hidden" name="memberId" value="<%=memberId%>">
 				<tr>
-					<th colspan="2">회원탈퇴</th>
+					<th colspan="2">
+						<h4 class="mt-3"><strong>회원탈퇴</strong></h4>
+					</th>
 				</tr>
 				<tr>
 					<th colspan="2">
@@ -31,29 +93,30 @@
 					String msg = request.getParameter("msg");
 						if(msg != null){
 					%>
-							<%=msg%>						
+							<span class="text-info">&#10069;<%=msg%></span>						
 					<%
 						}else{
 					%>
-							회원 탈퇴를 위한 비밀번호를 입력해주세요.
+							<span>회원 탈퇴를 위한 비밀번호를 입력해주세요.</span>
 					<%
 						}
 					%>
 					</th>
 				</tr>
 				<tr>
-					<th>비밀번호 입력</th>
+					<th class="w-50">비밀번호 입력</th>
 					<td>
-						<input type="password" name="memberPw">
+						<input type="password" name="memberPw" class="form-control w-75">
 					</td>
 				</tr>
 				<tr>
 					<td colspan="2">
-						<button type="submit">탈퇴</button>
+						<a href="<%=request.getContextPath()%>/member/memberOne.jsp" class="btn btn-outline-primary float-start">back</a>
+						<button type="submit" class="btn btn-outline-primary float-end">탈퇴</button>
 					</td>
 				</tr>
 			</table>
 		</form>
-		<a href="<%=request.getContextPath()%>/member/memberOne.jsp">back</a>
+	</div>
 	</body>
 </html>

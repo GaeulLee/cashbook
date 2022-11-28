@@ -43,83 +43,131 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>loginForm</title>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/bootswatch@5.2.2/dist/sandstone/bootstrap.min.css,npm/bootswatch@5.2.2/dist/sandstone/bootstrap.min.css">
+		<style>
+			th{
+				text-align: center;
+			}
+			
+			#align_center{
+				text-align: center;
+			}
+			table{
+				border-radius: 8px;
+			}
+		</style>
 	</head>
 	<body>
+	<div class="container">
 		<!-- 공지(5개)목록 페이징 (상세보기 없음 타이틀만 보이게, 댓글 기능) -->
-		<div>
-			<h3><strong>공지사항</strong></h3>
-			<table border="1">
-				<tr>
-					<th>내용</th>
+		<div class="mt-2">
+			<table class="table">
+				<tr class="table-light">
+					<th>공지내용</th>
 					<th>날짜</th>
 				</tr>
 				<%
 					for(Notice n : list){
 				%>
 						<tr>
-							<td><%=n.getNoticeMemo()%></td>
-							<td><%=n.getCreatedate()%></td>
+							<td class="w-75"><%=n.getNoticeMemo()%></td>
+							<td id="align_center">
+								<%
+									String createdate = n.getCreatedate();
+									createdate = createdate.substring(0,10);
+								%>
+								<%=createdate%>
+							</td>
 						</tr>
 				<%
 					}
 				%>
 			</table>
 			<!-- paging -->
-			<ul style="list-style: none;">				
-				<li>
-					<a href="<%=request.getContextPath()%>/loginForm.jsp?currentPage=1">처음</a>
-				<%
-					if(currentPage > 1){
-				%>
-						<a href="<%=request.getContextPath()%>/loginForm.jsp?currentPage=<%=currentPage-1%>">이전</a>
-				<%
-					}
-					for(int i=beginPage; i<=endPage; i++){
-				%>
-						<a href="<%=request.getContextPath()%>/loginForm.jsp?currentPage=<%=i%>"><%=i%></a>
-				<%	
-					}
-					if(currentPage < lastPage){
-				%>
-						<a href="<%=request.getContextPath()%>/loginForm.jsp?currentPage=<%=currentPage+1%>">다음</a>
-				<%
-					}
-				%>
-					<a href="<%=request.getContextPath()%>/loginForm.jsp?currentPage=<%=lastPage%>">마지막</a>	
-				</li>
-			</ul>
+			<div>
+				<ul class="pagination justify-content-center">				
+					<li class="page-item">
+						<a href="<%=request.getContextPath()%>/loginForm.jsp?currentPage=1" class="page-link">처음</a>
+					</li>
+					<%
+						if(currentPage > 1){
+					%>
+							<li class="page-item">
+								<a href="<%=request.getContextPath()%>/loginForm.jsp?currentPage=<%=currentPage-1%>" class="page-link">이전</a>
+							</li>
+					<%
+						}
+						for(int i=beginPage; i<=endPage; i++){
+							if(currentPage == i){
+							%>
+								<li class="page-item active">
+									<a href="<%=request.getContextPath()%>/loginForm.jsp?currentPage=<%=i%>" class="page-link"><%=i%></a>
+								</li>
+							<%		
+							}else{
+							%>
+								<li class="page-item">
+									<a href="<%=request.getContextPath()%>/loginForm.jsp?currentPage=<%=i%>" class="page-link"><%=i%></a>
+								</li>
+							<%	
+							}
+						}
+						if(currentPage < lastPage){
+					%>
+							<li class="page-item">
+								<a href="<%=request.getContextPath()%>/loginForm.jsp?currentPage=<%=currentPage+1%>" class="page-link">다음</a>
+							</li>
+					<%
+						}
+					%>
+					<li class="page-item">
+						<a href="<%=request.getContextPath()%>/loginForm.jsp?currentPage=<%=lastPage%>" class="page-link">마지막</a>	
+					</li>
+				</ul>
+			</div>
 		</div>
 		<!-- 회원 로그인 폼 -->
-		<form action="<%=request.getContextPath()%>/loginAction.jsp" method="post">
-			<table>
+		<form action="<%=request.getContextPath()%>/loginAction.jsp" method="post" class="w-50 mx-auto">
+			<table class="table table-borderless w-75 mx-auto align-middle shadow p-4 mb-4 bg-light">
 				<tr>
-					<th>로그인</th>
+					<th>
+						<h4 class="mt-3"><strong>로그인</strong></h4>
+					</th>
 				</tr>
 				<%
 					String msg = request.getParameter("msg");
 					if(msg != null){
 				%>
 						<tr>
-							<th colspan="2"><%=msg%></th>
+							<th class="text-info">&#10069;<%=msg%></th>
 						</tr>	
 				<%
 					}
 				%>
 				<tr>
-					<td>회원ID</td>
 					<td>
-						<input type="text" name="memberId">
+						<div class="form-floating mb-2 mt-2">
+							<input type="text" name="memberId" id="memberId" class="form-control" placeholder="Enter ID">
+							<label for="memberId">Enter ID</label>
+						</div>
+					</td>
+				</tr>			
+				<tr>
+					<td>
+						<div class="form-floating mb-2 mt-2">
+							<input type="password" name="memberPw" id="memberPw" class="form-control" placeholder="Enter Password">
+							<label for="memberPw">Enter Password</label>
+						</div>
 					</td>
 				</tr>
 				<tr>
-					<td>회원PW</td>
-					<td>
-						<input type="password" name="memberPw">
-					</td>
+					<th>
+						<a href="<%=request.getContextPath()%>/member/insertMemberForm.jsp" class="btn btn-outline-primary float-start">회원가입</a>
+						<button type="submit" class="btn btn-outline-primary float-end">로그인</button>
+					</th>
 				</tr>
 			</table>
-			<button type="submit">로그인</button>
 		</form>
-		<a href="<%=request.getContextPath()%>/member/insertMemberForm.jsp">회원가입</a>
+	</div>
 	</body>
 </html>

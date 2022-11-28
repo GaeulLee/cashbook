@@ -57,6 +57,6 @@
 	} else {
 		System.out.println("가입 성공");
 		msg = URLEncoder.encode("가입에 성공했습니다. 로그인을 해주세요.", "utf-8");
-		response.sendRedirect(request.getContextPath()+"/loginForm.jsp");
+		response.sendRedirect(request.getContextPath()+"/loginForm.jsp?msg="+msg);
 	}	
 %>

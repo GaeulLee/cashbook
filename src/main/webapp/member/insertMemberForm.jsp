@@ -11,48 +11,79 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>insertMemberForm</title>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/bootswatch@5.2.2/dist/sandstone/bootstrap.min.css,npm/bootswatch@5.2.2/dist/sandstone/bootstrap.min.css">
+		<style>
+			th{
+				text-align: center;
+			}
+			
+			#align_center{
+				text-align: center;
+			}
+			
+			table{
+				border-radius: 8px;
+			}
+			
+			#verticalMiddle{
+			    position: absolute;
+			    top: 45%;
+			    left: 50%;
+			    transform: translate(-50%, -50%);
+			}
+		</style>
 	</head>
 	<body>
-		<form action="<%=request.getContextPath()%>/member/insertMemberAction.jsp" method="post">
-			<table>
+	<div class="container">
+		<form action="<%=request.getContextPath()%>/member/insertMemberAction.jsp" method="post" class="w-50 mx-auto" id="verticalMiddle">
+			<table class="table table-borderless w-50 mx-auto align-middle shadow p-4 mb-4 bg-light">
 				<tr>
-					<th colspan="2">회원가입</th>
+					<th>
+						<h4 class="mt-3"><strong>회원가입</strong></h4>
+					</th>
 				</tr>
 				<%
 					String msg = request.getParameter("msg");
 					if(msg != null){
 				%>
 						<tr>
-							<th colspan="2"><%=msg%></th>
+							<th class="text-info">&#10069;<%=msg%></th>
 						</tr>	
 				<%
 					}
 				%>
 				<tr>
-					<th>회원 ID</th>
 					<td>
-						<input type="text" name="memberId">
+						<div class="form-floating mb-1 mt-2">
+							<input type="text" name="memberId" id="memberId" class="form-control" placeholder="Enter ID">
+							<label for="memberId">Enter ID</label>
+						</div>
 					</td>
 				</tr>
 				<tr>
-					<th>회원 PW</th>
 					<td>
-						<input type="password" name="memberPw">
+						<div class="form-floating mb-1 mt-1">
+							<input type="password" name="memberPw" id="memberPw" class="form-control" placeholder="Enter Password">
+							<label for="memberPw">Enter Password</label>
+						</div>
 					</td>
 				</tr>
 				<tr>
-					<th>회원 이름</th>
 					<td>
-						<input type="text" name="memberName">
+						<div class="form-floating mb-2 mt-1">
+							<input type="text" name="memberName" id="memberName" class="form-control" placeholder="Enter Name">
+							<label for="memberName">Enter Name</label>
+						</div>
 					</td>
 				</tr>
 				<tr>
-					<td colspan="2">
-						<button type="submit">가입</button>
+					<td>
+						<a href="<%=request.getContextPath()%>/loginForm.jsp" class="btn btn-outline-primary float-start">back</a>
+						<button type="submit" class="btn btn-outline-primary float-end">가입</button>
 					</td>
 				</tr>
 			</table>
-		</form>
-		<a href="<%=request.getContextPath()%>/loginForm.jsp">back</a>
+		</form>	
+	</div>
 	</body>
 </html>
