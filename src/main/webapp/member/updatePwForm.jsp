@@ -39,46 +39,14 @@
 	</head>
 	<body>
 	<!-- header -->
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		<div class="container">
-			<div class="container-fluid">
-				<div class="collapse navbar-collapse" id="navbarColor01">
-					<ul class="navbar-nav me-auto">
-						<li class="nav-item">
-							<a class="nav-link" href="<%=request.getContextPath()%>/cash/cashList.jsp">Home</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="#">Help</a>
-						</li>
-						<%
-							if(loginMember.getMemberLevel() > 0){
-						%>
-								<li class="nav-item">
-									<a class="nav-link" href="<%=request.getContextPath()%>/admin/adminMain.jsp">Admin</a>
-								</li>
-						<%
-							}
-						%>
-						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle active" data-toggle="dropdown" href="#">My page</a>
-							<span class="visually-hidden">(current)</span>
-							<ul class="dropdown-menu">
-								<li>
-									<a class="dropdown-item" href="<%=request.getContextPath()%>/member/memberOne.jsp">내 정보</a>
-								</li>
-								<li>
-									<div class="dropdown-divider"></div>
-								</li>
-								<li>
-									<a class="dropdown-item" href="<%=request.getContextPath()%>/logout.jsp">로그아웃</a>
-								</li>
-							</ul>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</nav>
+	<%	
+		String targetPage = "../inc/header.jsp";
+		if(loginMember.getMemberLevel() > 0){
+			targetPage = "../inc/adminHeader.jsp";
+		}
+	%>
+		<jsp:include page="<%=targetPage%>"></jsp:include>
+	<!-- 본문 시작 -->
 	<div class="container">
 		<form action="<%=request.getContextPath()%>/member/updatePwAction.jsp" method="post">
 			<table class="table table-borderless w-75 mx-auto align-middle shadow-sm mt-3">

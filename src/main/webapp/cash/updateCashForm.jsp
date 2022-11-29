@@ -47,6 +47,10 @@
 		<title>updateCashForm</title>
 	</head>
 	<body>
+	<!-- header -->
+	<jsp:include page="../inc/header.jsp"></jsp:include>
+	<!-- 본문 시작 -->
+	<div>
 		<a href="<%=request.getContextPath()%>/cash/cashDateList.jsp?year=<%=year%>&month=<%=month%>&date=<%=date%>">back</a>
 		<form action="<%=request.getContextPath()%>/cash/updateCashAction.jsp?cashNo=<%=cashNo%>" method="post">
 			<table border="1">
@@ -105,5 +109,6 @@
 				</tr>
 			</table>
 		</form>
+	</div>
 	</body>
 </html>

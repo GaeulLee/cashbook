@@ -104,47 +104,14 @@
 	<!-- 다이어리 형식으로 수입 지출을 확인할 수 있도록 -->
 	<body>
 	<!-- header -->
-	<nav class="navbar navbar-expand-lg navbar-light bg-light">
-		<div class="container">
-			<div class="container-fluid">
-				<div class="collapse navbar-collapse" id="navbarColor01">
-					<ul class="navbar-nav me-auto">
-						<li class="nav-item">
-							<a class="nav-link active" href="<%=request.getContextPath()%>/cash/cashList.jsp">Home
-								<span class="visually-hidden">(current)</span>
-							</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="<%=request.getContextPath()%>/help/helpList.jsp">Help</a>
-						</li>
-						<%
-							if(loginMember.getMemberLevel() > 0){
-						%>
-								<li class="nav-item">
-									<a class="nav-link" href="<%=request.getContextPath()%>/admin/adminMain.jsp">Admin</a>
-								</li>
-						<%
-							}
-						%>
-						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">My page</a>
-							<ul class="dropdown-menu">
-								<li>
-									<a class="dropdown-item" href="<%=request.getContextPath()%>/member/memberOne.jsp">내 정보</a>
-								</li>
-								<li>
-									<div class="dropdown-divider"></div>
-								</li>
-								<li>
-									<a class="dropdown-item" href="<%=request.getContextPath()%>/logout.jsp">로그아웃</a>
-								</li>
-							</ul>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</nav>
+	<%	
+		String targetPage = "../inc/header.jsp";
+		if(loginMember.getMemberLevel() > 0){
+			targetPage = "../inc/adminHeader.jsp";
+		}
+	%>
+		<jsp:include page="<%=targetPage%>"></jsp:include>
+	<!-- 본문 시작 -->
 	<div class="container">		
 		<!-- 로그인 정보(세션에 loginMember 변수) 출력 -->
 		<div class="alert alert-dismissible alert-secondary shadow-sm mt-2 w-25">

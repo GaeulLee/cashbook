@@ -34,14 +34,10 @@
 		<title>adminMain</title>
 	</head>
 	<body>
-		<ul>
-			<li><a href="<%=request.getContextPath()%>/admin/noticeList.jsp">공지 관리</a></li>
-			<li><a href="<%=request.getContextPath()%>/admin/categoryList.jsp">카테고리 관리</a></li>
-			<li><a href="<%=request.getContextPath()%>/admin/memberList.jsp">멤버 관리</a></li><!-- 레벨 수정, 멤버 목록, 강제 회원탈퇴 -->
-			<li><a href="<%=request.getContextPath()%>/cash/cashList.jsp">가계부</a></li>			
-		</ul>
-		<!-- admin contents -->
-		<!-- 최근 공지 5개 -->
+	<!-- header -->
+	<jsp:include page="../inc/adminMainHeader.jsp"></jsp:include>
+	<!-- 본문 시작 -->
+	<div>
 		<div>
 			<h3><strong>공지사항</strong></h3>
 			<table border="1">
@@ -89,5 +85,6 @@
 				%>
 			</table>
 		</div>
+	</div>
 	</body>
 </html>

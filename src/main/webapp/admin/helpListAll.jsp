@@ -5,28 +5,42 @@
 <%
 	// C
 	/*
-		1. 로그인 유효성 검사
-		2. 세션에서 회원 아이디 받기
-		3. 데이터 묶기
-		4. 모델 출력(회원이 작성한 모든 글)
+		1. 로그인 유효성 검사 + 레벨 확인
+		2. 페이징
+		3. 모델 출력(모든 문의 글)
 	*/
-	// 로그인 유효성 검사(로그인이 안되어있으면 들어오지 못하게)
-	if(session.getAttribute("loginMember") == null){
+	// 세션값 받고 레벨 확인
+	Member loginMember = (Member)session.getAttribute("loginMember");
+	if(loginMember == null || loginMember.getMemberLevel() < 1){
 		response.sendRedirect(request.getContextPath()+"loginForm.jsp");
 		return;
 	}
 
-	// 세션에 정보가 있다면 정보 가져오기
-	Member loginMember = (Member)session.getAttribute("loginMember");
-	String memberId = loginMember.getMemberId();
+	// 페이징
+	int currentPage = 1;
+	if(request.getParameter("currentPage") != null){
+		currentPage = Integer.parseInt(request.getParameter("currentPage"));
+	}
+	NoticeDao noticeDao = new NoticeDao();
+	int cnt = noticeDao.selectNoticeCount();
+	final int ROW_PER_PAGE = 15;
+	int beginRow = (currentPage-1)*ROW_PER_PAGE;
+	final int PAGE_COUNT = 10;
+	int beginPage = (currentPage-1)/PAGE_COUNT*PAGE_COUNT+1;
+	int endPage = beginPage*PAGE_COUNT;
+	int lastPage = cnt/ROW_PER_PAGE;
 	
-	// 데이터 묶기
-	Member paramMember = new Member();
-	paramMember.setMemberId(memberId);
+	if(cnt%ROW_PER_PAGE != 0){
+		lastPage++;
+	}
+	if(endPage > lastPage){
+		endPage = lastPage;
+	}
+	
 
 	// M
 	HelpDao helpDao = new HelpDao();
-	ArrayList<HashMap<String, Object>> helpList = helpDao.selectHelpList(paramMember);
+	ArrayList<HashMap<String, Object>> helpList = helpDao.selectHelpList(beginRow, ROW_PER_PAGE);
 	
 	// V
 %>
@@ -65,7 +79,7 @@
 	</head>
 	<body>
 	<!-- header -->
-	<jsp:include page="../inc/header.jsp"></jsp:include>
+	<jsp:include page="../inc/adminMainHeader.jsp"></jsp:include>
 	<!-- 본문 시작 -->
 	<div class="container">
 		<!-- 문의 추가 링크 -->
@@ -94,6 +108,7 @@
 							<div class="mt-4">
 								<span>답변 전</span>
 								<span class="float-end">
+									<!-- 답변 후에는 추가가 없어야 함 -->
 									<a href="<%=request.getContextPath()%>/help/updateHelpForm.jsp?helpNo=<%=m.get("helpNo")%>">수정</a>
 									<a href="<%=request.getContextPath()%>/help/deleteHelpAction.jsp?helpNo=<%=m.get("helpNo")%>">삭제</a>
 								</span>
@@ -113,6 +128,48 @@
 		<%
 			}
 		%>
+		</div>
+		<!-- paging -->
+		<div>
+			<ul class="pagination justify-content-center">				
+				<li class="page-item">
+					<a href="<%=request.getContextPath()%>/loginForm.jsp?currentPage=1" class="page-link">처음</a>
+				</li>
+				<%
+					if(currentPage > 1){
+				%>
+						<li class="page-item">
+							<a href="<%=request.getContextPath()%>/loginForm.jsp?currentPage=<%=currentPage-1%>" class="page-link">이전</a>
+						</li>
+				<%
+					}
+					for(int i=beginPage; i<=endPage; i++){
+						if(currentPage == i){
+						%>
+							<li class="page-item active">
+								<a href="<%=request.getContextPath()%>/loginForm.jsp?currentPage=<%=i%>" class="page-link"><%=i%></a>
+							</li>
+						<%		
+						}else{
+						%>
+							<li class="page-item">
+								<a href="<%=request.getContextPath()%>/loginForm.jsp?currentPage=<%=i%>" class="page-link"><%=i%></a>
+							</li>
+						<%	
+						}
+					}
+					if(currentPage < lastPage){
+				%>
+						<li class="page-item">
+							<a href="<%=request.getContextPath()%>/loginForm.jsp?currentPage=<%=currentPage+1%>" class="page-link">다음</a>
+						</li>
+				<%
+					}
+				%>
+				<li class="page-item">
+					<a href="<%=request.getContextPath()%>/loginForm.jsp?currentPage=<%=lastPage%>" class="page-link">마지막</a>	
+				</li>
+			</ul>
 		</div>
 	</div>
 	</body>
