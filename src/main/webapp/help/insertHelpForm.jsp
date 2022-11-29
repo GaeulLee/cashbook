@@ -35,6 +35,7 @@
 			#align_center{
 				text-align: center;
 			}
+			
 			table{
 				border-radius: 8px;
 			}
@@ -50,10 +51,15 @@
 	%>
 	<jsp:include page="<%=targetPage%>"></jsp:include>
 	<!-- 본문 시작 -->
-	<div>
+	<div class="container">
 		<form action="<%=request.getContextPath()%>/help/insertHelpAction.jsp" method="post">
 			<input type="hidden" name="memberId" value="<%=memberId%>">
-			<table border="1">
+			<table class="table table-borderless w-75 mx-auto align-middle shadow-sm mt-3">
+				<tr>
+					<th colspan="2">
+						<h4 class="mt-3"><strong>문의 작성</strong></h4>
+					</th>
+				</tr>
 				<%
 					String msg = request.getParameter("msg");
 					if(msg != null){
@@ -67,12 +73,12 @@
 				<tr>
 					<th>문의 내용</th>
 					<td>
-						<textarea name="helpMemo" rows="5" cols=50" placeholder="문의 내용을 입력해주세요."></textarea>
+						<textarea name="helpMemo" rows="10" cols=50" placeholder="문의 내용을 입력해주세요." class="form-control"></textarea>
 					</td>
 				</tr>
 				<tr>
 					<td colspan="2">
-						<button type="submit">작성</button>
+						<button type="submit" class="btn btn-outline-primary float-end">작성</button>
 					</td>
 				</tr>
 			</table>

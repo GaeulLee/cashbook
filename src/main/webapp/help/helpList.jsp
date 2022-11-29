@@ -74,8 +74,12 @@
 	<jsp:include page="<%=targetPage%>"></jsp:include>
 	<!-- 본문 시작 -->
 	<div class="container">
-		<!-- 문의 추가 링크 -->
-		<a href="<%=request.getContextPath()%>/help/insertHelpForm.jsp">문의하기</a>
+		<div class="w-75 mt-4 mb-4 mx-auto h3" id="align_center">
+			<strong>내 문의 내역</strong>
+			<span>
+				<a href="<%=request.getContextPath()%>/help/insertHelpForm.jsp" class="btn btn-outline-primary float-end">문의하기</a>
+			</span>
+		</div>
 		<!-- 문의 출력 -->
 		<div class="w-75 mx-auto">
 		<%			
@@ -100,8 +104,8 @@
 							<div class="mt-4">
 								<span>답변 전</span>
 								<span class="float-end">
-									<a href="<%=request.getContextPath()%>/help/updateHelpForm.jsp?helpNo=<%=m.get("helpNo")%>">수정</a>
-									<a href="<%=request.getContextPath()%>/help/deleteHelpAction.jsp?helpNo=<%=m.get("helpNo")%>">삭제</a>
+									<a href="<%=request.getContextPath()%>/help/updateHelpForm.jsp?helpNo=<%=m.get("helpNo")%>" class="btn btn-light">수정</a>
+									<a href="<%=request.getContextPath()%>/help/deleteHelpAction.jsp?helpNo=<%=m.get("helpNo")%>" class="btn btn-light">삭제</a>
 								</span>
 							</div>
 					<%
