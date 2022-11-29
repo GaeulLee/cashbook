@@ -115,7 +115,7 @@
 							</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="#">Help</a>
+							<a class="nav-link" href="<%=request.getContextPath()%>/help/helpList.jsp">Help</a>
 						</li>
 						<%
 							if(loginMember.getMemberLevel() > 0){
@@ -153,7 +153,7 @@
 		</div>
 		<!-- 달력 출력 -->
 		<div>
-			<div id="align_center" class="mt-3">
+			<div id="align_center" class="mt-4">
 				<span>
 					<a href="<%=request.getContextPath()%>/cash/cashList.jsp?year=<%=year%>&month=<%=month-1%>" class="btn btn-outline-secondary me-1">Prev</a>
 				</span>
