@@ -21,8 +21,8 @@
 	if(request.getParameter("currentPage") != null){
 		currentPage = Integer.parseInt(request.getParameter("currentPage"));
 	}
-	NoticeDao noticeDao = new NoticeDao();
-	int cnt = noticeDao.selectNoticeCount();
+	HelpDao helpDao = new HelpDao();
+	int cnt = helpDao.selectHelpCount();
 	final int ROW_PER_PAGE = 15;
 	int beginRow = (currentPage-1)*ROW_PER_PAGE;
 	final int PAGE_COUNT = 10;
@@ -39,7 +39,6 @@
 	
 
 	// M
-	HelpDao helpDao = new HelpDao();
 	ArrayList<HashMap<String, Object>> helpList = helpDao.selectHelpList(beginRow, ROW_PER_PAGE);
 	
 	// V
@@ -64,17 +63,21 @@
 			}
 			
 			details {
-			  background: #f0f0f0;
-			  padding: 20px;
-			  border-radius: 8px;
+				background: #f0f0f0;
+				padding: 20px;
+				border-radius: 8px;
 			 
 			}
 			
 			summary {
-			  cursor: pointer;
-			  font-weight: bold;
-			  font-size: 1.1em;
+				cursor: pointer; 
 			}
+			
+			#question{
+				font-weight: bold;
+			  	font-size: 1.1em;
+			}
+			
 		</style>
 	</head>
 	<body>
@@ -82,44 +85,46 @@
 	<jsp:include page="../inc/adminMainHeader.jsp"></jsp:include>
 	<!-- 본문 시작 -->
 	<div class="container">
-		<!-- 문의 추가 링크 -->
-		<a href="<%=request.getContextPath()%>/help/insertHelpForm.jsp">문의하기</a>
-		<!-- 문의 출력 -->
+		<!-- 문의글 출력 -->
 		<div class="w-75 mx-auto">
 		<%			
-			for(HashMap<String, Object> m : helpList){
+			for(HashMap<String, Object> m : helpList){ // helpList를 반복해서 출력
+				// 받아온 날짜를 년, 월, 일, 시, 분 까지만 나오게 문자열 자르기
 				String helpCreatedate = (String)m.get("helpCreatedate");
 				helpCreatedate = helpCreatedate.substring(0,16);
-				
-				String commentCreatedate = (String)m.get("commentCreatedate");
-				if(m.get("commentCreatedate") != null){
+				String commentCreatedate = (String)m.get("commentCreatedate"); // commentCreatedate에 값이 없으면 null로 들어옴
+				if(m.get("commentCreatedate") != null){ // commentCreatedate이 null이 아닐 경우에만 문자열 자르기 
 					commentCreatedate = commentCreatedate.substring(0,16);
 				}	
 		%>
+				<!-- 조건에 맞게 문의글 출력 -->
 				<details class="mb-2">
+					<!-- 질문 -->
 					<summary>
-						<span><%=m.get("helpMemo")%></span>
-						<span class="float-end"><%=helpCreatedate%></span>
-					 </summary>
-					 
+						<span id="question"><%=m.get("helpMemo")%></span>
+						<span class="float-end"><strong><%=helpCreatedate%></strong></span>
+						<span class="float-end">작성자ID: <%=m.get("memberId")%>&nbsp;</span>
+					</summary> 
+					<!-- 답변 -->
 					<%
-						if(m.get("commentMemo") == null || commentCreatedate == null){
+						if(m.get("commentMemo") == null){
 					%>
 							<div class="mt-4">
-								<span>답변 전</span>
+								<span>답변 전입니다.</span>
 								<span class="float-end">
-									<!-- 답변 후에는 추가가 없어야 함 -->
-									<a href="<%=request.getContextPath()%>/help/updateHelpForm.jsp?helpNo=<%=m.get("helpNo")%>">수정</a>
-									<a href="<%=request.getContextPath()%>/help/deleteHelpAction.jsp?helpNo=<%=m.get("helpNo")%>">삭제</a>
+									<a href="<%=request.getContextPath()%>/help/insertComment.jsp?helpNo=<%=m.get("helpNo")%>">답변하기</a>
+									
 								</span>
 							</div>
 					<%
-						}else{
-							
+						}else{	
 					%>
 							<div class="mt-4">
 								<span><%=m.get("commentMemo")%></span>
-								<span class="float-end"><%=commentCreatedate%></span>
+								<span class="float-end">
+									<a href="<%=request.getContextPath()%>/help/updateCommentForm.jsp?commentNo=<%=m.get("commentNo")%>">수정</a>
+									<a href="<%=request.getContextPath()%>/help/deleteCommentAction.jsp?commentNo=<%=m.get("commentNo")%>">삭제</a>
+								</span>
 							</div>
 					<%
 						}
@@ -133,13 +138,13 @@
 		<div>
 			<ul class="pagination justify-content-center">				
 				<li class="page-item">
-					<a href="<%=request.getContextPath()%>/loginForm.jsp?currentPage=1" class="page-link">처음</a>
+					<a href="<%=request.getContextPath()%>/admin/helpListAll.jsp?currentPage=1" class="page-link">처음</a>
 				</li>
 				<%
 					if(currentPage > 1){
 				%>
 						<li class="page-item">
-							<a href="<%=request.getContextPath()%>/loginForm.jsp?currentPage=<%=currentPage-1%>" class="page-link">이전</a>
+							<a href="<%=request.getContextPath()%>/admin/helpListAll.jsp?currentPage=<%=currentPage-1%>" class="page-link">이전</a>
 						</li>
 				<%
 					}
@@ -147,13 +152,13 @@
 						if(currentPage == i){
 						%>
 							<li class="page-item active">
-								<a href="<%=request.getContextPath()%>/loginForm.jsp?currentPage=<%=i%>" class="page-link"><%=i%></a>
+								<a href="<%=request.getContextPath()%>/admin/helpListAll.jsp?currentPage=<%=i%>" class="page-link"><%=i%></a>
 							</li>
 						<%		
 						}else{
 						%>
 							<li class="page-item">
-								<a href="<%=request.getContextPath()%>/loginForm.jsp?currentPage=<%=i%>" class="page-link"><%=i%></a>
+								<a href="<%=request.getContextPath()%>/admin/helpListAll.jsp?currentPage=<%=i%>" class="page-link"><%=i%></a>
 							</li>
 						<%	
 						}
@@ -161,13 +166,13 @@
 					if(currentPage < lastPage){
 				%>
 						<li class="page-item">
-							<a href="<%=request.getContextPath()%>/loginForm.jsp?currentPage=<%=currentPage+1%>" class="page-link">다음</a>
+							<a href="<%=request.getContextPath()%>/admin/helpListAll.jsp?currentPage=<%=currentPage+1%>" class="page-link">다음</a>
 						</li>
 				<%
 					}
 				%>
 				<li class="page-item">
-					<a href="<%=request.getContextPath()%>/loginForm.jsp?currentPage=<%=lastPage%>" class="page-link">마지막</a>	
+					<a href="<%=request.getContextPath()%>/admin/helpListAll.jsp?currentPage=<%=lastPage%>" class="page-link">마지막</a>	
 				</li>
 			</ul>
 		</div>

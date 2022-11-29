@@ -65,7 +65,13 @@
 	</head>
 	<body>
 	<!-- header -->
-	<jsp:include page="../inc/header.jsp"></jsp:include>
+	<%	
+		String targetPage = "../inc/header.jsp";
+		if(loginMember.getMemberLevel() > 0){
+			targetPage = "../inc/adminHeader.jsp";
+		}
+	%>
+	<jsp:include page="<%=targetPage%>"></jsp:include>
 	<!-- 본문 시작 -->
 	<div class="container">
 		<!-- 문의 추가 링크 -->

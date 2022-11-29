@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import util.DBUtil;
+import vo.Comment;
 import vo.Help;
 import vo.Member;
 
@@ -20,6 +21,7 @@ public class HelpDao {
 		String sql = "SELECT h.help_no helpNo"
 			+ "		, h.help_memo helpMemo"
 			+ "		, h.createdate helpCreatedate"
+			+ "		, h.member_id memberId" // 누가 문의글 작성했는지 봐야 함
 			+ "		, c.comment_no commemtNo" // 회원 페이지에선 필요 없으나 관리자 페이지에선 필요
 			+ "		, c.comment_memo commentMemo"
 			+ "		, c.createdate commentCreatedate"
@@ -44,6 +46,7 @@ public class HelpDao {
 			HashMap<String, Object> m = new HashMap<String, Object>();
 			m.put("helpNo", rs.getInt("helpNo"));
 			m.put("helpMemo", rs.getString("helpMemo"));
+			m.put("memberId", rs.getString("memberId"));
 			m.put("helpCreatedate", rs.getString("helpCreatedate"));
 			m.put("commemtNo", rs.getInt("commemtNo")); // null 이면 어떻게 들어올까 -> null
 			m.put("commentMemo", rs.getString("commentMemo"));
@@ -57,12 +60,27 @@ public class HelpDao {
 	}
 	
 	// 관리자 문의글 카운트 helpListAll.jsp
-	
-	
-	
-	// 관리자 댓글
-	
-	// 관리자
+	public int selectHelpCount() throws Exception{
+		
+		int cnt = 0;
+		
+		String sql = "SELECT COUNT(*) cnt FROM help";
+		
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		conn = dbUtil.getConnection();
+			System.out.println("selectHelpCount db 접속 확인");
+		stmt = conn.prepareStatement(sql);
+		rs = stmt.executeQuery();
+		if(rs.next()) {
+			cnt = rs.getInt("cnt");
+		}
+		dbUtil.close(rs, stmt, conn);
+		return cnt;
+	}
 	
 	
 	// 문의글 출력 helpList.jsp
@@ -73,7 +91,6 @@ public class HelpDao {
 		String sql = "SELECT h.help_no helpNo"
 				+ "		, h.help_memo helpMemo"
 				+ "		, h.createdate helpCreatedate"
-				+ "		, h.member_id memberId" // 누가 문의글 작성했는지 봐야 함
 				+ "		, c.comment_no commemtNo" // 회원 페이지에선 필요 없으나 관리자 페이지에선 필요
 				+ "		, c.comment_memo commentMemo"
 				+ "		, c.createdate commentCreatedate"
@@ -131,5 +148,87 @@ public class HelpDao {
 		
 		dbUtil.close(null, stmt, conn);
 		return resultInsert;
+	}
+	
+	// 문의 수정 전 글 불러오기 (no id -> no memo)
+	public Help selectHelpOne(Help paramHelp) throws Exception {
+		
+		Help oldHelp = null;
+		
+		String sql = "SELECT"
+				+ " help_no helpNo"
+				+ ", help_memo helpMemo"
+				+ " FROM help"
+				+ " WHERE help_no = ? AND member_id = ?";
+		
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+
+		conn = dbUtil.getConnection();
+			System.out.println("selectHelpOne db 접속 확인");
+		stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, paramHelp.getHelpNo());
+		stmt.setString(2, paramHelp.getMemberId());
+		rs = stmt.executeQuery();
+		if(rs.next()) {
+			oldHelp = new Help();
+			oldHelp.setHelpNo(rs.getInt("helpNo"));
+			oldHelp.setHelpMemo(rs.getString("helpMemo"));
+		}
+		
+		dbUtil.close(rs, stmt, conn);
+		return oldHelp;
+	}
+	
+	
+	// 문의 수정 updateHelpAction.jsp (no memo update + id)
+	public int updateHelp(Help paramHelp) throws Exception {
+		
+		int resultUpdate = 0;
+		
+		String sql = "UPDATE help SET"
+				+ " help_memo = ?"
+				+ ", updatedate = NOW()"
+				+ " WHERE help_no = ? AND member_id = ?";
+		
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = null;
+		PreparedStatement stmt = null;
+
+		conn = dbUtil.getConnection();
+			System.out.println("insertHelp db 접속 확인");
+		stmt = conn.prepareStatement(sql);
+		stmt.setString(1, paramHelp.getHelpMemo());
+		stmt.setInt(2, paramHelp.getHelpNo());
+		stmt.setString(3, paramHelp.getMemberId());
+		resultUpdate = stmt.executeUpdate();
+		
+		dbUtil.close(null, stmt, conn);
+		return resultUpdate;
+	}
+		
+	// 문의 삭제 deleteHelpAction.jsp (no + id)
+	public int deleteHelp(Help paramHelp) throws Exception {
+		
+		int resultDelete = 0;
+		
+		String sql = "DELETE FROM help"
+				+ " WHERE help_no = ? AND member_id = ?";
+		
+		DBUtil dbUtil = new DBUtil();
+		Connection conn = null;
+		PreparedStatement stmt = null;
+
+		conn = dbUtil.getConnection();
+			System.out.println("insertHelp db 접속 확인");
+		stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, paramHelp.getHelpNo());
+		stmt.setString(2, paramHelp.getMemberId());
+		resultDelete = stmt.executeUpdate();
+		
+		dbUtil.close(null, stmt, conn);
+		return resultDelete;
 	}
 }
