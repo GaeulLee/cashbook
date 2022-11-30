@@ -71,7 +71,27 @@
 				<tr>
 					<th>회원레벨</th>
 					<td>
-						<input type="number" name="memberLevel" value="<%=oldMember.getMemberLevel()%>" placeholder="회원은 0, 관리자는 1">
+					<%
+						if(oldMember.getMemberLevel() == 0){
+					%>
+							<label>
+								<input type="radio" id="memberLevel" name="memberLevel" value="1">관리자
+							</label>
+							<label>
+								<input type="radio" id="memberLevel" name="memberLevel" value="0" checked>회원
+							</label>
+					<%	
+						} else {
+					%>
+							<label>
+								<input type="radio" id="memberLevel" name="memberLevel" value="1" checked>관리자
+							</label>
+							<label>
+								<input type="radio" id="memberLevel" name="memberLevel" value="0">회원
+							</label>
+					<%
+						}
+					%>
 					</td>
 				</tr>
 				<tr>
