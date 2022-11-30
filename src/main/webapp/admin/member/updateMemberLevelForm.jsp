@@ -39,6 +39,10 @@
 		<title>updateMemberLevelForm</title>
 	</head>
 	<body>
+	<!-- header -->
+	<jsp:include page="../../inc/adminMainHeader.jsp"></jsp:include>
+	<!-- 본문 시작 -->
+	<div>
 		<h3><strong>멤버 수정</strong></h3>
 		<form action="<%=request.getContextPath()%>/admin/member/updateMemberLevelAction.jsp" method="post">
 			<table>
@@ -90,5 +94,6 @@
 		<div>
 			<a href="<%=request.getContextPath()%>/admin/memberList.jsp">back</a>
 		</div>
+	</div>
 	</body>
 </html>

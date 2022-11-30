@@ -49,12 +49,8 @@
 		<title>memberList</title>
 	</head>
 	<body>
-		<ul>
-			<li><a href="<%=request.getContextPath()%>/admin/noticeList.jsp">공지 관리</a></li>
-			<li><a href="<%=request.getContextPath()%>/admin/categoryList.jsp">카테고리 관리</a></li>
-			<li><a href="<%=request.getContextPath()%>/admin/memberList.jsp">멤버 관리</a></li><!-- 레벨 수정, 멤버 목록, 강제 회원탈퇴 -->
-			<li><a href="<%=request.getContextPath()%>/admin/adminMain.jsp">back</a></li>
-		</ul>
+		<!-- header -->
+		<jsp:include page="../inc/adminMainHeader.jsp"></jsp:include>
 		<!-- 멤버목록 페이징 -->
 		<div>
 			<h3><strong>멤버목록</strong></h3>

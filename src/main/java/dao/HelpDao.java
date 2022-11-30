@@ -22,7 +22,7 @@ public class HelpDao {
 			+ "		, h.help_memo helpMemo"
 			+ "		, h.createdate helpCreatedate"
 			+ "		, h.member_id memberId" // 누가 문의글 작성했는지 봐야 함
-			+ "		, c.comment_no commemtNo" // 회원 페이지에선 필요 없으나 관리자 페이지에선 필요
+			+ "		, c.comment_no commentNo" // 회원 페이지에선 필요 없으나 관리자 페이지에선 필요
 			+ "		, c.comment_memo commentMemo"
 			+ "		, c.createdate commentCreatedate"
 			+ " FROM help h left outer join comment c"
@@ -48,7 +48,7 @@ public class HelpDao {
 			m.put("helpMemo", rs.getString("helpMemo"));
 			m.put("memberId", rs.getString("memberId"));
 			m.put("helpCreatedate", rs.getString("helpCreatedate"));
-			m.put("commemtNo", rs.getInt("commemtNo")); // null 이면 어떻게 들어올까 -> null
+			m.put("commentNo", rs.getInt("commentNo")); // null 이면 어떻게 들어올까 -> null
 			m.put("commentMemo", rs.getString("commentMemo"));
 			m.put("commentCreatedate", rs.getString("commentCreatedate"));
 			

@@ -85,6 +85,9 @@
 	<jsp:include page="../inc/adminMainHeader.jsp"></jsp:include>
 	<!-- 본문 시작 -->
 	<div class="container">
+		<div class="w-75 mt-4 mb-4 mx-auto h3" id="align_center">
+			<strong>회원 문의 내역</strong>
+		</div>
 		<!-- 문의글 출력 -->
 		<div class="w-75 mx-auto">
 		<%			
@@ -112,7 +115,7 @@
 							<div class="mt-4">
 								<span>답변 전입니다.</span>
 								<span class="float-end">
-									<a href="<%=request.getContextPath()%>/help/insertComment.jsp?helpNo=<%=m.get("helpNo")%>">답변하기</a>
+									<a href="<%=request.getContextPath()%>/admin/comment/insertCommentForm.jsp?helpNo=<%=m.get("helpNo")%>" class="btn btn-light">답변하기</a>
 									
 								</span>
 							</div>
@@ -122,8 +125,8 @@
 							<div class="mt-4">
 								<span><%=m.get("commentMemo")%></span>
 								<span class="float-end">
-									<a href="<%=request.getContextPath()%>/help/updateCommentForm.jsp?commentNo=<%=m.get("commentNo")%>">수정</a>
-									<a href="<%=request.getContextPath()%>/help/deleteCommentAction.jsp?commentNo=<%=m.get("commentNo")%>">삭제</a>
+									<a href="<%=request.getContextPath()%>/admin/comment/updateCommentForm.jsp?commentNo=<%=m.get("commentNo")%>" class="btn btn-light">수정</a>
+									<a href="<%=request.getContextPath()%>/admin/comment/deleteCommentAction.jsp?commentNo=<%=m.get("commentNo")%>" class="btn btn-light">삭제</a>
 								</span>
 							</div>
 					<%

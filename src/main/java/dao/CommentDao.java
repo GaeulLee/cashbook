@@ -15,8 +15,8 @@ public class CommentDao {
 		int resultInsert = 0;
 		
 		String sql = "INSERT INTO comment"
-				+ " (comment_memo, member_id, updatedate, createdate)"
-				+ " VALUES (?, ?, NOW(), NOW())";
+				+ " (help_no, comment_memo, member_id, updatedate, createdate)"
+				+ " VALUES (?, ?, ?, NOW(), NOW())";
 		
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = null;
@@ -25,8 +25,9 @@ public class CommentDao {
 		conn = dbUtil.getConnection();
 			System.out.println("insertComment db 접속 확인");
 		stmt = conn.prepareStatement(sql);
-		stmt.setString(1, comment.getCommentMemo());
-		stmt.setString(2, comment.getMemberId());
+		stmt.setInt(1, comment.getHelpNo());
+		stmt.setString(2, comment.getCommentMemo());
+		stmt.setString(3, comment.getMemberId());
 		resultInsert = stmt.executeUpdate();
 		
 		dbUtil.close(null, stmt, conn);
@@ -39,10 +40,10 @@ public class CommentDao {
 		Comment oldComment = null;
 		
 		String sql = "SELECT"
-				+ " comment_no commentNo"
-				+ ", comment_memo commentMemo"
-				+ "FROM comment"
-				+ " WHERE comment_no = ?";
+				+ "	comment_no commentNo"
+				+ "	, comment_memo commentMemo"
+				+ " FROM comment"
+				+ " WHERE comment_no = ?;";
 		
 		DBUtil dbUtil = new DBUtil();
 		Connection conn = null;

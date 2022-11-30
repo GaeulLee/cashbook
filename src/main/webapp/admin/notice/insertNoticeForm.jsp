@@ -19,6 +19,10 @@
 		<title>insertNoticeForm</title>
 	</head>
 	<body>
+	<!-- header -->
+	<jsp:include page="../../inc/adminMainHeader.jsp"></jsp:include>
+	<!-- 본문 시작 -->
+	<div class="container">
 		<h3><strong>공지 추가</strong></h3>
 		<form action="<%=request.getContextPath()%>/admin/notice/insertNoticeAction.jsp" method="post">
 			<table>
@@ -48,5 +52,6 @@
 		<div>
 			<a href="<%=request.getContextPath()%>/admin/noticeList.jsp">back</a>
 		</div>
+	</div>
 	</body>
 </html>

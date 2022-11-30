@@ -28,6 +28,10 @@
 		<title>insertCategoryForm</title>
 	</head>
 	<body>
+	<!-- header -->
+	<jsp:include page="../../inc/adminMainHeader.jsp"></jsp:include>
+	<!-- 본문 시작 -->
+	<div>
 		<h3><strong>카테고리 추가</strong></h3>
 		<form action="<%=request.getContextPath()%>/admin/category/insertCategoryAction.jsp" method="post">
 			<table>
@@ -68,5 +72,6 @@
 		<div>
 			<a href="<%=request.getContextPath()%>/admin/categoryList.jsp">back</a>
 		</div>
+	</div>
 	</body>
 </html>

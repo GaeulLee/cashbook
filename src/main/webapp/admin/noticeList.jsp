@@ -50,12 +50,8 @@
 		<title>noticeList</title>
 	</head>
 	<body>
-		<ul>
-			<li><a href="<%=request.getContextPath()%>/admin/noticeList.jsp">공지 관리</a></li>
-			<li><a href="<%=request.getContextPath()%>/admin/categoryList.jsp">카테고리 관리</a></li>
-			<li><a href="<%=request.getContextPath()%>/admin/memberList.jsp">멤버 관리</a></li><!-- 레벨 수정, 멤버 목록, 강제 회원탈퇴 -->
-			<li><a href="<%=request.getContextPath()%>/admin/adminMain.jsp">back</a></li>
-		</ul>
+		<!-- header -->
+		<jsp:include page="../inc/adminMainHeader.jsp"></jsp:include>
 		<!-- 공지목록 페이징 (상세보기 없음 타이틀만 보이게, 댓글 기능) -->
 		<div>
 			<h3><strong>공지사항</strong></h3>
