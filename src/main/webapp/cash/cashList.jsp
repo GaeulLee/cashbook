@@ -73,10 +73,29 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>cashList</title>
     <!-- Custom Stylesheet -->
+    <link href="../Resources/plugins/fullcalendar/css/fullcalendar.min.css" rel="stylesheet">
     <link href="../Resources/css/style.css" rel="stylesheet">
-
+    <style>
+    	table{
+    		height: 650px;
+    	}
+    	
+    	th{
+    		height: 10px;
+    		text-align: center;
+    		background-color: #ededf8;
+    	}
+    	
+    	td{
+    		width: 60px;
+    		word-break: break-all;
+    	}
+    	
+    	td_cell{
+    		min-height:50px;
+    	}
+    </style>
 </head>
-
 <body>
  	<!--Preloader start-->
     <div id="preloader">
@@ -92,7 +111,13 @@
     <div id="main-wrapper">
     
 		<!-- header & sidebar -->
-		<jsp:include page="../inc/header.jsp"></jsp:include>
+		<%	
+		String targetPage = "../inc/header.jsp";
+		if(loginMember.getMemberLevel() > 0){
+			targetPage = "../inc/adminHeader.jsp";
+		}
+		%>
+		<jsp:include page="<%=targetPage%>"></jsp:include>
 
         <!-- 본문시작 -->
          <!--Content body start-->
@@ -106,19 +131,17 @@
                                 <!-- 달력 출력 -->
 								<div>
 									<!-- 달력 날짜 -->
-									<div class="mt-4">
+									<div class="mt-4 text-center">
 										<span>
 											<a href="<%=request.getContextPath()%>/cash/cashList.jsp?year=<%=year%>&month=<%=month-1%>" class="btn btn-outline-secondary me-1">Prev</a>
 										</span>
-										<span>
-											<%=year%>년 <%=month+1%>월
-										</span>
+										<span class="h3 align-middle"><%=year%>년 <%=month+1%>월</span>
 										<span>
 											<a href="<%=request.getContextPath()%>/cash/cashList.jsp?year=<%=year%>&month=<%=month+1%>" class="btn btn-outline-secondary ms-1">Next</a>
 										</span>
 									</div>
 									<!-- 달력 본문 -->
-									<table class="table table-borderless mt-3">
+									<table class="table mt-3 w-75 mx-auto">
 										<tr>
 											<th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th>
 										</tr>
@@ -126,7 +149,8 @@
 											<%
 												for(int i=1; i<=totalTd; i++){
 											%>
-													<td>
+													<td class="align-top">
+														<div id="td_cell">
 											<%
 														int date = i - beginBlank; // i를 출력하면 안됨 i는 td의 갯수
 														if(date > 0 && date <= lastDate){
@@ -166,7 +190,8 @@
 											<%			
 														}
 											%>
-													</td>
+														</div>
+													</td>										
 											<%
 													if(i%7 == 0 && i != totalTd){ // 7로 나누어 떨어지고 i가 totalTd가 아닐때만 출력
 											%>
@@ -194,36 +219,29 @@
 			</div>
             <!-- #/ container -->
         </div>
-        <!--**********************************
-            Content body end
-        ***********************************-->
-        
-        
-        <!--**********************************
-            Footer start
-        ***********************************-->
+        <!--Content body end-->
+ 
+        <!--Footer start-->
         <div class="footer">
             <div class="copyright">
                 <p>Copyright &copy; Designed & Developed by <a href="https://themeforest.net/user/quixlab">Quixlab</a> 2018</p>
             </div>
         </div>
-        <!--**********************************
-            Footer end
-        ***********************************-->
+        <!--Footer end-->
     </div>
-    <!--**********************************
-        Main wrapper end
-    ***********************************-->
+    <!--Main wrapper end-->
 
-    <!--**********************************
-        Scripts
-    ***********************************-->
+    <!--Scripts-->
     <script src="../Resources/plugins/common/common.min.js"></script>
     <script src="../Resources/js/custom.min.js"></script>
     <script src="../Resources/js/settings.js"></script>
     <script src="../Resources/js/gleek.js"></script>
     <script src="../Resources/js/styleSwitcher.js"></script>
+    
+    <script src="../Resources/plugins/jqueryui/js/jquery-ui.min.js"></script>
+    <script src="../Resources/plugins/moment/moment.min.js"></script>
+    <script src="../Resources/plugins/fullcalendar/js/fullcalendar.min.js"></script>
+    <script src="../Resources/js/plugins-init/fullcalendar-init.js"></script>
 
 </body>
-
 </html>

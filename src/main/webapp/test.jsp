@@ -1,4 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="vo.*"%>
+
+<%@ page import="dao.*"%>
+
+<%@ page import="java.util.*"%>
+<%
+	// C
+	/*
+		1. 로그인 유효성 검사
+		2. 모델 출력
+	*/
+
+	
+	// M
+	NoticeDao noticeDao = new NoticeDao();
+	MemberDao memberDao = new MemberDao();
+	HelpDao helpDao = new HelpDao();
+	int beginRow = 0;
+	int rowPerPage = 5;
+	ArrayList<Notice> noticeList = noticeDao.selectNoticeListByPage(beginRow, rowPerPage); // 최근 공지 5개
+	ArrayList<Member> memberList = memberDao.selectMemberListByPage(beginRow, rowPerPage); // 최근 추가 멤버 5개씩
+	ArrayList<HashMap<String, Object>> helpList = helpDao.selectHelpList(beginRow, rowPerPage);
+	
+	// V
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,21 +49,103 @@
     <div id="main-wrapper">
     
 		<!-- header & sidebar -->
-		<jsp:include page="./inc/header.jsp"></jsp:include>
+		<jsp:include page="./inc/adminMainHeader.jsp"></jsp:include>
 
         <!--Content body start-->
         <div class="content-body">
+            <!-- row -->
+
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-12">
-                    
+                    <div class="col">
                         <div class="card">
                             <div class="card-body">
-                                <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Asperiores repellendus molestiae exercitationem voluptatem tempora quo dolore nostrum dolor consequuntur itaque, alias fugit. Architecto rerum animi velit, beatae corrupti quos nam saepe asperiores aliquid quae culpa ea reiciendis ipsam numquam laborum aperiam. Id tempore consequuntur velit vitae corporis, aspernatur praesentium ratione!</p>
+                                <div>
+									<h3><strong>공지사항</strong></h3>
+									<table border="1">
+										<tr>
+											<th>내용</th>
+											<th>날짜</th>
+										</tr>
+										<%
+											for(Notice n : noticeList){
+										%>
+												<tr>
+													<td><%=n.getNoticeMemo()%></td>
+													<td><%=n.getCreatedate()%></td>
+												</tr>
+										<%
+											}
+										%>
+									</table>
+								</div>
                             </div>
                         </div>
-                        
                     </div>
+                    
+                    <div class="col">
+                        <div class="card">
+                            <div class="card-body">
+                                <div>
+									<h3><strong>최근 생성된 회원</strong></h3>
+									<table border="1">
+										<tr>
+											<th>회원번호</th>
+											<th>아이디</th>
+											<th>회원레벨</th>
+											<th>이름</th>
+											<th>수정일</th>
+											<th>회원 생성일</th>
+										</tr>
+										<%
+											for(Member m : memberList){
+										%>
+												<tr>
+													<td><%=m.getMemberNo()%></td>
+													<td><%=m.getMemberId()%></td>
+													<td><%=m.getMemberLevel()%></td>
+													<td><%=m.getMemberName()%></td>
+													<td><%=m.getUpdatedate()%></td>
+													<td><%=m.getCreatedate()%></td>
+												</tr>
+										<%
+											}
+										%>
+									</table>
+								</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+               	  <div class="col">
+                       <div class="card">
+                           <div class="card-body">
+                               <div>
+								<h3><strong>최근 생성된 문의</strong></h3>
+								<table border="1">
+									<tr>
+										<th>문의내용</th>
+										<th>작성자</th>
+										<th>작성일</th>
+									</tr>
+									<%
+										for(HashMap<String, Object> h : helpList){
+									%>
+											<tr>
+												<td><%=h.get("helpMemo")%></td>
+												<td><%=h.get("memberId")%></td>
+												<td><%=h.get("helpCreatedate")%></td>
+											</tr>
+									<%
+										}
+									%>
+								</table>
+							</div>
+                           </div>
+                       </div>
+                   </div>
                 </div>
             </div>
             <!-- #/ container -->
