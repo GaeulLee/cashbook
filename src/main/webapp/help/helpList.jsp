@@ -30,100 +30,156 @@
 	
 	// V
 %>
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8">
-		<title>helpList</title>
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/bootswatch@5.2.2/dist/sandstone/bootstrap.min.css,npm/bootswatch@5.2.2/dist/sandstone/bootstrap.min.css">
-		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        <style>
-			th{
-				text-align: center;
-			}
-			
-			#align_center{
-				text-align: center;
-			}
-			
-			details {
-			  background: #f0f0f0;
-			  padding: 20px;
-			  border-radius: 8px;
-			 
-			}
-			
-			summary {
-			  cursor: pointer;
-			  font-weight: bold;
-			  font-size: 1.1em;
-			}
-		</style>
-	</head>
-	<body>
-	<!-- header -->
-	<%	
-		String targetPage = "../inc/header.jsp";
-		if(loginMember.getMemberLevel() > 0){
-			targetPage = "../inc/adminHeader.jsp";
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>helpList</title>
+    <!-- Custom Stylesheet -->
+    <link href="../Resources/plugins/fullcalendar/css/fullcalendar.min.css" rel="stylesheet">
+    <link href="../Resources/css/style.css" rel="stylesheet">
+	<style>
+		th{
+			text-align: center;
 		}
-	%>
-	<jsp:include page="<%=targetPage%>"></jsp:include>
-	<!-- 본문 시작 -->
-	<div class="container">
-		<div class="w-75 mt-4 mb-4 mx-auto h3" id="align_center">
-			<strong>내 문의 내역</strong>
-			<span>
-				<a href="<%=request.getContextPath()%>/help/insertHelpForm.jsp" class="btn btn-outline-primary float-end">문의하기</a>
-			</span>
-		</div>
-		<!-- 문의 출력 -->
-		<div class="w-75 mx-auto">
-		<%			
-			for(HashMap<String, Object> m : helpList){
-				String helpCreatedate = (String)m.get("helpCreatedate");
-				helpCreatedate = helpCreatedate.substring(0,16);
-				
-				String commentCreatedate = (String)m.get("commentCreatedate");
-				if(m.get("commentCreatedate") != null){
-					commentCreatedate = commentCreatedate.substring(0,16);
-				}	
-		%>
-				<details class="mb-2">
-					<summary>
-						<span><%=m.get("helpMemo")%></span>
-						<span class="float-end"><%=helpCreatedate%></span>
-					 </summary>
-					 
-					<%
-						if(m.get("commentMemo") == null || commentCreatedate == null){
-					%>
-							<div class="mt-4">
-								<span>답변 전</span>
-								<span class="float-end">
-									<a href="<%=request.getContextPath()%>/help/updateHelpForm.jsp?helpNo=<%=m.get("helpNo")%>" class="btn btn-light">문의 수정</a>
-									<a href="<%=request.getContextPath()%>/help/deleteHelpAction.jsp?helpNo=<%=m.get("helpNo")%>" class="btn btn-light">문의 삭제</a>
-								</span>
-							</div>
-					<%
-						}else{
-							
-					%>
-							<div class="mt-4">
-								<span><%=m.get("commentMemo")%></span>
-								<span class="float-end"><%=commentCreatedate%></span>
-							</div>
-					<%
-						}
-					%>
-				</details>
-		<%
+		
+		#align_center{
+			text-align: center;
+		}
+		
+		details {
+			background: #f0f0f0;
+			padding: 20px;
+			border-radius: 8px;
+		 
+		}
+		
+		summary {
+			cursor: pointer;
+			font-weight: bold;
+			font-size: 1.1em;
+		}
+	</style>
+</head>
+<body>
+ 	<!--Preloader start-->
+    <div id="preloader">
+        <div class="loader">
+            <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+            </svg>
+        </div>
+    </div>
+    <!--Preloader end-->
+
+    <!--Main wrapper start-->
+    <div id="main-wrapper">
+    
+    	<!-- header & sidebar -->
+		<%	
+			String targetPage = "../inc/header.jsp";
+			if(loginMember.getMemberLevel() > 0){
+				targetPage = "../inc/adminHeader.jsp";
 			}
 		%>
-		</div>
-	</div>
+		<jsp:include page="<%=targetPage%>"></jsp:include>    	
+
+        <!--Content body start-->
+        <div class="content-body">
+            <div class="container-fluid">
+            
+                <div class="row">
+                    <div class="col">
+                        <div class="card">
+                        	<!-- 본문시작 -->
+                            <div class="card-body">
+								<div class="w-75 mt-4 mb-4 mx-auto h3 text-center" >
+									<strong>내 문의 내역</strong>
+									<span>
+										<a href="<%=request.getContextPath()%>/help/insertHelpForm.jsp" class="btn btn-outline-secondary float-end">문의하기</a>
+									</span>
+								</div>
+								<!-- 문의 출력 -->
+								<div class="w-75 mx-auto">
+								<%			
+									for(HashMap<String, Object> m : helpList){
+										String helpCreatedate = (String)m.get("helpCreatedate");
+										helpCreatedate = helpCreatedate.substring(0,16);
+										
+										String commentCreatedate = (String)m.get("commentCreatedate");
+										if(m.get("commentCreatedate") != null){
+											commentCreatedate = commentCreatedate.substring(0,16);
+										}	
+								%>
+										<details class="mb-2">
+											<summary>
+												<span><%=m.get("helpMemo")%></span>
+												<span class="float-end"><%=helpCreatedate%></span>
+											 </summary>
+											 
+											<%
+												if(m.get("commentMemo") == null || commentCreatedate == null){
+											%>
+													<div class="mt-4">
+														<span>답변 전</span>
+														<span class="float-end">
+															<a href="<%=request.getContextPath()%>/help/updateHelpForm.jsp?helpNo=<%=m.get("helpNo")%>" class="btn btn-light">문의 수정</a>
+															<a href="<%=request.getContextPath()%>/help/deleteHelpAction.jsp?helpNo=<%=m.get("helpNo")%>" class="btn btn-light">문의 삭제</a>
+														</span>
+													</div>
+											<%
+												}else{
+													
+											%>
+													<div class="mt-4">
+														<span><%=m.get("commentMemo")%></span>
+														<span class="float-end"><%=commentCreatedate%></span>
+													</div>
+											<%
+												}
+											%>
+										</details>
+								<%
+									}
+								%>
+								</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <!-- #/ container -->
+        </div>
+        <!--Content body end--> 
+        
+        <!--Footer start-->
+        <div class="footer">
+            <div class="copyright">
+                <p>Copyright &copy; Designed & Developed by <a href="https://themeforest.net/user/quixlab">Quixlab</a> 2018</p>
+            </div>
+        </div>
+        <!--Footer end-->
+        
+    </div>
+    <!--Main wrapper end-->
+    
+    
+    
+
+		
+
+	
+	<!--Scripts-->
+    <script src="../Resources/plugins/common/common.min.js"></script>
+    <script src="../Resources/js/custom.min.js"></script>
+    <script src="../Resources/js/settings.js"></script>
+    <script src="../Resources/js/gleek.js"></script>
+    <script src="../Resources/js/styleSwitcher.js"></script>
+    
+    <script src="../Resources/plugins/jqueryui/js/jquery-ui.min.js"></script>
+    <script src="../Resources/plugins/moment/moment.min.js"></script>
+    <script src="../Resources/plugins/fullcalendar/js/fullcalendar.min.js"></script>
+    <script src="../Resources/js/plugins-init/fullcalendar-init.js"></script>
 	</body>
 </html>

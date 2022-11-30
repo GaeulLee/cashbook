@@ -53,8 +53,12 @@
 <div class="nk-sidebar">           
      <div class="nk-nav-scroll">
          <ul class="metismenu" id="menu">
+             <li>
+                 <a href="<%=request.getContextPath()%>/admin/adminMain.jsp" aria-expanded="false">
+                     <i class="icon-menu menu-icon"></i><span class="nav-text">Home</span>
+                 </a>
+             </li>
              
-             <li class="nav-label">Home</li>
              <li>
                  <a class="has-arrow" href="javascript:void()" aria-expanded="false">
                      <i class="icon-note menu-icon"></i><span class="nav-text">Manage</span>

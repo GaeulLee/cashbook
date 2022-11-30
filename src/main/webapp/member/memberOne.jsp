@@ -15,60 +15,121 @@
 %>
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<title>MemberOne</title>
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/bootswatch@5.2.2/dist/sandstone/bootstrap.min.css,npm/bootswatch@5.2.2/dist/sandstone/bootstrap.min.css">
-		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        <style>
-			th{
-				text-align: center;
+<head>
+	<meta charset="UTF-8">
+	<title>MemberOne</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>helpList</title>
+    <!-- Custom Stylesheet -->
+    <link href="../Resources/plugins/fullcalendar/css/fullcalendar.min.css" rel="stylesheet">
+    <link href="../Resources/css/style.css" rel="stylesheet">
+	<style>
+		th{
+			text-align: center;
+		}
+		
+		#align_center{
+			text-align: center;
+		}
+		table{
+			border-radius: 8px;
+			height: 300px;
+		}
+	</style>
+</head>
+<body>
+    <!--Preloader start-->
+    <div id="preloader">
+        <div class="loader">
+            <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+            </svg>
+        </div>
+    </div>
+    <!--Preloader end-->
+    
+    <!--Main wrapper start-->
+    <div id="main-wrapper">
+
+		<!-- header & sidebar -->
+		<%	
+			String targetPage = "../inc/header.jsp";
+			if(loginMember.getMemberLevel() > 0){
+				targetPage = "../inc/adminHeader.jsp";
 			}
-			
-			#align_center{
-				text-align: center;
-			}
-			table{
-				border-radius: 8px;
-				height: 300px;
-			}
-		</style>
-	</head>
-	<body>
-	<!-- header -->
-	<jsp:include page="../inc/header.jsp"></jsp:include>
-	<!-- 본문 시작 -->
-	<div class="container">
-		<table class="table table-borderless w-75 mx-auto align-middle shadow-sm mt-3">
-			<tr>
-				<th colspan="2" class="h4"><strong>내 정보</strong></th>
-			</tr>
-			<tr>
-				<th>회원 ID</th>
-				<td><%=memberId%></td>
-			</tr>
-			<tr>
-				<th>회원 PW</th>
-				<td>
-					<a href="<%=request.getContextPath()%>/member/updatePwForm.jsp" class="btn btn-outline-primary btn-sm">비밀번호 변경</a>
-				</td>
-			</tr>
-			<tr>
-				<th>회원 이름</th>
-				<td><%=memberName%></td>
-			</tr>
-		</table>
-		<div id="align_center">
-			<span>
-				<a href="<%=request.getContextPath()%>/member/updateMemberForm.jsp" class="btn btn-outline-primary">회원정보 수정</a>
-			</span>
-			<span>
-				<a href="<%=request.getContextPath()%>/member/deleteMemberForm.jsp" class="btn btn-outline-primary">회원 탈퇴</a>
-			</span>
-		</div>
-	</div>
+		%>
+		<jsp:include page="<%=targetPage%>"></jsp:include>	
+
+        <!--Content body start-->
+        <div class="content-body">
+            <div class="container-fluid">
+            
+                <div class="row">
+                
+                    <div class="col">
+                        <div class="card">
+                        	<!-- 본문시작 -->
+                            <div class="card-body">
+								<table class="table table-borderless w-75 mx-auto align-middle shadow-sm mt-3">
+									<tr>
+										<th colspan="2" class="h4"><strong>내 정보</strong></th>
+									</tr>
+									<tr>
+										<th>회원 ID</th>
+										<td><%=memberId%></td>
+									</tr>
+									<tr>
+										<th>회원 PW</th>
+										<td>
+											<a href="<%=request.getContextPath()%>/member/updatePwForm.jsp" class="btn btn-outline-primary btn-sm">비밀번호 변경</a>
+										</td>
+									</tr>
+									<tr>
+										<th>회원 이름</th>
+										<td><%=memberName%></td>
+									</tr>
+								</table>
+								
+								<div id="align_center">
+									<span>
+										<a href="<%=request.getContextPath()%>/member/updateMemberForm.jsp" class="btn btn-outline-primary">회원정보 수정</a>
+									</span>
+									<span>
+										<a href="<%=request.getContextPath()%>/member/deleteMemberForm.jsp" class="btn btn-outline-primary">회원 탈퇴</a>
+									</span>
+								</div>
+								
+                            </div><!-- card-body -->
+                        </div>
+                    </div>
+                    
+                </div>
+                
+            </div>
+            <!-- #/ container -->
+        </div>
+        <!--Content body end--> 
+        
+        <!--Footer start-->
+        <div class="footer">
+            <div class="copyright">
+                <p>Copyright &copy; Designed & Developed by <a href="https://themeforest.net/user/quixlab">Quixlab</a> 2018</p>
+            </div>
+        </div>
+        <!--Footer end-->       
+    </div>
+    <!--Main wrapper end-->
+
+	<!--Scripts-->
+    <script src="../Resources/plugins/common/common.min.js"></script>
+    <script src="../Resources/js/custom.min.js"></script>
+    <script src="../Resources/js/settings.js"></script>
+    <script src="../Resources/js/gleek.js"></script>
+    <script src="../Resources/js/styleSwitcher.js"></script>
+    
+    <script src="../Resources/plugins/jqueryui/js/jquery-ui.min.js"></script>
+    <script src="../Resources/plugins/moment/moment.min.js"></script>
+    <script src="../Resources/plugins/fullcalendar/js/fullcalendar.min.js"></script>
+    <script src="../Resources/js/plugins-init/fullcalendar-init.js"></script>
 	</body>
 </html>

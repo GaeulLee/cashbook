@@ -76,10 +76,6 @@
     <link href="../Resources/plugins/fullcalendar/css/fullcalendar.min.css" rel="stylesheet">
     <link href="../Resources/css/style.css" rel="stylesheet">
     <style>
-    	table{
-    		height: 650px;
-    	}
-    	
     	th{
     		height: 10px;
     		text-align: center;
@@ -88,6 +84,7 @@
     	
     	td{
     		width: 60px;
+    		height: 8rem;
     		word-break: break-all;
     	}
     	
@@ -124,7 +121,7 @@
         <div class="content-body">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-12">
+                    <div class="col">
 
                         <div class="card">
                             <div class="card-body">
@@ -208,15 +205,6 @@
                     </div>
                 </div>
             </div>
-            <!-- #/ container -->
-        </div>
-        <!--Content body end-->
-        
-        <div class="content-body">
-        	<div class="container">
-				
-				</div>
-			</div>
             <!-- #/ container -->
         </div>
         <!--Content body end-->

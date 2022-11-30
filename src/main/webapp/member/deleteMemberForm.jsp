@@ -13,72 +13,120 @@
 
 %>
 <!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8">
-		<title>deleteMemberForm</title>
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/bootswatch@5.2.2/dist/sandstone/bootstrap.min.css,npm/bootswatch@5.2.2/dist/sandstone/bootstrap.min.css">
-		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        <style>
-			th{
-				text-align: center;
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>deleteMemberForm</title>
+    <!-- Custom Stylesheet -->
+    <link href="../Resources/plugins/fullcalendar/css/fullcalendar.min.css" rel="stylesheet">
+    <link href="../Resources/css/style.css" rel="stylesheet">
+    <style>
+    	
+    </style>
+</head>
+<body>
+ 	<!--Preloader start-->
+    <div id="preloader">
+        <div class="loader">
+            <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+            </svg>
+        </div>
+    </div>
+    <!--Preloader end-->
+    
+    <!--Main wrapper start-->
+    <div id="main-wrapper">
+    
+    	<!-- header & sidebar -->
+		<%	
+			String targetPage = "../inc/header.jsp";
+			if(loginMember.getMemberLevel() > 0){
+				targetPage = "../inc/adminHeader.jsp";
 			}
-			
-			#align_center{
-				text-align: center;
-			}
-			table{
-				border-radius: 8px;
-				height: 300px;
-			}
-		</style>
-	</head>
-	<body>
-	<!-- header -->
-	<jsp:include page="../inc/header.jsp"></jsp:include>
-	<!-- 본문 시작 -->
-	<div class="container">
-		<form action="<%=request.getContextPath()%>/member/deleteMemberAction.jsp" method="post">
-			<table class="table table-borderless w-50 mx-auto align-middle shadow-sm mt-3">
-				<input type="hidden" name="memberId" value="<%=memberId%>">
-				<tr>
-					<th colspan="2">
-						<h4 class="mt-3"><strong>회원탈퇴</strong></h4>
-					</th>
-				</tr>
-				<tr>
-					<th colspan="2">
-					<%
-					String msg = request.getParameter("msg");
-						if(msg != null){
-					%>
-							<span class="text-info">&#10069;<%=msg%></span>						
-					<%
-						}else{
-					%>
-							<span>회원 탈퇴를 위한 비밀번호를 입력해주세요.</span>
-					<%
-						}
-					%>
-					</th>
-				</tr>
-				<tr>
-					<th class="w-50">비밀번호 입력</th>
-					<td>
-						<input type="password" name="memberPw" class="form-control w-75">
-					</td>
-				</tr>
-				<tr>
-					<td colspan="2">
-						<a href="<%=request.getContextPath()%>/member/memberOne.jsp" class="btn btn-outline-primary float-start">back</a>
-						<button type="submit" class="btn btn-outline-primary float-end">탈퇴</button>
-					</td>
-				</tr>
-			</table>
-		</form>
-	</div>
+		%>
+		<jsp:include page="<%=targetPage%>"></jsp:include>
+    
+        <!--Content body start-->
+        <div class="content-body">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col">
+                        <div class="card">
+                        	<!-- 본문시작 -->
+                            <div class="card-body">
+                                <form action="<%=request.getContextPath()%>/member/deleteMemberAction.jsp" method="post">
+									<input type="hidden" name="memberId" value="<%=memberId%>">
+									<table class="table table-borderless w-50 mx-auto align-middle shadow-sm mt-3">
+										<tr>
+											<th colspan="2">
+												<h3 class="mt-3 text-center"><strong>회원 탈퇴</strong></h3>
+											</th>
+										</tr>
+										<tr>
+											<th colspan="2">
+											<%
+											String msg = request.getParameter("msg");
+												if(msg != null){
+											%>
+													<div class="text-info text-center">&#10069;<%=msg%></div>						
+											<%
+												}else{
+											%>
+													<div class="text-center">회원 탈퇴를 위한 비밀번호를 입력해주세요.</div>
+											<%
+												}
+											%>
+											</th>
+										</tr>
+										<tr>
+											<th class="w-50 text-center">비밀번호 입력</th>
+											<td>
+												<input type="password" name="memberPw" class="form-control input-default w-75">
+											</td>
+										</tr>
+										<tr>
+											<td colspan="2">
+												<a href="<%=request.getContextPath()%>/member/memberOne.jsp" class="btn mb-1 btn-outline-secondary float-start">back</a>
+												<button type="submit" class="btn mb-1 btn-outline-secondary float-end">탈퇴</button>
+											</td>
+										</tr>
+									</table>
+								</form>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <!-- #/ container -->
+        </div>
+        <!--Content body end--> 
+        
+        <!--Footer start-->
+        <div class="footer">
+            <div class="copyright">
+                <p>Copyright &copy; Designed & Developed by <a href="https://themeforest.net/user/quixlab">Quixlab</a> 2018</p>
+            </div>
+        </div>
+        <!--Footer end--> 
+   	</div>
+    <!--Main wrapper end-->
+   
+	<!--Scripts-->
+    <script src="../Resources/plugins/common/common.min.js"></script>
+    <script src="../Resources/js/custom.min.js"></script>
+    <script src="../Resources/js/settings.js"></script>
+    <script src="../Resources/js/gleek.js"></script>
+    <script src="../Resources/js/styleSwitcher.js"></script>
+    
+    <script src="../Resources/plugins/jqueryui/js/jquery-ui.min.js"></script>
+    <script src="../Resources/plugins/moment/moment.min.js"></script>
+    <script src="../Resources/plugins/fullcalendar/js/fullcalendar.min.js"></script>
+    <script src="../Resources/js/plugins-init/fullcalendar-init.js"></script>
 	</body>
 </html>

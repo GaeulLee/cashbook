@@ -1,41 +1,36 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="vo.*"%>
-
-<%@ page import="dao.*"%>
-
-<%@ page import="java.util.*"%>
+<%@ page import="vo.Member"%>
 <%
-	// C
-	/*
-		1. 로그인 유효성 검사
-		2. 모델 출력
-	*/
 
-	
-	// M
-	NoticeDao noticeDao = new NoticeDao();
-	MemberDao memberDao = new MemberDao();
-	HelpDao helpDao = new HelpDao();
-	int beginRow = 0;
-	int rowPerPage = 5;
-	ArrayList<Notice> noticeList = noticeDao.selectNoticeListByPage(beginRow, rowPerPage); // 최근 공지 5개
-	ArrayList<Member> memberList = memberDao.selectMemberListByPage(beginRow, rowPerPage); // 최근 추가 멤버 5개씩
-	ArrayList<HashMap<String, Object>> helpList = helpDao.selectHelpList(beginRow, rowPerPage);
-	
-	// V
 %>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>test</title>
+    <title>deleteMemberForm</title>
     <!-- Custom Stylesheet -->
-    <link href="./Resources/css/style.css" rel="stylesheet">
+    <link href="../Resources/plugins/fullcalendar/css/fullcalendar.min.css" rel="stylesheet">
+    <link href="../Resources/css/style.css" rel="stylesheet">
+    <style>
+    	th{
+    		
+    		background-color: #ededf8;
+    	}
+    	
+    	td{
+    	
+    	}
+    	
+    	td_cell{
+    		
+    	}
+    </style>
 </head>
 <body>
-    <!--Preloader start-->
+ 	<!--Preloader start-->
     <div id="preloader">
         <div class="loader">
             <svg class="circular" viewBox="25 25 50 50">
@@ -49,125 +44,61 @@
     <div id="main-wrapper">
     
 		<!-- header & sidebar -->
-		<jsp:include page="./inc/adminMainHeader.jsp"></jsp:include>
+		
+		
 
-        <!--Content body start-->
-        <div class="content-body">
-            <!-- row -->
-
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col">
-                        <div class="card">
-                            <div class="card-body">
-                                <div>
-									<h3><strong>공지사항</strong></h3>
-									<table border="1">
-										<tr>
-											<th>내용</th>
-											<th>날짜</th>
-										</tr>
-										<%
-											for(Notice n : noticeList){
-										%>
-												<tr>
-													<td><%=n.getNoticeMemo()%></td>
-													<td><%=n.getCreatedate()%></td>
-												</tr>
-										<%
-											}
-										%>
-									</table>
-								</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col">
-                        <div class="card">
-                            <div class="card-body">
-                                <div>
-									<h3><strong>최근 생성된 회원</strong></h3>
-									<table border="1">
-										<tr>
-											<th>회원번호</th>
-											<th>아이디</th>
-											<th>회원레벨</th>
-											<th>이름</th>
-											<th>수정일</th>
-											<th>회원 생성일</th>
-										</tr>
-										<%
-											for(Member m : memberList){
-										%>
-												<tr>
-													<td><%=m.getMemberNo()%></td>
-													<td><%=m.getMemberId()%></td>
-													<td><%=m.getMemberLevel()%></td>
-													<td><%=m.getMemberName()%></td>
-													<td><%=m.getUpdatedate()%></td>
-													<td><%=m.getCreatedate()%></td>
-												</tr>
-										<%
-											}
-										%>
-									</table>
-								</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="row">
-               	  <div class="col">
-                       <div class="card">
-                           <div class="card-body">
-                               <div>
-								<h3><strong>최근 생성된 문의</strong></h3>
-								<table border="1">
-									<tr>
-										<th>문의내용</th>
-										<th>작성자</th>
-										<th>작성일</th>
-									</tr>
-									<%
-										for(HashMap<String, Object> h : helpList){
-									%>
-											<tr>
-												<td><%=h.get("helpMemo")%></td>
-												<td><%=h.get("memberId")%></td>
-												<td><%=h.get("helpCreatedate")%></td>
-											</tr>
-									<%
-										}
-									%>
-								</table>
-							</div>
-                           </div>
-                       </div>
-                   </div>
-                </div>
-            </div>
-            <!-- #/ container -->
-        </div>
-        <!--Content body end-->
-        
-        
-        <!--Footer start-->
-        <div class="footer">
-            <div class="copyright">
-                <p>Copyright &copy; Designed & Developed by <a href="https://themeforest.net/user/quixlab">Quixlab</a> 2018</p>
-            </div>
-        </div>
-        <!--Footer end-->
-    </div>
-    <!--Main wrapper end-->
-
-    <!--Scripts-->
-    <script src="./Resources/plugins/common/common.min.js"></script>
-    <script src="./Resources/js/custom.min.js"></script>
-    <script src="./Resources/js/settings.js"></script>
-    <script src="./Resources/js/gleek.js"></script>
-    <script src="./Resources/js/styleSwitcher.js"></script>
-</body>
+        <!-- 본문시작 -->
+		
+			<form action="<%=request.getContextPath()%>/member/deleteMemberAction.jsp" method="post">
+				<input type="hidden" name="memberId" value="">
+				<table class="table table-borderless w-50 mx-auto align-middle shadow-sm mt-3">
+					<tr>
+						<th colspan="2">
+							<h4 class="mt-3"><strong>회원탈퇴</strong></h4>
+						</th>
+					</tr>
+					<tr>
+						<th colspan="2">
+						<%
+						String msg = request.getParameter("msg");
+							if(msg != null){
+						%>
+								<span class="text-info">&#10069;<%=msg%></span>						
+						<%
+							}else{
+						%>
+								<span>회원 탈퇴를 위한 비밀번호를 입력해주세요.</span>
+						<%
+							}
+						%>
+						</th>
+					</tr>
+					<tr>
+						<th class="w-50">비밀번호 입력</th>
+						<td>
+							<input type="password" name="memberPw" class="form-control w-75">
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<a href="<%=request.getContextPath()%>/member/memberOne.jsp" class="btn btn-outline-primary float-start">back</a>
+							<button type="submit" class="btn btn-outline-primary float-end">탈퇴</button>
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+		
+		<!--Scripts-->
+	    <script src="../Resources/plugins/common/common.min.js"></script>
+	    <script src="../Resources/js/custom.min.js"></script>
+	    <script src="../Resources/js/settings.js"></script>
+	    <script src="../Resources/js/gleek.js"></script>
+	    <script src="../Resources/js/styleSwitcher.js"></script>
+	    
+	    <script src="../Resources/plugins/jqueryui/js/jquery-ui.min.js"></script>
+	    <script src="../Resources/plugins/moment/moment.min.js"></script>
+	    <script src="../Resources/plugins/fullcalendar/js/fullcalendar.min.js"></script>
+	    <script src="../Resources/js/plugins-init/fullcalendar-init.js"></script>
+	</body>
 </html>
