@@ -39,139 +39,144 @@
 
 %>
 <!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8">
-		<title>loginForm</title>
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/bootswatch@5.2.2/dist/sandstone/bootstrap.min.css,npm/bootswatch@5.2.2/dist/sandstone/bootstrap.min.css">
-		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        <style>
-			th{
-				text-align: center;
-			}
-			
-			#align_center{
-				text-align: center;
-			}
-			table{
-				border-radius: 8px;
-			}
-		</style>
-	</head>
-	<body>
-	<div class="container">
-		<!-- 공지(5개)목록 페이징 (상세보기 없음 타이틀만 보이게, 댓글 기능) -->
-		<div class="mt-2">
-			<table class="table">
-				<tr class="table-light">
-					<th>공지내용</th>
-					<th>날짜</th>
-				</tr>
+<html class="h-100" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>login</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/favicon.png">
+    <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous"> -->
+    <link href="./Resources/css/style.css" rel="stylesheet">    
+</head>
+
+<body class="h-100">
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="loader">
+            <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+            </svg>
+        </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+    
+    <!-- 공지(5개)목록 페이징 (상세보기 없음 타이틀만 보이게, 댓글 기능) -->
+	<div class="container mt-2 mx-auto">
+		<table class="table">
+			<tr class="table-light text-center">
+				<th>공지내용</th>
+				<th>날짜</th>
+			</tr>
+			<%
+				for(Notice n : list){
+			%>
+					<tr>
+						<td class="w-75"><%=n.getNoticeMemo()%></td>
+						<td class="text-center">
+							<%
+								String createdate = n.getCreatedate();
+								createdate = createdate.substring(0,10);
+							%>
+							<%=createdate%>
+						</td>
+					</tr>
+			<%
+				}
+			%>
+		</table>
+		<!-- paging -->
+		<div>
+			<ul class="pagination justify-content-center">				
+				<li class="page-item">
+					<a href="<%=request.getContextPath()%>/loginForm.jsp?currentPage=1" class="page-link">처음</a>
+				</li>
 				<%
-					for(Notice n : list){
+					if(currentPage > 1){
 				%>
-						<tr>
-							<td class="w-75"><%=n.getNoticeMemo()%></td>
-							<td id="align_center">
-								<%
-									String createdate = n.getCreatedate();
-									createdate = createdate.substring(0,10);
-								%>
-								<%=createdate%>
-							</td>
-						</tr>
+						<li class="page-item">
+							<a href="<%=request.getContextPath()%>/loginForm.jsp?currentPage=<%=currentPage-1%>" class="page-link">이전</a>
+						</li>
+				<%
+					}
+					for(int i=beginPage; i<=endPage; i++){
+						if(currentPage == i){
+						%>
+							<li class="page-item active">
+								<a href="<%=request.getContextPath()%>/loginForm.jsp?currentPage=<%=i%>" class="page-link"><%=i%></a>
+							</li>
+						<%		
+						}else{
+						%>
+							<li class="page-item">
+								<a href="<%=request.getContextPath()%>/loginForm.jsp?currentPage=<%=i%>" class="page-link"><%=i%></a>
+							</li>
+						<%	
+						}
+					}
+					if(currentPage < lastPage){
+				%>
+						<li class="page-item">
+							<a href="<%=request.getContextPath()%>/loginForm.jsp?currentPage=<%=currentPage+1%>" class="page-link">다음</a>
+						</li>
 				<%
 					}
 				%>
-			</table>
-			<!-- paging -->
-			<div>
-				<ul class="pagination justify-content-center">				
-					<li class="page-item">
-						<a href="<%=request.getContextPath()%>/loginForm.jsp?currentPage=1" class="page-link">처음</a>
-					</li>
-					<%
-						if(currentPage > 1){
-					%>
-							<li class="page-item">
-								<a href="<%=request.getContextPath()%>/loginForm.jsp?currentPage=<%=currentPage-1%>" class="page-link">이전</a>
-							</li>
-					<%
-						}
-						for(int i=beginPage; i<=endPage; i++){
-							if(currentPage == i){
-							%>
-								<li class="page-item active">
-									<a href="<%=request.getContextPath()%>/loginForm.jsp?currentPage=<%=i%>" class="page-link"><%=i%></a>
-								</li>
-							<%		
-							}else{
-							%>
-								<li class="page-item">
-									<a href="<%=request.getContextPath()%>/loginForm.jsp?currentPage=<%=i%>" class="page-link"><%=i%></a>
-								</li>
-							<%	
-							}
-						}
-						if(currentPage < lastPage){
-					%>
-							<li class="page-item">
-								<a href="<%=request.getContextPath()%>/loginForm.jsp?currentPage=<%=currentPage+1%>" class="page-link">다음</a>
-							</li>
-					<%
-						}
-					%>
-					<li class="page-item">
-						<a href="<%=request.getContextPath()%>/loginForm.jsp?currentPage=<%=lastPage%>" class="page-link">마지막</a>	
-					</li>
-				</ul>
-			</div>
+				<li class="page-item">
+					<a href="<%=request.getContextPath()%>/loginForm.jsp?currentPage=<%=lastPage%>" class="page-link">마지막</a>	
+				</li>
+			</ul>
 		</div>
-		<!-- 회원 로그인 폼 -->
-		<form action="<%=request.getContextPath()%>/loginAction.jsp" method="post" class="w-50 mx-auto">
-			<table class="table table-borderless w-75 mx-auto align-middle shadow p-4 mb-4 bg-light">
-				<tr>
-					<th>
-						<h4 class="mt-3"><strong>로그인</strong></h4>
-					</th>
-				</tr>
-				<%
-					String msg = request.getParameter("msg");
-					if(msg != null){
-				%>
-						<tr>
-							<th class="text-info">&#10069;<%=msg%></th>
-						</tr>	
-				<%
-					}
-				%>
-				<tr>
-					<td>
-						<div class="form-floating mb-2 mt-2">
-							<input type="text" name="memberId" id="memberId" class="form-control" placeholder="Enter ID">
-							<label for="memberId">Enter ID</label>
-						</div>
-					</td>
-				</tr>			
-				<tr>
-					<td>
-						<div class="form-floating mb-2 mt-2">
-							<input type="password" name="memberPw" id="memberPw" class="form-control" placeholder="Enter Password">
-							<label for="memberPw">Enter Password</label>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<th>
-						<a href="<%=request.getContextPath()%>/member/insertMemberForm.jsp" class="btn btn-outline-primary float-start">회원가입</a>
-						<button type="submit" class="btn btn-outline-primary float-end">로그인</button>
-					</th>
-				</tr>
-			</table>
-		</form>
 	</div>
-	</body>
+
+	<!-- 회원 로그인 폼 -->
+    <div class="login-form-bg h-50">
+        <div class="container h-100">
+            <div class="row justify-content-center h-100">
+                <div class="col-xl-6">
+                    <div class="form-input-content">
+                        <div class="card login-form mb-0">
+                            <div class="card-body pt-5">
+                                <a class="text-center" href="<%=request.getContextPath()%>/loginForm.jsp"><h4>Login</h4></a>
+                                <form action="<%=request.getContextPath()%>/loginAction.jsp" method="post" class="mt-5 mb-5 login-input">
+                             		<%
+										String msg = request.getParameter("msg");
+										if(msg != null){
+									%>
+											<p class="text-primary">&#10069;<%=msg%></p>												
+									<%
+										}
+									%>
+                                    <div class="form-group">
+                                        <input type="text" name="memberId" class="form-control" placeholder="Id">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password" name="memberPw" class="form-control" placeholder="Password">
+                                    </div>
+                                    <button type="submit" class="btn login-form__btn submit w-100">Sign In</button>
+                                </form>
+                                <p class="mt-5 login-form__footer">회원이 아니신가요? <a href="<%=request.getContextPath()%>/member/insertMemberForm.jsp" class="text-primary">화원가입</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <script src="./Resources/plugins/common/common.min.js"></script>
+    <script src="./Resources/js/custom.min.js"></script>
+    <script src="./Resources/js/settings.js"></script>
+    <script src="./Resources/js/gleek.js"></script>
+    <script src="./Resources/js/styleSwitcher.js"></script>
+</body>
 </html>

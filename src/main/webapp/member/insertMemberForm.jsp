@@ -7,83 +7,78 @@
 	}
 %>
 <!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8">
-		<title>insertMemberForm</title>
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/bootswatch@5.2.2/dist/sandstone/bootstrap.min.css,npm/bootswatch@5.2.2/dist/sandstone/bootstrap.min.css">
-		<style>
-			th{
-				text-align: center;
-			}
-			
-			#align_center{
-				text-align: center;
-			}
-			
-			table{
-				border-radius: 8px;
-			}
-			
-			#verticalMiddle{
-			    position: absolute;
-			    top: 45%;
-			    left: 50%;
-			    transform: translate(-50%, -50%);
-			}
-		</style>
-	</head>
-	<body>
-	<div class="container">
-		<form action="<%=request.getContextPath()%>/member/insertMemberAction.jsp" method="post" class="w-50 mx-auto" id="verticalMiddle">
-			<table class="table table-borderless w-50 mx-auto align-middle shadow p-4 mb-4 bg-light">
-				<tr>
-					<th>
-						<h4 class="mt-3"><strong>회원가입</strong></h4>
-					</th>
-				</tr>
-				<%
-					String msg = request.getParameter("msg");
-					if(msg != null){
-				%>
-						<tr>
-							<th class="text-info">&#10069;<%=msg%></th>
-						</tr>	
-				<%
-					}
-				%>
-				<tr>
-					<td>
-						<div class="form-floating mb-1 mt-2">
-							<input type="text" name="memberId" id="memberId" class="form-control" placeholder="Enter ID">
-							<label for="memberId">Enter ID</label>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<div class="form-floating mb-1 mt-1">
-							<input type="password" name="memberPw" id="memberPw" class="form-control" placeholder="Enter Password">
-							<label for="memberPw">Enter Password</label>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<div class="form-floating mb-2 mt-1">
-							<input type="text" name="memberName" id="memberName" class="form-control" placeholder="Enter Name">
-							<label for="memberName">Enter Name</label>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<a href="<%=request.getContextPath()%>/loginForm.jsp" class="btn btn-outline-primary float-start">back</a>
-						<button type="submit" class="btn btn-outline-primary float-end">가입</button>
-					</td>
-				</tr>
-			</table>
-		</form>	
+<html class="h-100" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>insertMemberForm</title>
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/favicon.png">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link href="../Resources/css/style.css" rel="stylesheet">    
+</head>
+
+<body class="h-100">  
+    <!--*******************
+        Preloader start
+    ********************-->
+    <div id="preloader">
+        <div class="loader">
+            <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+            </svg>
+        </div>
+    </div>
+    <!--*******************
+        Preloader end
+    ********************-->
+    
+    <!-- 회원가입 폼 -->
+    <div class="login-form-bg h-100">
+        <div class="container h-100">
+            <div class="row justify-content-center h-100">
+                <div class="col-xl-6">
+                    <div class="form-input-content">
+                        <div class="card login-form mb-0">
+                            <div class="card-body pt-5">
+                                <a class="text-center" href="#"> <h4>SignIn</h4></a>
+								<form action="<%=request.getContextPath()%>/member/insertMemberAction.jsp" method="post" class="mt-5 mb-5 login-input">
+									<%
+										String msg = request.getParameter("msg");
+										if(msg != null){
+									%>
+											<p class="text-primary">&#10069;<%=msg%></p>
+									<%
+										}
+									%>
+								    <div class="form-group">
+										<input type="text" name="memberName" class="form-control" placeholder="Enter Name" required>
+								    </div>
+								    <div class="form-group">
+								        <input type="text" name="memberId" class="form-control" placeholder="Enter ID" required>
+								    </div>
+								    <div class="form-group">
+								        <input type="password" name="memberPw" class="form-control" placeholder="Enter Password" required>                                       
+								    </div>
+								    <button type="submit" class="btn login-form__btn submit w-100">Sign in</button>
+								</form>
+	            				<p class="mt-5 login-form__footer">이미 회원이라면 <a href="<%=request.getContextPath()%>/loginForm.jsp" class="text-primary">로그인 </a></p>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
 	</div>
-	</body>
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <script src="../Resources/plugins/common/common.min.js"></script>
+    <script src="../Resources/js/custom.min.js"></script>
+    <script src="../Resources/js/settings.js"></script>
+    <script src="../Resources/js/gleek.js"></script>
+    <script src="../Resources/js/styleSwitcher.js"></script>
+</body>
 </html>

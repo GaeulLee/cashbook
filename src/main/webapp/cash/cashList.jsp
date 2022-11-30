@@ -65,131 +65,165 @@
 	// View : 달력 출력 + 일별 cash 목록
 %>
 <!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8">
-		<title>cashList</title>
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/bootswatch@5.2.2/dist/sandstone/bootstrap.min.css,npm/bootswatch@5.2.2/dist/sandstone/bootstrap.min.css">
-		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        <style>
-			th{
-				text-align: center;
-				height: 20px;
-			}
-			
-			td{
-				width: 60px;			
-			}
-			#align_center{
-				text-align: center;
-			}
-			
-			table{
-				border-radius: 10px;
-				background-color: rgba(248,245,240,0.5);
-				height: 600px;
-				table-layout: fixed;
-				word-break: break-all;
-			}
-			
-			#font_size{
-				font-size: 20px;
-				font-weight: bold;
-			}
-		</style>
-	</head>	
-	<!-- 다이어리 형식으로 수입 지출을 확인할 수 있도록 -->
-	<body>
-	<!-- header -->
-	<%	
-		String targetPage = "../inc/header.jsp";
-		if(loginMember.getMemberLevel() > 0){
-			targetPage = "../inc/adminHeader.jsp";
-		}
-	%>
-		<jsp:include page="<%=targetPage%>"></jsp:include>
-	<!-- 본문 시작 -->
-	<div class="container">		
-		<!-- 로그인 정보(세션에 loginMember 변수) 출력 -->
-		<div class="alert alert-dismissible alert-secondary shadow-sm mt-2 w-25">
-			<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-			<strong><%=loginMember.getMemberName()%></strong>님 반갑습니다.
-		</div>
-		<!-- 달력 출력 -->
-		<div>
-			<div id="align_center" class="mt-4">
-				<span>
-					<a href="<%=request.getContextPath()%>/cash/cashList.jsp?year=<%=year%>&month=<%=month-1%>" class="btn btn-outline-secondary me-1">Prev</a>
-				</span>
-				<span id="font_size">
-					<%=year%>년 <%=month+1%>월
-				</span>
-				<span>
-					<a href="<%=request.getContextPath()%>/cash/cashList.jsp?year=<%=year%>&month=<%=month+1%>" class="btn btn-outline-secondary ms-1">Next</a>
-				</span>
-			</div>
-			<table class="table shadow-sm mt-3">
-				<tr class="" id="">
-					<th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th>
-				</tr>
-				<tr>
-					<%
-						for(int i=1; i<=totalTd; i++){
-					%>
-							<td>
-					<%
-								int date = i - beginBlank; // i를 출력하면 안됨 i는 td의 갯수
-								if(date > 0 && date <= lastDate){
-					%>
-									<div>
-										<a href="<%=request.getContextPath()%>/cash/cashDateList.jsp?year=<%=year%>&month=<%=month+1%>&date=<%=date%>">
-											<%=date%>
-										</a>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>cashList</title>
+    <!-- Custom Stylesheet -->
+    <link href="../Resources/css/style.css" rel="stylesheet">
+
+</head>
+
+<body>
+ 	<!--Preloader start-->
+    <div id="preloader">
+        <div class="loader">
+            <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10" />
+            </svg>
+        </div>
+    </div>
+    <!--Preloader end-->
+    
+    <!--Main wrapper start-->
+    <div id="main-wrapper">
+    
+		<!-- header & sidebar -->
+		<jsp:include page="../inc/header.jsp"></jsp:include>
+
+        <!-- 본문시작 -->
+         <!--Content body start-->
+        <div class="content-body">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+
+                        <div class="card">
+                            <div class="card-body">
+                                <!-- 달력 출력 -->
+								<div>
+									<!-- 달력 날짜 -->
+									<div class="mt-4">
+										<span>
+											<a href="<%=request.getContextPath()%>/cash/cashList.jsp?year=<%=year%>&month=<%=month-1%>" class="btn btn-outline-secondary me-1">Prev</a>
+										</span>
+										<span>
+											<%=year%>년 <%=month+1%>월
+										</span>
+										<span>
+											<a href="<%=request.getContextPath()%>/cash/cashList.jsp?year=<%=year%>&month=<%=month+1%>" class="btn btn-outline-secondary ms-1">Next</a>
+										</span>
 									</div>
-									<div>
-									<%
-										for(HashMap<String, Object> m : list) {
-											String cashDate = (String)(m.get("cashDate"));
-											String cateKind = (String)(m.get("categoryKind"));
-											if(Integer.parseInt(cashDate.substring(8)) == date){ 
-											// 일별 수입지출 목록을 보기 위해서 -> String 타입의 cashdate 변수를 만들고, 정수타입으로 형변환, 일 숫자 추출 
-											// int를 적으면 안됨 -> int타입의 참조타입형태인 integer로 형변환 왜? hashmap에서 object 타입으로 받아왔기때문
-												if(cateKind.equals("수입")){
-											%>
-													<span style="color: skyblue;">[<%=(String)(m.get("categoryKind"))%>]</span>
+									<!-- 달력 본문 -->
+									<table class="table table-borderless mt-3">
+										<tr>
+											<th>일</th><th>월</th><th>화</th><th>수</th><th>목</th><th>금</th><th>토</th>
+										</tr>
+										<tr>
 											<%
-												} else {
+												for(int i=1; i<=totalTd; i++){
 											%>
-													<span style="color: pink;">[<%=(String)(m.get("categoryKind"))%>]</span>
+													<td>
 											<%
+														int date = i - beginBlank; // i를 출력하면 안됨 i는 td의 갯수
+														if(date > 0 && date <= lastDate){
+											%>
+															<div>
+																<a href="<%=request.getContextPath()%>/cash/cashDateList.jsp?year=<%=year%>&month=<%=month+1%>&date=<%=date%>">
+																	<%=date%>
+																</a>
+															</div>
+															<div>
+															<%
+																for(HashMap<String, Object> m : list) {
+																	String cashDate = (String)(m.get("cashDate"));
+																	String cateKind = (String)(m.get("categoryKind"));
+																	if(Integer.parseInt(cashDate.substring(8)) == date){ 
+																	// 일별 수입지출 목록을 보기 위해서 -> String 타입의 cashdate 변수를 만들고, 정수타입으로 형변환, 일 숫자 추출 
+																	// int를 적으면 안됨 -> int타입의 참조타입형태인 integer로 형변환 왜? hashmap에서 object 타입으로 받아왔기때문
+																		if(cateKind.equals("수입")){
+																	%>
+																			<span style="color: skyblue;"><%=(String)(m.get("categoryKind"))%></span>
+																	<%
+																		} else {
+																	%>
+																			<span style="color: pink;"><%=(String)(m.get("categoryKind"))%></span>
+																	<%
+																		}
+																	%>	
+																		<%=(String)(m.get("categoryName"))%>
+																		&nbsp;
+																		<%=(Long)(m.get("cashPrice"))%>원
+																		<br>												
+																	<%
+																	}
+																}
+															%>		
+															</div>
+											<%			
+														}
+											%>
+													</td>
+											<%
+													if(i%7 == 0 && i != totalTd){ // 7로 나누어 떨어지고 i가 totalTd가 아닐때만 출력
+											%>
+														</tr><tr><!-- td 7개 만들고 테이블 줄바꿈 -->
+											<%
+													}
 												}
-											%>	
-												<%=(String)(m.get("categoryName"))%>
-												&nbsp;
-												<%=(Long)(m.get("cashPrice"))%>원
-												<br>												
-											<%
-											}
-										}
-									%>		
-									</div>
-					<%			
-								}
-					%>
-							</td>
-					<%
-							if(i%7 == 0 && i != totalTd){ // 7로 나누어 떨어지고 i가 totalTd가 아닐때만 출력
-					%>
-								</tr><tr><!-- td 7개 만들고 테이블 줄바꿈 -->
-					<%
-							}
-						}
-					%>
-			</table>
-		</div>
-	</div>
-	</body>
+											%>
+									</table>
+								</div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            <!-- #/ container -->
+        </div>
+        <!--Content body end-->
+        
+        <div class="content-body">
+        	<div class="container">
+				
+				</div>
+			</div>
+            <!-- #/ container -->
+        </div>
+        <!--**********************************
+            Content body end
+        ***********************************-->
+        
+        
+        <!--**********************************
+            Footer start
+        ***********************************-->
+        <div class="footer">
+            <div class="copyright">
+                <p>Copyright &copy; Designed & Developed by <a href="https://themeforest.net/user/quixlab">Quixlab</a> 2018</p>
+            </div>
+        </div>
+        <!--**********************************
+            Footer end
+        ***********************************-->
+    </div>
+    <!--**********************************
+        Main wrapper end
+    ***********************************-->
+
+    <!--**********************************
+        Scripts
+    ***********************************-->
+    <script src="../Resources/plugins/common/common.min.js"></script>
+    <script src="../Resources/js/custom.min.js"></script>
+    <script src="../Resources/js/settings.js"></script>
+    <script src="../Resources/js/gleek.js"></script>
+    <script src="../Resources/js/styleSwitcher.js"></script>
+
+</body>
+
 </html>
