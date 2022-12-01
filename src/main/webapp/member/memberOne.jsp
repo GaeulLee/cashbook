@@ -21,20 +21,17 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>helpList</title>
     <!-- Custom Stylesheet -->
-    <link href="../Resources/plugins/fullcalendar/css/fullcalendar.min.css" rel="stylesheet">
-    <link href="../Resources/css/style.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/Resources/plugins/fullcalendar/css/fullcalendar.min.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/Resources/css/style.css" rel="stylesheet">
 	<style>
 		th{
 			text-align: center;
 		}
 		
-		#align_center{
-			text-align: center;
-		}
 		table{
-			border-radius: 8px;
-			height: 300px;
+			height:400px;
 		}
+		
 	</style>
 </head>
 <body>
@@ -70,32 +67,32 @@
                         <div class="card">
                         	<!-- 본문시작 -->
                             <div class="card-body">
-								<table class="table table-borderless w-75 mx-auto align-middle shadow-sm mt-3">
+								<table class="table table-borderless w-75 mx-auto align-middle">
 									<tr>
 										<th colspan="2" class="h4"><strong>내 정보</strong></th>
 									</tr>
 									<tr>
-										<th>회원 ID</th>
+										<th class="align-middle">회원 ID</th>
 										<td><%=memberId%></td>
 									</tr>
 									<tr>
-										<th>회원 PW</th>
+										<th class="align-middle">회원 PW</th>
 										<td>
-											<a href="<%=request.getContextPath()%>/member/updatePwForm.jsp" class="btn btn-outline-primary btn-sm">비밀번호 변경</a>
+											<a href="<%=request.getContextPath()%>/member/updatePwForm.jsp" class="btn btn-outline-secondary btn-sm">비밀번호 변경</a>
 										</td>
 									</tr>
 									<tr>
-										<th>회원 이름</th>
+										<th class="align-middle">회원 이름</th>
 										<td><%=memberName%></td>
 									</tr>
 								</table>
 								
-								<div id="align_center">
+								<div class="text-center">
 									<span>
-										<a href="<%=request.getContextPath()%>/member/updateMemberForm.jsp" class="btn btn-outline-primary">회원정보 수정</a>
+										<a href="<%=request.getContextPath()%>/member/updateMemberForm.jsp" class="btn btn-outline-secondary">회원정보 수정</a>
 									</span>
 									<span>
-										<a href="<%=request.getContextPath()%>/member/deleteMemberForm.jsp" class="btn btn-outline-primary">회원 탈퇴</a>
+										<a href="<%=request.getContextPath()%>/member/deleteMemberForm.jsp" class="btn btn-outline-secondary">회원 탈퇴</a>
 									</span>
 								</div>
 								
@@ -121,15 +118,15 @@
     <!--Main wrapper end-->
 
 	<!--Scripts-->
-    <script src="../Resources/plugins/common/common.min.js"></script>
-    <script src="../Resources/js/custom.min.js"></script>
-    <script src="../Resources/js/settings.js"></script>
-    <script src="../Resources/js/gleek.js"></script>
-    <script src="../Resources/js/styleSwitcher.js"></script>
+    <script src="<%=request.getContextPath()%>/Resources/plugins/common/common.min.js"></script>
+    <script src="<%=request.getContextPath()%>/Resources/js/custom.min.js"></script>
+    <script src="<%=request.getContextPath()%>/Resources/js/settings.js"></script>
+    <script src="<%=request.getContextPath()%>/Resources/js/gleek.js"></script>
+    <script src="<%=request.getContextPath()%>/Resources/js/styleSwitcher.js"></script>
     
-    <script src="../Resources/plugins/jqueryui/js/jquery-ui.min.js"></script>
-    <script src="../Resources/plugins/moment/moment.min.js"></script>
-    <script src="../Resources/plugins/fullcalendar/js/fullcalendar.min.js"></script>
-    <script src="../Resources/js/plugins-init/fullcalendar-init.js"></script>
+    <script src="<%=request.getContextPath()%>/Resources/plugins/jqueryui/js/jquery-ui.min.js"></script>
+    <script src="<%=request.getContextPath()%>/Resources/plugins/moment/moment.min.js"></script>
+    <script src="<%=request.getContextPath()%>/Resources/plugins/fullcalendar/js/fullcalendar.min.js"></script>
+    <script src="<%=request.getContextPath()%>/Resources/js/plugins-init/fullcalendar-init.js"></script>
 	</body>
 </html>

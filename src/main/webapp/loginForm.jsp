@@ -46,16 +46,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>login</title>
-    <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/favicon.png">
     <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous"> -->
-    <link href="./Resources/css/style.css" rel="stylesheet">    
+    <link href="<%=request.getContextPath()%>/Resources/css/style.css" rel="stylesheet">    
 </head>
 
 <body class="h-100">
-    <!--*******************
-        Preloader start
-    ********************-->
+    <!--Preloader start-->
     <div id="preloader">
         <div class="loader">
             <svg class="circular" viewBox="25 25 50 50">
@@ -63,12 +59,10 @@
             </svg>
         </div>
     </div>
-    <!--*******************
-        Preloader end
-    ********************-->
+    <!--Preloader end-->
     
-    <!-- 공지(5개)목록 페이징 (상세보기 없음 타이틀만 보이게, 댓글 기능) -->
-	<div class="container mt-2 mx-auto">
+     <!-- 공지(5개)목록 페이징 (상세보기 없음 타이틀만 보이게, 댓글 기능) -->
+	<div class="container mx-auto mt-2 w-50">
 		<table class="table">
 			<tr class="table-light text-center">
 				<th>공지내용</th>
@@ -134,8 +128,8 @@
 			</ul>
 		</div>
 	</div>
-
-	<!-- 회원 로그인 폼 -->
+    
+    <!-- 회원 로그인 폼 -->
     <div class="login-form-bg h-50">
         <div class="container h-100">
             <div class="row justify-content-center h-100">
@@ -154,10 +148,10 @@
 										}
 									%>
                                     <div class="form-group">
-                                        <input type="text" name="memberId" class="form-control" placeholder="Id">
+                                        <input type="text" name="memberId" class="form-control input-default" placeholder="Id">
                                     </div>
                                     <div class="form-group">
-                                        <input type="password" name="memberPw" class="form-control" placeholder="Password">
+                                        <input type="password" name="memberPw" class="form-control input-default" placeholder="Password">
                                     </div>
                                     <button type="submit" class="btn login-form__btn submit w-100">Sign In</button>
                                 </form>
@@ -170,13 +164,11 @@
         </div>
     </div>
 
-    <!--**********************************
-        Scripts
-    ***********************************-->
-    <script src="./Resources/plugins/common/common.min.js"></script>
-    <script src="./Resources/js/custom.min.js"></script>
-    <script src="./Resources/js/settings.js"></script>
-    <script src="./Resources/js/gleek.js"></script>
-    <script src="./Resources/js/styleSwitcher.js"></script>
+    <!--Scripts-->
+    <script src="<%=request.getContextPath()%>/Resources/plugins/common/common.min.js"></script>
+    <script src="<%=request.getContextPath()%>/Resources/js/custom.min.js"></script>
+    <script src="<%=request.getContextPath()%>/Resources/js/settings.js"></script>
+    <script src="<%=request.getContextPath()%>/Resources/js/gleek.js"></script>
+    <script src="<%=request.getContextPath()%>/Resources/js/styleSwitcher.js"></script>
 </body>
 </html>

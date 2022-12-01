@@ -36,8 +36,8 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>helpList</title>
     <!-- Custom Stylesheet -->
-    <link href="../Resources/plugins/fullcalendar/css/fullcalendar.min.css" rel="stylesheet">
-    <link href="../Resources/css/style.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/Resources/plugins/fullcalendar/css/fullcalendar.min.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/Resources/css/style.css" rel="stylesheet">
 	<style>
 		th{
 			text-align: center;
@@ -171,15 +171,15 @@
 
 	
 	<!--Scripts-->
-    <script src="../Resources/plugins/common/common.min.js"></script>
-    <script src="../Resources/js/custom.min.js"></script>
-    <script src="../Resources/js/settings.js"></script>
-    <script src="../Resources/js/gleek.js"></script>
-    <script src="../Resources/js/styleSwitcher.js"></script>
+    <script src="<%=request.getContextPath()%>/Resources/plugins/common/common.min.js"></script>
+    <script src="<%=request.getContextPath()%>/Resources/js/custom.min.js"></script>
+    <script src="<%=request.getContextPath()%>/Resources/js/settings.js"></script>
+    <script src="<%=request.getContextPath()%>/Resources/js/gleek.js"></script>
+    <script src="<%=request.getContextPath()%>/Resources/js/styleSwitcher.js"></script>
     
-    <script src="../Resources/plugins/jqueryui/js/jquery-ui.min.js"></script>
-    <script src="../Resources/plugins/moment/moment.min.js"></script>
-    <script src="../Resources/plugins/fullcalendar/js/fullcalendar.min.js"></script>
-    <script src="../Resources/js/plugins-init/fullcalendar-init.js"></script>
+    <script src="<%=request.getContextPath()%>/Resources/plugins/jqueryui/js/jquery-ui.min.js"></script>
+    <script src="<%=request.getContextPath()%>/Resources/plugins/moment/moment.min.js"></script>
+    <script src="<%=request.getContextPath()%>/Resources/plugins/fullcalendar/js/fullcalendar.min.js"></script>
+    <script src="<%=request.getContextPath()%>/Resources/js/plugins-init/fullcalendar-init.js"></script>
 	</body>
 </html>

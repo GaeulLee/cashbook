@@ -21,10 +21,12 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>deleteMemberForm</title>
     <!-- Custom Stylesheet -->
-    <link href="../Resources/plugins/fullcalendar/css/fullcalendar.min.css" rel="stylesheet">
-    <link href="../Resources/css/style.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/Resources/plugins/fullcalendar/css/fullcalendar.min.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/Resources/css/style.css" rel="stylesheet">
     <style>
-    	
+    	table{
+			height:400px;
+		}
     </style>
 </head>
 <body>
@@ -60,10 +62,10 @@
                             <div class="card-body">
                                 <form action="<%=request.getContextPath()%>/member/deleteMemberAction.jsp" method="post">
 									<input type="hidden" name="memberId" value="<%=memberId%>">
-									<table class="table table-borderless w-50 mx-auto align-middle shadow-sm mt-3">
+									<table class="table table-borderless w-50 mx-auto align-middle">
 										<tr>
 											<th colspan="2">
-												<h3 class="mt-3 text-center"><strong>회원 탈퇴</strong></h3>
+												<h4 class="mt-3 text-center"><strong>회원 탈퇴</strong></h4>
 											</th>
 										</tr>
 										<tr>
@@ -83,15 +85,14 @@
 											</th>
 										</tr>
 										<tr>
-											<th class="w-50 text-center">비밀번호 입력</th>
+											<th class="w-50 text-center align-middle">비밀번호 입력</th>
 											<td>
 												<input type="password" name="memberPw" class="form-control input-default w-75">
 											</td>
 										</tr>
 										<tr>
-											<td colspan="2">
-												<a href="<%=request.getContextPath()%>/member/memberOne.jsp" class="btn mb-1 btn-outline-secondary float-start">back</a>
-												<button type="submit" class="btn mb-1 btn-outline-secondary float-end">탈퇴</button>
+											<td colspan="2" class="text-right">
+												<button type="submit" class="btn mb-1 btn-outline-secondary">탈퇴</button>
 											</td>
 										</tr>
 									</table>
@@ -118,15 +119,15 @@
     <!--Main wrapper end-->
    
 	<!--Scripts-->
-    <script src="../Resources/plugins/common/common.min.js"></script>
-    <script src="../Resources/js/custom.min.js"></script>
-    <script src="../Resources/js/settings.js"></script>
-    <script src="../Resources/js/gleek.js"></script>
-    <script src="../Resources/js/styleSwitcher.js"></script>
+    <script src="<%=request.getContextPath()%>/Resources/plugins/common/common.min.js"></script>
+    <script src="<%=request.getContextPath()%>/Resources/js/custom.min.js"></script>
+    <script src="<%=request.getContextPath()%>/Resources/js/settings.js"></script>
+    <script src="<%=request.getContextPath()%>/Resources/js/gleek.js"></script>
+    <script src="<%=request.getContextPath()%>/Resources/js/styleSwitcher.js"></script>
     
-    <script src="../Resources/plugins/jqueryui/js/jquery-ui.min.js"></script>
-    <script src="../Resources/plugins/moment/moment.min.js"></script>
-    <script src="../Resources/plugins/fullcalendar/js/fullcalendar.min.js"></script>
-    <script src="../Resources/js/plugins-init/fullcalendar-init.js"></script>
+    <script src="<%=request.getContextPath()%>/Resources/plugins/jqueryui/js/jquery-ui.min.js"></script>
+    <script src="<%=request.getContextPath()%>/Resources/plugins/moment/moment.min.js"></script>
+    <script src="<%=request.getContextPath()%>/Resources/plugins/fullcalendar/js/fullcalendar.min.js"></script>
+    <script src="<%=request.getContextPath()%>/Resources/js/plugins-init/fullcalendar-init.js"></script>
 	</body>
 </html>

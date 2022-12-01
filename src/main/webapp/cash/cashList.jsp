@@ -130,11 +130,11 @@
 									<!-- 달력 날짜 -->
 									<div class="mt-4 text-center">
 										<span>
-											<a href="<%=request.getContextPath()%>/cash/cashList.jsp?year=<%=year%>&month=<%=month-1%>" class="btn btn-outline-secondary me-1">Prev</a>
+											<a href="<%=request.getContextPath()%>/cash/cashList.jsp?year=<%=year%>&month=<%=month-1%>" class="btn btn-outline-secondary">Prev</a>
 										</span>
 										<span class="h3 align-middle"><%=year%>년 <%=month+1%>월</span>
 										<span>
-											<a href="<%=request.getContextPath()%>/cash/cashList.jsp?year=<%=year%>&month=<%=month+1%>" class="btn btn-outline-secondary ms-1">Next</a>
+											<a href="<%=request.getContextPath()%>/cash/cashList.jsp?year=<%=year%>&month=<%=month+1%>" class="btn btn-outline-secondary">Next</a>
 										</span>
 									</div>
 									<!-- 달력 본문 -->
