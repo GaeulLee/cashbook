@@ -41,23 +41,22 @@
 	<style>
 		th{
 			text-align: center;
-		}
-		
-		#align_center{
-			text-align: center;
-		}
+		}		
 		
 		details {
-			background: #f0f0f0;
-			padding: 20px;
-			border-radius: 8px;
-		 
+			background-color: #ededf8;
+			padding: 30px;
+			border-radius: 8px;		 
 		}
 		
 		summary {
 			cursor: pointer;
 			font-weight: bold;
 			font-size: 1.1em;
+		}
+		
+		#font_color{
+			color: #76838f;
 		}
 	</style>
 </head>
@@ -73,8 +72,7 @@
     <!--Preloader end-->
 
     <!--Main wrapper start-->
-    <div id="main-wrapper">
-    
+    <div id="main-wrapper">  
     	<!-- header & sidebar -->
 		<%	
 			String targetPage = "../inc/header.jsp";
@@ -82,7 +80,7 @@
 				targetPage = "../inc/adminHeader.jsp";
 			}
 		%>
-		<jsp:include page="<%=targetPage%>"></jsp:include>    	
+		<jsp:include page="<%=targetPage%>"></jsp:include>
 
         <!--Content body start-->
         <div class="content-body">
@@ -92,15 +90,16 @@
                     <div class="col">
                         <div class="card">
                         	<!-- 본문시작 -->
-                            <div class="card-body">
-								<div class="w-75 mt-4 mb-4 mx-auto h3 text-center" >
+                            <div class="card-body w-75 mx-auto">
+								<div class="mb-4 h3 text-center" id="font_color">
 									<strong>내 문의 내역</strong>
-									<span>
-										<a href="<%=request.getContextPath()%>/help/insertHelpForm.jsp" class="btn btn-outline-secondary float-end">문의하기</a>
-									</span>
 								</div>
+								<div class="text-right mb-3">
+									<a href="<%=request.getContextPath()%>/help/insertHelpForm.jsp" class="btn btn-outline-secondary">문의하기</a>
+								</div>
+
 								<!-- 문의 출력 -->
-								<div class="w-75 mx-auto">
+								<div>
 								<%			
 									for(HashMap<String, Object> m : helpList){
 										String helpCreatedate = (String)m.get("helpCreatedate");
@@ -111,10 +110,10 @@
 											commentCreatedate = commentCreatedate.substring(0,16);
 										}	
 								%>
-										<details class="mb-2">
+										<details class="mb-3">
 											<summary>
-												<span><%=m.get("helpMemo")%></span>
-												<span class="float-end"><%=helpCreatedate%></span>
+												<span class="h4" id="font_color"><strong><%=m.get("helpMemo")%></strong></span>
+												<div class="text-right">작성일 <%=helpCreatedate%></div>
 											 </summary>
 											 
 											<%
@@ -122,10 +121,10 @@
 											%>
 													<div class="mt-4">
 														<span>답변 전</span>
-														<span class="float-end">
-															<a href="<%=request.getContextPath()%>/help/updateHelpForm.jsp?helpNo=<%=m.get("helpNo")%>" class="btn btn-light">문의 수정</a>
-															<a href="<%=request.getContextPath()%>/help/deleteHelpAction.jsp?helpNo=<%=m.get("helpNo")%>" class="btn btn-light">문의 삭제</a>
-														</span>
+														<div class="text-right">
+															<a href="<%=request.getContextPath()%>/help/updateHelpForm.jsp?helpNo=<%=m.get("helpNo")%>" class="btn btn-light btn-sm">문의 수정</a>
+															<a href="<%=request.getContextPath()%>/help/deleteHelpAction.jsp?helpNo=<%=m.get("helpNo")%>" class="btn btn-light btn-sm">문의 삭제</a>
+														</div>
 													</div>
 											<%
 												}else{
@@ -133,7 +132,7 @@
 											%>
 													<div class="mt-4">
 														<span><%=m.get("commentMemo")%></span>
-														<span class="float-end"><%=commentCreatedate%></span>
+														<div class="text-right">답변일 <%=commentCreatedate%></div>
 													</div>
 											<%
 												}
@@ -163,13 +162,7 @@
         
     </div>
     <!--Main wrapper end-->
-    
-    
-    
 
-		
-
-	
 	<!--Scripts-->
     <script src="<%=request.getContextPath()%>/Resources/plugins/common/common.min.js"></script>
     <script src="<%=request.getContextPath()%>/Resources/js/custom.min.js"></script>

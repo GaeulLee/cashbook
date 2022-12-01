@@ -27,6 +27,10 @@
     	table{
 			height:400px;
 		}
+		
+		#font_color{
+			color: #76838f;
+		}
     </style>
 </head>
 <body>
@@ -60,12 +64,13 @@
                         <div class="card">
                         	<!-- 본문시작 -->
                             <div class="card-body">
+                            	<a href="<%=request.getContextPath()%>/member/memberOne.jsp">back</a>
                                 <form action="<%=request.getContextPath()%>/member/deleteMemberAction.jsp" method="post">
 									<input type="hidden" name="memberId" value="<%=memberId%>">
 									<table class="table table-borderless w-50 mx-auto align-middle">
 										<tr>
 											<th colspan="2">
-												<h4 class="mt-3 text-center"><strong>회원 탈퇴</strong></h4>
+												<h3 class="mt-3 text-center" id="font_color"><strong>회원 탈퇴</strong></h3>
 											</th>
 										</tr>
 										<tr>

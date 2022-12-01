@@ -38,69 +38,117 @@
 %>
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<title>updateHelpForm</title>
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/bootswatch@5.2.2/dist/sandstone/bootstrap.min.css,npm/bootswatch@5.2.2/dist/sandstone/bootstrap.min.css">
-		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        <style>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>updateHelpForm</title>
+	<!-- Custom Stylesheet -->
+	<link href="<%=request.getContextPath()%>/Resources/css/style.css" rel="stylesheet">
+	<link href="<%=request.getContextPath()%>/Resources/css/style.css" rel="stylesheet">
+	<style>
 			th{
 				text-align: center;
 			}
-			
-			#align_center{
-				text-align: center;
-			}
-			table{
-				border-radius: 8px;
-			}
-		</style>
-	</head>
-	<body>
-	<!-- header -->
-	<%	
-		String targetPage = "../inc/header.jsp";
-		if(loginMember.getMemberLevel() > 0){
-			targetPage = "../inc/adminHeader.jsp";
-		}
-	%>
-	<jsp:include page="<%=targetPage%>"></jsp:include>
-	<!-- 본문 시작 -->
-	<div class="container">
-		<form action="<%=request.getContextPath()%>/help/updateHelpAction.jsp" method="post">
-			<input type="hidden" name="helpNo" value="<%=oldHelp.getHelpNo()%>">
-			<table class="table table-borderless w-75 mx-auto align-middle shadow-sm mt-3">
-				<tr>
-					<th colspan="2">
-						<h4 class="mt-3"><strong>문의 수정</strong></h4>
-					</th>
-				</tr>
-				<%
-					String msg = request.getParameter("msg");
-					if(msg != null){
-				%>
-						<tr>
-							<th class="text-info" colspan="2">&#10069;<%=msg%></th>
-						</tr>	
-				<%
-					}
-				%>
-				<tr>
-					<th>문의 내용</th>
-					<td>
-						<textarea name="helpMemo" rows="10" cols="50" placeholder="수정할 문의 내용을 입력해주세요." class="form-control"><%=oldHelp.getHelpMemo()%></textarea>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="2">
-						<button type="submit" class="btn btn-outline-primary float-end">수정</button>
-					</td>
-				</tr>
-			</table>
-		</form>
+	</style>
+</head>      
+
+<body>
+	<!--Preloader start-->
+	<div id="preloader">
+		<div class="loader">
+			<svg class="circular" viewBox="25 25 50 50">
+				<circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10">
+			</svg>
+		</div>
 	</div>
+	<!--Preloader end-->
+
+	<!--Main wrapper start-->
+	<div id="main-wrapper">
+		<!-- header & sidebar -->
+		<%	
+			String targetPage = "../inc/header.jsp";
+			if(loginMember.getMemberLevel() > 0){
+				targetPage = "../inc/adminHeader.jsp";
+			}
+		%>
+		<jsp:include page="<%=targetPage%>"></jsp:include>
+	
+		<!--Content body start-->
+		<div class="content-body">
+			<div class="container-fluid">
+			
+				<div class="row">
+				
+					<div class="col">
+						<div class="card">
+							<!-- 본문시작 -->
+							<div class="card-body">
+								<form action="<%=request.getContextPath()%>/help/updateHelpAction.jsp" method="post">
+									<input type="hidden" name="helpNo" value="<%=oldHelp.getHelpNo()%>">
+									<table class="table table-borderless w-75 mx-auto align-middle">
+										<tr>
+											<th colspan="2">
+												<h4><strong>문의 수정</strong></h4>
+											</th>
+										</tr>
+										<%
+											String msg = request.getParameter("msg");
+											if(msg != null){
+										%>
+												<tr>
+													<th class="text-info" colspan="2">&#10069;<%=msg%></th>
+												</tr>	
+										<%
+											}
+										%>
+										<tr>
+											<th class="align-middle">문의 내용</th>
+											<td>
+												<textarea name="helpMemo" rows="20" cols="50" placeholder="수정할 문의 내용을 입력해주세요." class="form-control input-default"><%=oldHelp.getHelpMemo()%></textarea>
+											</td>
+										</tr>
+										<tr>
+											<td colspan="2" class="text-right">
+												<button type="submit" class="btn btn-outline-secondary">수정</button>
+											</td>
+										</tr>
+									</table>
+								</form>
+							</div>
+						</div>
+					</div>
+				    
+				</div>
+			
+			</div>
+		<!-- #/ container -->
+		</div>
+		<!--Content body end--> 
+		
+		<!--Footer start-->
+		<div class="footer">
+			<div class="copyright">
+				<p>Copyright &copy; Designed & Developed by <a href="https://themeforest.net/user/quixlab">Quixlab</a> 2018</p>
+			</div>
+		</div>
+		<!--Footer end-->
+	    
+	</div>
+	<!--Main wrapper end-->
+	
+	<!--Scripts-->
+	<script src="<%=request.getContextPath()%>/Resources/plugins/common/common.min.js"></script>
+	<script src="<%=request.getContextPath()%>/Resources/js/custom.min.js"></script>
+	<script src="<%=request.getContextPath()%>/Resources/js/settings.js"></script>
+	<script src="<%=request.getContextPath()%>/Resources/js/gleek.js"></script>
+	<script src="<%=request.getContextPath()%>/Resources/js/styleSwitcher.js"></script>
+	
+	<script src="<%=request.getContextPath()%>/Resources/plugins/jqueryui/js/jquery-ui.min.js"></script>
+	<script src="<%=request.getContextPath()%>/Resources/plugins/moment/moment.min.js"></script>
+	<script src="<%=request.getContextPath()%>/Resources/plugins/fullcalendar/js/fullcalendar.min.js"></script>
+	<script src="<%=request.getContextPath()%>/Resources/js/plugins-init/fullcalendar-init.js"></script>
+		
 	</body>
 </html>

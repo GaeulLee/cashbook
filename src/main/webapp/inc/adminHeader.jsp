@@ -37,10 +37,10 @@
                          <div class="dropdown-content-body">
                              <ul>
                                  <li>
-                                     <a href="app-profile.html"><i class="icon-user"></i> <span>My page</span></a>
+                                     <a href="<%=request.getContextPath()%>/member/memberOne.jsp"><i class="icon-user"></i> <span>내 정보</span></a>
                                  </li>
                                  <hr class="my-2">                                        
-                                 <li><a href="page-login.html"><i class="icon-key"></i> <span>Logout</span></a></li>
+                                 <li><a href="<%=request.getContextPath()%>/logout.jsp"><i class="icon-key"></i> <span>로그아웃</span></a></li>
                              </ul>
                          </div>
                      </div>
@@ -80,6 +80,9 @@
                  </a>
                  <ul aria-expanded="false">
                      <li><a href="<%=request.getContextPath()%>/member/memberOne.jsp">내 정보</a></li>
+                     <li><a href="<%=request.getContextPath()%>/member/updateMemberForm.jsp">회원정보 수정</a></li>
+                     <li><a href="<%=request.getContextPath()%>/member/updatePwForm.jsp">비밀번호 수정</a></li>
+                     <li><a href="<%=request.getContextPath()%>/member/deleteMemberForm.jsp">회원탈퇴</a></li>
                      <li><a href="<%=request.getContextPath()%>/logout.jsp">로그아웃</a></li>
                  </ul>
              </li>

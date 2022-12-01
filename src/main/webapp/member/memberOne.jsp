@@ -32,6 +32,9 @@
 			height:400px;
 		}
 		
+		#font_color{
+			color: #76838f;
+		}
 	</style>
 </head>
 <body>
@@ -47,7 +50,6 @@
     
     <!--Main wrapper start-->
     <div id="main-wrapper">
-
 		<!-- header & sidebar -->
 		<%	
 			String targetPage = "../inc/header.jsp";
@@ -55,21 +57,19 @@
 				targetPage = "../inc/adminHeader.jsp";
 			}
 		%>
-		<jsp:include page="<%=targetPage%>"></jsp:include>	
+		<jsp:include page="<%=targetPage%>"></jsp:include>
 
         <!--Content body start-->
         <div class="content-body">
             <div class="container-fluid">
-            
                 <div class="row">
-                
                     <div class="col">
                         <div class="card">
                         	<!-- 본문시작 -->
                             <div class="card-body">
 								<table class="table table-borderless w-75 mx-auto align-middle">
 									<tr>
-										<th colspan="2" class="h4"><strong>내 정보</strong></th>
+										<th colspan="2" class="h3" id="font_color"><strong>내 정보</strong></th>
 									</tr>
 									<tr>
 										<th class="align-middle">회원 ID</th>

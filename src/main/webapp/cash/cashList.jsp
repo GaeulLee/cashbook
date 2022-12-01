@@ -66,15 +66,14 @@
 %>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>cashList</title>
     <!-- Custom Stylesheet -->
-    <link href="../Resources/plugins/fullcalendar/css/fullcalendar.min.css" rel="stylesheet">
-    <link href="../Resources/css/style.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/Resources/plugins/fullcalendar/css/fullcalendar.min.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/Resources/css/style.css" rel="stylesheet">
     <style>
     	th{
     		height: 10px;
@@ -91,6 +90,18 @@
     	td_cell{
     		min-height:50px;
     	}
+    	
+    	#font_color{
+			color: #76838f;
+		}
+		
+		#income{
+			background-color: skyblue;
+		}
+		
+		#outcome{
+			background-color: pink;
+		}
     </style>
 </head>
 <body>
@@ -128,11 +139,11 @@
                                 <!-- 달력 출력 -->
 								<div>
 									<!-- 달력 날짜 -->
-									<div class="mt-4 text-center">
+									<div class="mt-2 mb-4 text-center">
 										<span>
 											<a href="<%=request.getContextPath()%>/cash/cashList.jsp?year=<%=year%>&month=<%=month-1%>" class="btn btn-outline-secondary">Prev</a>
 										</span>
-										<span class="h3 align-middle"><%=year%>년 <%=month+1%>월</span>
+										<span class="h3 align-middle" id="font_color"><strong><%=year%>년 <%=month+1%>월</strong></span>
 										<span>
 											<a href="<%=request.getContextPath()%>/cash/cashList.jsp?year=<%=year%>&month=<%=month+1%>" class="btn btn-outline-secondary">Next</a>
 										</span>
@@ -167,17 +178,15 @@
 																	// int를 적으면 안됨 -> int타입의 참조타입형태인 integer로 형변환 왜? hashmap에서 object 타입으로 받아왔기때문
 																		if(cateKind.equals("수입")){
 																	%>
-																			<span style="color: skyblue;"><%=(String)(m.get("categoryKind"))%></span>
+																			<span class="badge badge-light align-middle mb-1" id="income"><%=(String)(m.get("categoryKind"))%></span>
 																	<%
 																		} else {
 																	%>
-																			<span style="color: pink;"><%=(String)(m.get("categoryKind"))%></span>
+																			<span class="badge badge-light align-middle mb-1" id="outcome"><%=(String)(m.get("categoryKind"))%></span>																			
 																	<%
 																		}
 																	%>	
-																		<%=(String)(m.get("categoryName"))%>
-																		&nbsp;
-																		<%=(Long)(m.get("cashPrice"))%>원
+																		<span><%=(String)(m.get("categoryName"))%>&nbsp;<%=(Long)(m.get("cashPrice"))%>원</span>
 																		<br>												
 																	<%
 																	}
@@ -220,16 +229,16 @@
     <!--Main wrapper end-->
 
     <!--Scripts-->
-    <script src="../Resources/plugins/common/common.min.js"></script>
-    <script src="../Resources/js/custom.min.js"></script>
-    <script src="../Resources/js/settings.js"></script>
-    <script src="../Resources/js/gleek.js"></script>
-    <script src="../Resources/js/styleSwitcher.js"></script>
+    <script src="<%=request.getContextPath()%>/Resources/plugins/common/common.min.js"></script>
+    <script src="<%=request.getContextPath()%>/Resources/js/custom.min.js"></script>
+    <script src="<%=request.getContextPath()%>/Resources/js/settings.js"></script>
+    <script src="<%=request.getContextPath()%>/Resources/js/gleek.js"></script>
+    <script src="<%=request.getContextPath()%>/Resources/js/styleSwitcher.js"></script>
     
-    <script src="../Resources/plugins/jqueryui/js/jquery-ui.min.js"></script>
-    <script src="../Resources/plugins/moment/moment.min.js"></script>
-    <script src="../Resources/plugins/fullcalendar/js/fullcalendar.min.js"></script>
-    <script src="../Resources/js/plugins-init/fullcalendar-init.js"></script>
+    <script src="<%=request.getContextPath()%>/Resources/plugins/jqueryui/js/jquery-ui.min.js"></script>
+    <script src="<%=request.getContextPath()%>/Resources/plugins/moment/moment.min.js"></script>
+    <script src="<%=request.getContextPath()%>/Resources/plugins/fullcalendar/js/fullcalendar.min.js"></script>
+    <script src="<%=request.getContextPath()%>/Resources/js/plugins-init/fullcalendar-init.js"></script>
 
 </body>
 </html>

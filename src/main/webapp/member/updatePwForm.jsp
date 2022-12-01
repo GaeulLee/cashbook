@@ -32,6 +32,10 @@
 		table{
 			height:400px;
 		}
+		
+		#font_color{
+			color: #76838f;
+		}
 	</style>
 </head>
 
@@ -66,11 +70,12 @@
 						<div class="card">
 							<!-- 본문시작 -->
 							<div class="card-body">
+								<a href="<%=request.getContextPath()%>/member/memberOne.jsp">back</a>
 								<form action="<%=request.getContextPath()%>/member/updatePwAction.jsp" method="post">
 									<table class="table table-borderless w-50 mx-auto align-middle">
 										<tr>
 											<th colspan="2">
-												<h4><strong>비밀번호 변경</strong></h4>
+												<h3 id="font_color"><strong>비밀번호 변경</strong></h3>
 											</th>
 										</tr>
 										<%

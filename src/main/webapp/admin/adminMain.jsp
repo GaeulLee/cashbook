@@ -31,14 +31,21 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>adminMain</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>adminMain</title>	
 	<!-- Custom Stylesheet -->
-	<link href="../Resources/plugins/fullcalendar/css/fullcalendar.min.css" rel="stylesheet">
-	<link href="../Resources/css/style.css" rel="stylesheet">
+	<link href="<%=request.getContextPath()%>/Resources/plugins/fullcalendar/css/fullcalendar.min.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/Resources/css/style.css" rel="stylesheet">
 	<style>
 		th{
 			background-color: #ededf8;
 			text-align: center;
+			height: 10px;
+		}
+		
+		table{
+			height: 300px;
 		}
 	</style>
 </head>
@@ -182,10 +189,16 @@
     <!--Main wrapper end-->
 
     <!--Scripts-->
-    <script src="../Resources/plugins/common/common.min.js"></script>
-    <script src="../Resources/js/custom.min.js"></script>
-    <script src="../Resources/js/settings.js"></script>
-    <script src="../Resources/js/gleek.js"></script>
-    <script src="../Resources/js/styleSwitcher.js"></script>
+	<script src="<%=request.getContextPath()%>/Resources/plugins/common/common.min.js"></script>
+	<script src="<%=request.getContextPath()%>/Resources/js/custom.min.js"></script>
+	<script src="<%=request.getContextPath()%>/Resources/js/settings.js"></script>
+	<script src="<%=request.getContextPath()%>/Resources/js/gleek.js"></script>
+	<script src="<%=request.getContextPath()%>/Resources/js/styleSwitcher.js"></script>
+	
+	<script src="<%=request.getContextPath()%>/Resources/plugins/jqueryui/js/jquery-ui.min.js"></script>
+	<script src="<%=request.getContextPath()%>/Resources/plugins/moment/moment.min.js"></script>
+	<script src="<%=request.getContextPath()%>/Resources/plugins/fullcalendar/js/fullcalendar.min.js"></script>
+	<script src="<%=request.getContextPath()%>/Resources/js/plugins-init/fullcalendar-init.js"></script>
+	
 </body>
 </html>
