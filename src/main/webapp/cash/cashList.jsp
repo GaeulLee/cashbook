@@ -125,7 +125,9 @@
 			targetPage = "../inc/adminHeader.jsp";
 		}
 		%>
-		<jsp:include page="<%=targetPage%>"></jsp:include>
+		<jsp:include page="<%=targetPage%>">
+			<jsp:param value="<%=loginMember.getMemberId()%>" name="memberId"/>
+		</jsp:include>
 
         <!-- 본문시작 -->
          <!--Content body start-->

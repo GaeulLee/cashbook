@@ -23,7 +23,7 @@
 	}
 	HelpDao helpDao = new HelpDao();
 	int cnt = helpDao.selectHelpCount();
-	final int ROW_PER_PAGE = 15;
+	final int ROW_PER_PAGE = 5;
 	int beginRow = (currentPage-1)*ROW_PER_PAGE;
 	final int PAGE_COUNT = 10;
 	int beginPage = (currentPage-1)/PAGE_COUNT*PAGE_COUNT+1;
@@ -45,140 +45,190 @@
 %>
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<title>helpList</title>
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/combine/npm/bootswatch@5.2.2/dist/sandstone/bootstrap.min.css,npm/bootswatch@5.2.2/dist/sandstone/bootstrap.min.css">
-		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        <style>
-			th{
-				text-align: center;
-			}
-			
-			#align_center{
-				text-align: center;
-			}
-			
-			details {
-				background: #f0f0f0;
-				padding: 20px;
-				border-radius: 8px;
-			 
-			}
-			
-			summary {
-				cursor: pointer; 
-			}
-			
-			#question{
-				font-weight: bold;
-			  	font-size: 1.1em;
-			}
-			
-		</style>
-	</head>
-	<body>
-	<!-- header -->
-	<jsp:include page="../inc/adminMainHeader.jsp"></jsp:include>
-	<!-- 본문 시작 -->
-	<div class="container">
-		<div class="w-75 mt-4 mb-4 mx-auto h3" id="align_center">
-			<strong>회원 문의 내역</strong>
-		</div>
-		<!-- 문의글 출력 -->
-		<div class="w-75 mx-auto">
-		<%			
-			for(HashMap<String, Object> m : helpList){ // helpList를 반복해서 출력
-				// 받아온 날짜를 년, 월, 일, 시, 분 까지만 나오게 문자열 자르기
-				String helpCreatedate = (String)m.get("helpCreatedate");
-				helpCreatedate = helpCreatedate.substring(0,16);
-				String commentCreatedate = (String)m.get("commentCreatedate"); // commentCreatedate에 값이 없으면 null로 들어옴
-				if(m.get("commentCreatedate") != null){ // commentCreatedate이 null이 아닐 경우에만 문자열 자르기 
-					commentCreatedate = commentCreatedate.substring(0,16);
-				}	
-		%>
-				<!-- 조건에 맞게 문의글 출력 -->
-				<details class="mb-2">
-					<!-- 질문 -->
-					<summary>
-						<span id="question"><%=m.get("helpMemo")%></span>
-						<span class="float-end"><strong><%=helpCreatedate%></strong></span>
-						<span class="float-end">작성자ID: <%=m.get("memberId")%>&nbsp;</span>
-					</summary> 
-					<!-- 답변 -->
-					<%
-						if(m.get("commentMemo") == null){
-					%>
-							<div class="mt-4">
-								<span>답변 전입니다.</span>
-								<span class="float-end">
-									<a href="<%=request.getContextPath()%>/admin/comment/insertCommentForm.jsp?helpNo=<%=m.get("helpNo")%>" class="btn btn-light">답변하기</a>
-									
-								</span>
-							</div>
-					<%
-						}else{	
-					%>
-							<div class="mt-4">
-								<span><%=m.get("commentMemo")%></span>
-								<span class="float-end">
-									<a href="<%=request.getContextPath()%>/admin/comment/updateCommentForm.jsp?commentNo=<%=m.get("commentNo")%>" class="btn btn-light">수정</a>
-									<a href="<%=request.getContextPath()%>/admin/comment/deleteCommentAction.jsp?commentNo=<%=m.get("commentNo")%>" class="btn btn-light">삭제</a>
-								</span>
-							</div>
-					<%
-						}
-					%>
-				</details>
-		<%
-			}
-		%>
-		</div>
-		<!-- paging -->
-		<div>
-			<ul class="pagination justify-content-center">				
-				<li class="page-item">
-					<a href="<%=request.getContextPath()%>/admin/helpListAll.jsp?currentPage=1" class="page-link">처음</a>
-				</li>
-				<%
-					if(currentPage > 1){
-				%>
-						<li class="page-item">
-							<a href="<%=request.getContextPath()%>/admin/helpListAll.jsp?currentPage=<%=currentPage-1%>" class="page-link">이전</a>
-						</li>
-				<%
-					}
-					for(int i=beginPage; i<=endPage; i++){
-						if(currentPage == i){
-						%>
-							<li class="page-item active">
-								<a href="<%=request.getContextPath()%>/admin/helpListAll.jsp?currentPage=<%=i%>" class="page-link"><%=i%></a>
-							</li>
-						<%		
-						}else{
-						%>
-							<li class="page-item">
-								<a href="<%=request.getContextPath()%>/admin/helpListAll.jsp?currentPage=<%=i%>" class="page-link"><%=i%></a>
-							</li>
-						<%	
-						}
-					}
-					if(currentPage < lastPage){
-				%>
-						<li class="page-item">
-							<a href="<%=request.getContextPath()%>/admin/helpListAll.jsp?currentPage=<%=currentPage+1%>" class="page-link">다음</a>
-						</li>
-				<%
-					}
-				%>
-				<li class="page-item">
-					<a href="<%=request.getContextPath()%>/admin/helpListAll.jsp?currentPage=<%=lastPage%>" class="page-link">마지막</a>	
-				</li>
-			</ul>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<title>helpListAll</title>
+	<!-- Custom Stylesheet -->
+	<link href="<%=request.getContextPath()%>/Resources/css/style.css" rel="stylesheet">
+	<link href="<%=request.getContextPath()%>/Resources/css/style.css" rel="stylesheet">
+	<style>
+		th{
+			text-align: center;
+		}		
+		
+		details {
+			background-color: #ededf8;
+			padding: 30px;
+			border-radius: 8px;		 
+		}
+		
+		summary {
+			cursor: pointer;
+			font-weight: bold;
+			font-size: 1.1em;
+		}
+		
+		#font_color{
+			color: #76838f;
+		}
+	</style>
+</head>
+<body>
+<!--Preloader start-->
+	<div id="preloader">
+		<div class="loader">
+			<svg class="circular" viewBox="25 25 50 50">
+				<circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10">
+			</svg>
 		</div>
 	</div>
-	</body>
+	<!--Preloader end-->
+
+	<!--Main wrapper start-->
+	<div id="main-wrapper">
+	
+		<!-- header -->
+		<jsp:include page="../inc/adminMainHeader.jsp"></jsp:include>
+		
+		<!--Content body start-->
+		<div class="content-body">
+			<div class="container-fluid">
+			
+				<div class="row">
+				
+					<div class="col">
+						<div class="card">
+							<!-- 본문시작 -->
+							<div class="card-body w-75 mx-auto">
+								<div class="mb-4 h3 text-center" id="font_color">
+									<strong>회원 문의 내역</strong>
+								</div>
+								<!-- 문의글 출력 -->
+								<div class="w-75 mx-auto">
+								<%			
+									for(HashMap<String, Object> m : helpList){ // helpList를 반복해서 출력
+										// 받아온 날짜를 년, 월, 일, 시, 분 까지만 나오게 문자열 자르기
+										String helpCreatedate = (String)m.get("helpCreatedate");
+										helpCreatedate = helpCreatedate.substring(0,16);
+										String commentCreatedate = (String)m.get("commentCreatedate"); // commentCreatedate에 값이 없으면 null로 들어옴
+										if(m.get("commentCreatedate") != null){ // commentCreatedate이 null이 아닐 경우에만 문자열 자르기 
+											commentCreatedate = commentCreatedate.substring(0,16);
+										}	
+								%>
+										<!-- 조건에 맞게 문의글 출력 -->
+										<details class="mb-3">
+											<!-- 질문 -->
+											<summary>
+												<span class="h4" id="font_color"><strong><%=m.get("helpMemo")%></strong></span>
+												<div class="text-right">작성일 <%=helpCreatedate%> </div>
+												<div class="text-right">작성자 <%=m.get("memberId")%></div>
+												
+											</summary> 
+											<!-- 답변 -->
+											<%
+												if(m.get("commentMemo") == null){
+											%>
+													<div class="mt-4">
+														<span>답변 전입니다.</span>
+														<div class="text-right">
+															<a href="<%=request.getContextPath()%>/admin/comment/insertCommentForm.jsp?helpNo=<%=m.get("helpNo")%>" class="btn btn-light btn-sm">답변하기</a>															
+														</div>
+													</div>
+											<%
+												}else{	
+											%>
+													<div class="mt-4">
+														<span><%=m.get("commentMemo")%></span>
+														<div class="text-right">
+															<a href="<%=request.getContextPath()%>/admin/comment/updateCommentForm.jsp?commentNo=<%=m.get("commentNo")%>" class="btn btn-light btn-sm">수정</a>
+															<a href="<%=request.getContextPath()%>/admin/comment/deleteCommentAction.jsp?commentNo=<%=m.get("commentNo")%>" class="btn btn-light btn-sm">삭제</a>
+														</div>
+													</div>
+											<%
+												}
+											%>
+										</details>
+								<%
+									}
+								%>
+								</div>
+								<!-- paging -->
+								<div>
+									<ul class="pagination justify-content-center">				
+										<li class="page-item">
+											<a href="<%=request.getContextPath()%>/admin/helpListAll.jsp?currentPage=1" class="page-link">처음</a>
+										</li>
+										<%
+											if(currentPage > 1){
+										%>
+												<li class="page-item">
+													<a href="<%=request.getContextPath()%>/admin/helpListAll.jsp?currentPage=<%=currentPage-1%>" class="page-link">이전</a>
+												</li>
+										<%
+											}
+											for(int i=beginPage; i<=endPage; i++){
+												if(currentPage == i){
+												%>
+													<li class="page-item active">
+														<a href="<%=request.getContextPath()%>/admin/helpListAll.jsp?currentPage=<%=i%>" class="page-link"><%=i%></a>
+													</li>
+												<%		
+												}else{
+												%>
+													<li class="page-item">
+														<a href="<%=request.getContextPath()%>/admin/helpListAll.jsp?currentPage=<%=i%>" class="page-link"><%=i%></a>
+													</li>
+												<%	
+												}
+											}
+											if(currentPage < lastPage){
+										%>
+												<li class="page-item">
+													<a href="<%=request.getContextPath()%>/admin/helpListAll.jsp?currentPage=<%=currentPage+1%>" class="page-link">다음</a>
+												</li>
+										<%
+											}
+										%>
+										<li class="page-item">
+											<a href="<%=request.getContextPath()%>/admin/helpListAll.jsp?currentPage=<%=lastPage%>" class="page-link">마지막</a>	
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				    
+				</div>
+			
+			</div>
+		<!-- #/ container -->
+		</div>
+		<!--Content body end--> 
+		
+		<!--Footer start-->
+		<div class="footer">
+			<div class="copyright">
+				<p>Copyright &copy; Designed & Developed by <a href="https://themeforest.net/user/quixlab">Quixlab</a> 2018</p>
+			</div>
+		</div>
+		<!--Footer end-->
+	    
+	</div>
+	<!--Main wrapper end-->
+	
+	<!--Scripts-->
+	<script src="<%=request.getContextPath()%>/Resources/plugins/common/common.min.js"></script>
+	<script src="<%=request.getContextPath()%>/Resources/js/custom.min.js"></script>
+	<script src="<%=request.getContextPath()%>/Resources/js/settings.js"></script>
+	<script src="<%=request.getContextPath()%>/Resources/js/gleek.js"></script>
+	<script src="<%=request.getContextPath()%>/Resources/js/styleSwitcher.js"></script>
+	
+	<script src="<%=request.getContextPath()%>/Resources/plugins/jqueryui/js/jquery-ui.min.js"></script>
+	<script src="<%=request.getContextPath()%>/Resources/plugins/moment/moment.min.js"></script>
+	<script src="<%=request.getContextPath()%>/Resources/plugins/fullcalendar/js/fullcalendar.min.js"></script>
+	<script src="<%=request.getContextPath()%>/Resources/js/plugins-init/fullcalendar-init.js"></script>	
+
+</body>
 </html>
