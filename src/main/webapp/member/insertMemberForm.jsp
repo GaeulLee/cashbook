@@ -17,7 +17,12 @@
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/favicon.png">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-    <link href="<%=request.getContextPath()%>/Resources/css/style.css" rel="stylesheet">    
+    <link href="<%=request.getContextPath()%>/Resources/css/style.css" rel="stylesheet">
+    <style>
+    	#button_color{
+    		background-color: #9097c4;
+    	}
+    </style> 
 </head>
 
 <body class="h-100">  
@@ -58,7 +63,7 @@
 								    <div class="form-group">
 								        <input type="password" name="memberPw" class="form-control input-default" placeholder="Enter Password" required>                                       
 								    </div>
-								    <button type="submit" class="btn login-form__btn submit w-100">Sign in</button>
+								    <button type="submit" class="btn login-form__btn submit w-100" id="button_color">Sign in</button>
 								</form>
 	            				<p class="mt-5 login-form__footer">이미 회원이라면 <a href="<%=request.getContextPath()%>/loginForm.jsp" class="text-primary">로그인 </a></p>
 	                        </div>

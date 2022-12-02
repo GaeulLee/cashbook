@@ -38,6 +38,9 @@
 	CategoryDao categoryDao = new CategoryDao();
 	ArrayList<Category> categoryList = categoryDao.selectCategoryList(); // 카테고리 리스트
 	
+	CashDao cashDao = new CashDao();
+	Cash oldCash = cashDao.selectCashOne(cashNo);
+	
 	// V
 %>
 <!DOCTYPE html>
@@ -133,12 +136,20 @@
 											<td>
 												<select name="categoryNo" class="form-control input-default">
 												<%
-													for(Category c : categoryList){
-												%>
-														<option value="<%=c.getCategoryNo()%>">
-															[<%=c.getCategoryKind()%>]-<%=c.getCategoryName()%>
-														</option>
-												<%
+													for(Category c : categoryList){														
+														if(c.getCategoryNo() == oldCash.getCategoryNo()){
+														%>
+															<option value="<%=c.getCategoryNo()%>" selected>
+																[<%=c.getCategoryKind()%>]-<%=c.getCategoryName()%>
+															</option>
+														<%														
+														} else {
+														%>
+															<option value="<%=c.getCategoryNo()%>">
+																[<%=c.getCategoryKind()%>]-<%=c.getCategoryName()%>
+															</option>
+														<%
+														}
 													}
 												%>
 												</select>
@@ -147,13 +158,13 @@
 										<tr>
 											<th class="align-middle">금액</th>
 											<td>
-												<input type="number" name="cashPrice" class="form-control input-default">
+												<input type="number" name="cashPrice" value="<%=oldCash.getCashPrice()%>" class="form-control input-default">
 											</td>
 										</tr>
 										<tr>
 											<th class="align-middle">메모</th>
 											<td>
-												<textarea name="cashMemo" rows="10" cols="50" class="form-control input-default"></textarea>
+												<textarea name="cashMemo" rows="10" cols="50" class="form-control input-default"><%=oldCash.getCashMemo()%></textarea>
 											</td>
 										</tr>
 										<tr>
