@@ -83,7 +83,9 @@
 	<!--Main wrapper start-->
 	<div id="main-wrapper">
 		<!-- header -->
-		<jsp:include page="../inc/adminMainHeader.jsp"></jsp:include>
+		<jsp:include page="../inc/adminMainHeader.jsp">
+			<jsp:param value="<%=loginMember.getMemberId()%>" name="memberId"/>
+		</jsp:include>
 		
 		<!--Content body start-->
 		<div class="content-body">
@@ -114,7 +116,17 @@
 											<tr>
 												<td><%=m.getMemberNo()%></td>
 												<td><%=m.getMemberId()%></td>
-												<td><%=m.getMemberLevel()%></td>
+												<%
+													if(m.getMemberLevel() > 0){
+												%>
+														<td>관리자</td>
+												<%
+													} else {														
+												%>
+														<td>회원</td>
+												<%
+													}
+												%>												
 												<td><%=m.getMemberName()%></td>
 												<td><%=m.getUpdatedate()%></td>
 												<td><%=m.getCreatedate()%></td>

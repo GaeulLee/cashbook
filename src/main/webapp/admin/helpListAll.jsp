@@ -90,7 +90,9 @@
 	<div id="main-wrapper">
 	
 		<!-- header -->
-		<jsp:include page="../inc/adminMainHeader.jsp"></jsp:include>
+		<jsp:include page="../inc/adminMainHeader.jsp">
+			<jsp:param value="<%=loginMember.getMemberId()%>" name="memberId"/>
+		</jsp:include>
 		
 		<!--Content body start-->
 		<div class="content-body">

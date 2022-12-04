@@ -80,7 +80,9 @@
 				targetPage = "../inc/adminHeader.jsp";
 			}
 		%>
-		<jsp:include page="<%=targetPage%>"></jsp:include>
+		<jsp:include page="<%=targetPage%>">
+			<jsp:param value="<%=loginMember.getMemberId()%>" name="memberId"/>
+		</jsp:include>
 
         <!--Content body start-->
         <div class="content-body">

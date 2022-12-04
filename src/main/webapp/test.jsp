@@ -28,10 +28,8 @@
 	
 		<!--Content body start-->
 		<div class="content-body">
-			<div class="container-fluid">
-			
-				<div class="row">
-				
+			<div class="container-fluid">			
+				<div class="row">				
 					<div class="col">
 						<div class="card">
 							<!-- 본문시작 -->
@@ -39,10 +37,8 @@
 								<p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Asperiores repellendus molestiae exercitationem voluptatem tempora quo dolore nostrum dolor consequuntur itaque, alias fugit. Architecto rerum animi velit, beatae corrupti quos nam saepe asperiores aliquid quae culpa ea reiciendis ipsam numquam laborum aperiam. Id tempore consequuntur velit vitae corporis, aspernatur praesentium ratione!</p>
 							</div>
 						</div>
-					</div>
-				    
-				</div>
-			
+					</div>				   
+				</div>			
 			</div>
 		<!-- #/ container -->
 		</div>

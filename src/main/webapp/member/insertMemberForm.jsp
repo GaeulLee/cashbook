@@ -1,10 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="vo.Member"%>
 <%
 	// 로그인 유효성 검사(로그인이 되어있으면 회원가입을 할 수 없게)
 	if(session.getAttribute("loginMember") != null){
 		response.sendRedirect(request.getContextPath()+"/cash/cashList.jsp");
 		return;
 	}
+
+	Member loginMember = (Member)session.getAttribute("loginMember");
 %>
 <!DOCTYPE html>
 <html class="h-100" lang="en">
