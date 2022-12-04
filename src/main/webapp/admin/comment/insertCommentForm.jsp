@@ -23,6 +23,10 @@
 	}	
 	int helpNo = Integer.parseInt(request.getParameter("helpNo"));
 	
+	// M -> 답변할 문의글 불러오기
+	HelpDao helpDao = new HelpDao();
+	Help helpForComment = helpDao.selectHelpForComment(helpNo);	
+	
 	// V
 %>
 <!DOCTYPE html>
@@ -79,28 +83,44 @@
 								<a href="<%=request.getContextPath()%>/admin/helpListAll.jsp">back</a>
 								<div class="mb-4 h3 text-center" id="font_color">
 									<strong>답변 등록</strong>
-								</div>
+								</div>								
 								<form action="<%=request.getContextPath()%>/admin/comment/insertCommentAction.jsp" method="post">
 									<input type="hidden" name="helpNo" value="<%=helpNo%>">
-									<table class="table table-borderless w-75 mx-auto">										
+									<table class="table table-borderless w-75 mx-auto">																				
+										<tr>
+											<th class="align-middle w-25">작성자</th>
+											<td>
+												<%=helpForComment.getMemberId()%>
+											</td>
+											<th class="align-middle w-25">작성일</th>
+											<td>
+												<%=helpForComment.getCreatedate()%>
+											</td>											
+										</tr>
+										<tr>
+											<th class="align-middle">문의 내용</th>
+											<td colspan="3" class="text-left">
+												<%=helpForComment.getHelpMemo()%>
+											</td>											
+										</tr>									
 										<%
 											String msg = request.getParameter("msg");
 											if(msg != null){
 										%>
 												<tr>
-													<th class="text-info" colspan="2">&#10069;<%=msg%></th>
+													<th class="text-info" colspan="4">&#10069;<%=msg%></th>
 												</tr>	
 										<%
 											}
 										%>
 										<tr>
 											<th class="align-middle">답변 내용</th>
-											<td>
+											<td colspan="3">
 												<textarea name="commentMemo" rows="10" cols="50" placeholder="입력할 답변을 입력해주세요." class="form-control input-default"></textarea>
 											</td>
 										</tr>
 										<tr>
-											<td colspan="2" class="text-right">
+											<td colspan="4" class="text-right">
 												<button type="submit" class="btn btn-outline-secondary">등록</button>
 											</td>
 										</tr>

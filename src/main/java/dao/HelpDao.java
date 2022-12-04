@@ -11,6 +11,45 @@ import vo.*;
 
 public class HelpDao {
 	
+	// 관리자 답변 해당 문의글 출력
+	public Help selectHelpForComment(int helpNo) {
+		Help helpForComment = null;
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		DBUtil dbUtil = new DBUtil();
+		
+		String sql = "SELECT"
+				+ " help_memo helpMemo"
+				+ ", member_id memberId"
+				+ ", createdate"
+				+ " FROM help"
+				+ " WHERE help_no = ?";
+		
+		try {
+			conn = dbUtil.getConnection();
+				System.out.println("selectHelpForComment db 접속 완료");
+			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, helpNo);
+			rs = stmt.executeQuery();
+			if(rs.next()) {
+				helpForComment = new Help();
+				helpForComment.setHelpMemo(rs.getString("helpMemo"));
+				helpForComment.setMemberId(rs.getString("memberId"));
+				helpForComment.setCreatedate(rs.getString("createdate"));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				dbUtil.close(rs, stmt, conn);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return helpForComment;
+	}
+	
 	// 관리자 문의글 출력 helpListAll.jsp (매개변수가 다르면 같은 이름의 메소드를 만들수 있음 -> 오버로딩)
 	public ArrayList<HashMap<String, Object>> selectHelpList(int beginRow, int rowPerPage) {		 										
 
