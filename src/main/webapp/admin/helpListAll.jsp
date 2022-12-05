@@ -144,7 +144,7 @@
 													<div class="mt-4">
 														<span><%=m.get("commentMemo")%></span>
 														<div class="text-right">
-															<a href="<%=request.getContextPath()%>/admin/comment/updateCommentForm.jsp?commentNo=<%=m.get("commentNo")%>" class="btn btn-light btn-sm">수정</a>
+															<a href="<%=request.getContextPath()%>/admin/comment/updateCommentForm.jsp?commentNo=<%=m.get("commentNo")%>&helpNo=<%=m.get("helpNo")%>" class="btn btn-light btn-sm">수정</a>
 															<a href="<%=request.getContextPath()%>/admin/comment/deleteCommentAction.jsp?commentNo=<%=m.get("commentNo")%>" class="btn btn-light btn-sm">삭제</a>
 														</div>
 													</div>

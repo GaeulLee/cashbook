@@ -25,7 +25,7 @@
 	
 	// M -> 답변할 문의글 불러오기
 	HelpDao helpDao = new HelpDao();
-	Help helpForComment = helpDao.selectHelpForComment(helpNo);	
+	Help helpForComment = helpDao.selectHelpForComment(helpNo);
 	
 	// V
 %>
@@ -100,7 +100,7 @@
 										<tr>
 											<th class="align-middle">문의 내용</th>
 											<td colspan="3" class="text-left">
-												<%=helpForComment.getHelpMemo()%>
+												<textarea readonly="readonly" rows="15" cols="50" class="form-control input-default"><%=helpForComment.getHelpMemo()%></textarea>
 											</td>											
 										</tr>									
 										<%

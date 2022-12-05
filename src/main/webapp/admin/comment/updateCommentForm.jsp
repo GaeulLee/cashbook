@@ -18,11 +18,12 @@
 	}
 	
 	// 파라메터 유효성 검사
-	if(request.getParameter("commentNo") == null){
+	if(request.getParameter("commentNo") == null || request.getParameter("helpNo") == null){
 		response.sendRedirect(request.getContextPath()+"/admin/helpListAll.jsp");
 		return;
 	}	
 	int commentNo = Integer.parseInt(request.getParameter("commentNo"));
+	int helpNo = Integer.parseInt(request.getParameter("helpNo"));
 	
 	// 데이터 묶기
 	Comment comment = new Comment();
@@ -31,6 +32,10 @@
 	// M
 	CommentDao commentDao = new CommentDao();
 	Comment oldComment = commentDao.selectCommentOne(comment);
+
+	HelpDao helpDao = new HelpDao();
+	Help helpForComment = helpDao.selectHelpForComment(helpNo); // -> 답변할 문의글 불러오기
+	
 	
 	// V
 %>
@@ -91,7 +96,23 @@
 									<div class="mb-4 h3 text-center" id="font_color">
 										<strong>답변 수정</strong>
 									</div>
-									<table class="table table-borderless w-75 mx-auto align-middle">									
+									<table class="table table-borderless w-75 mx-auto align-middle">
+										<tr>
+											<th class="align-middle w-25">작성자</th>
+											<td>
+												<%=helpForComment.getMemberId()%>
+											</td>
+											<th class="align-middle w-25">작성일</th>
+											<td>
+												<%=helpForComment.getCreatedate()%>
+											</td>											
+										</tr>
+										<tr>
+											<th class="align-middle">문의 내용</th>
+											<td colspan="3" class="text-left">
+												<textarea readonly="readonly" rows="15" cols="50" class="form-control input-default"><%=helpForComment.getHelpMemo()%></textarea>
+											</td>											
+										</tr>								
 										<%
 											String msg = request.getParameter("msg");
 											if(msg != null){
@@ -104,12 +125,12 @@
 										%>
 										<tr>
 											<th class="align-middle">답변 내용</th>
-											<td>
+											<td colspan="3">
 												<textarea name="commentMemo" rows="10" cols="50" placeholder="수정할 답변을 입력해주세요." class="form-control input-default"><%=oldComment.getCommentMemo()%></textarea>
 											</td>
 										</tr>
 										<tr>
-											<td colspan="2" class="text-right">
+											<td colspan="4" class="text-right">
 												<button type="submit" class="btn btn-outline-secondary">수정</button>
 											</td>
 										</tr>

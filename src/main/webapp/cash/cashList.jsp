@@ -157,20 +157,20 @@
 										</tr>
 										<tr>
 											<%
-												for(int i=1; i<=totalTd; i++){
+												for(int i=1; i<=totalTd; i++){													
 											%>
 													<td class="align-top">
 														<div id="td_cell">
 											<%
-														int date = i - beginBlank; // i를 출력하면 안됨 i는 td의 갯수
-														if(date > 0 && date <= lastDate){
+															int date = i - beginBlank; // i를 출력하면 안됨 i는 td의 갯수
+															if(date > 0 && date <= lastDate){
 											%>
 															<div>
 																<a href="<%=request.getContextPath()%>/cash/cashDateList.jsp?year=<%=year%>&month=<%=month+1%>&date=<%=date%>">
 																	<%=date%>
 																</a>
 															</div>
-															<div>
+															<div onclick="location.href='<%=request.getContextPath()%>/cash/cashDateList.jsp?year=<%=year%>&month=<%=month+1%>&date=<%=date%>'" style="cursor:pointer;">
 															<%
 																for(HashMap<String, Object> m : list) {
 																	String cashDate = (String)(m.get("cashDate"));
