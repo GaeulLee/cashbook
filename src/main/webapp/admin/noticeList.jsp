@@ -28,7 +28,7 @@
 	int beginRow = (currentPage-1)*ROW_PER_PAGE;
 	final int PAGE_COUNT = 10;
 	int beginPage = (currentPage-1)/PAGE_COUNT*PAGE_COUNT+1;
-	int endPage = beginPage*PAGE_COUNT;
+	int endPage = beginPage+PAGE_COUNT-1;
 	int lastPage = cnt/ROW_PER_PAGE;
 	
 	if(cnt%ROW_PER_PAGE != 0){
