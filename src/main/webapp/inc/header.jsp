@@ -85,6 +85,13 @@
              </li>
              
              <li>
+                 <a href="<%=request.getContextPath()%>/memberNoticeList.jsp" aria-expanded="false">
+                    <i class="icon-notebook menu-icon"></i>
+					<span class="nav-text">공지</span>					
+                 </a>
+             </li>
+             
+             <li>
                  <a href="<%=request.getContextPath()%>/help/helpList.jsp" aria-expanded="false">
                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-question-circle" viewBox="0 0 16 16">
 					  	<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
