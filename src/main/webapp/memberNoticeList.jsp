@@ -11,6 +11,9 @@
 		2. 페이징(페이지 값 있다면 바꿔주기)
 		3. 모델 출력
 	*/
+	
+	request.setCharacterEncoding("utf-8");
+	
 	// 로그인 유효성 검사
 	Member loginMember = (Member)session.getAttribute("loginMember");
 	if(loginMember == null) {
@@ -20,6 +23,10 @@
 	
 	// 검색 값 받아오기
 	String word = request.getParameter("word");
+	if(word == null){
+		word = "";
+	}
+		System.out.println("word: "+word);
 	
 	// 페이징
 	int currentPage = 1;
@@ -30,11 +37,12 @@
 	NoticeDao noticeDao = new NoticeDao();
 	int cnt = 0;	
 	// 검색 값 유무에 따라 분기
-	if(word == null){
+	if(word.equals("")){
 		cnt = noticeDao.selectNoticeCount();
 	} else {
-		cnt = 0; // 추후 수정
-	}	
+		cnt = noticeDao.selectNoticeCountWithWord(word);
+	}
+		System.out.println("cnt: "+cnt);
 	final int ROW_PER_PAGE = 10;
 	int beginRow = (currentPage-1)*ROW_PER_PAGE;
 	final int PAGE_COUNT = 10;
@@ -52,10 +60,10 @@
 	// M
 	// 검색 값 유무에 따라 분기
 	ArrayList<Notice> noticeList = new ArrayList<Notice>();
-	if(word == null){
+	if(word.equals("")){
 		noticeList = noticeDao.selectNoticeListByPage(beginRow, ROW_PER_PAGE);
 	} else {
-		noticeList = null; // 추후 수정
+		noticeList = noticeDao.selectNoticeListByPageWithWord(beginRow, ROW_PER_PAGE, word);
 	}
  
 	
@@ -127,9 +135,9 @@
 									<strong>공지 목록</strong>
 								</div>
 								<div class="mb-1 text-right">
-									<form action="<%=request.getContextPath()%>/memberNoticeList.jsp?word=<%=word%>" method="post">
+									<form action="<%=request.getContextPath()%>/memberNoticeList.jsp" method="post">
 										<label>
-											<input type="text" placeholder="제목 검색" class="form-control input-default">
+											<input type="text" name="word" placeholder="내용 검색" value="<%=word%>" class="form-control input-default">
 										</label>
 										<button type="submit" class="btn btn-light">Search</button>
 									</form>
@@ -156,13 +164,13 @@
 								<div>
 									<ul class="pagination justify-content-center">				
 										<li class="page-item">
-											<a href="<%=request.getContextPath()%>/memberNoticeList.jsp?currentPage=1" class="page-link">처음</a>
+											<a href="<%=request.getContextPath()%>/memberNoticeList.jsp?currentPage=1&word=<%=word%>" class="page-link">처음</a>
 										</li>
 										<%
 											if(currentPage > 1){
 										%>
 												<li class="page-item">
-													<a href="<%=request.getContextPath()%>/memberNoticeList.jsp?currentPage=<%=currentPage-1%>" class="page-link">이전</a>
+													<a href="<%=request.getContextPath()%>/memberNoticeList.jsp?currentPage=<%=currentPage-1%>&word=<%=word%>" class="page-link">이전</a>
 												</li>
 										<%
 											}
@@ -170,13 +178,13 @@
 												if(currentPage == i){
 												%>
 													<li class="page-item active">
-														<a href="<%=request.getContextPath()%>/memberNoticeList.jsp?currentPage=<%=i%>" class="page-link"><%=i%></a>
+														<a href="<%=request.getContextPath()%>/memberNoticeList.jsp?currentPage=<%=i%>&word=<%=word%>" class="page-link"><%=i%></a>
 													</li>
 												<%		
 												}else{
 												%>
 													<li class="page-item">
-														<a href="<%=request.getContextPath()%>/memberNoticeList.jsp?currentPage=<%=i%>" class="page-link"><%=i%></a>
+														<a href="<%=request.getContextPath()%>/memberNoticeList.jsp?currentPage=<%=i%>&word=<%=word%>" class="page-link"><%=i%></a>
 													</li>
 												<%	
 												}
@@ -184,13 +192,13 @@
 											if(currentPage < lastPage){
 										%>
 												<li class="page-item">
-													<a href="<%=request.getContextPath()%>/memberNoticeList.jsp?currentPage=<%=currentPage+1%>" class="page-link">다음</a>
+													<a href="<%=request.getContextPath()%>/memberNoticeList.jsp?currentPage=<%=currentPage+1%>&word=<%=word%>" class="page-link">다음</a>
 												</li>
 										<%
 											}
 										%>
 										<li class="page-item">
-											<a href="<%=request.getContextPath()%>/memberNoticeList.jsp?currentPage=<%=lastPage%>" class="page-link">마지막</a>	
+											<a href="<%=request.getContextPath()%>/memberNoticeList.jsp?currentPage=<%=lastPage%>&word=<%=word%>" class="page-link">마지막</a>	
 										</li>
 									</ul>
 								</div>

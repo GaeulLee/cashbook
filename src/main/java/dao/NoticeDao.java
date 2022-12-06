@@ -39,6 +39,39 @@ public class NoticeDao {
 		}
 		return cnt;
 	}
+	
+	// 검색 값이 있는 마지막 페이지 구하기
+	public int selectNoticeCountWithWord(String word) {
+		int cnt = 0;
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		DBUtil dbUtil = new DBUtil();
+		
+		String sql = "SELECT COUNT(*) cnt"
+				+ " FROM notice"
+				+ " WHERE notice_memo LIKE ?";
+		
+		try {
+			conn = dbUtil.getConnection();
+				System.out.println("selectNoticeCountWithWord db 접속 확인");			
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, "%"+word+"%");
+			ResultSet rs = stmt.executeQuery();
+			if(rs.next()) {
+				cnt = rs.getInt("cnt");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				dbUtil.close(null, stmt, conn);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return cnt;
+	}
 
 	// loginForm.jsp 공지목록
 	public ArrayList<Notice> selectNoticeListByPage(int beginRow, int rowPerPage) {
@@ -58,6 +91,48 @@ public class NoticeDao {
 			stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, beginRow);
 			stmt.setInt(2, rowPerPage);
+			rs = stmt.executeQuery();
+			list = new ArrayList<Notice>();
+			while(rs.next()) {
+				Notice n = new Notice();
+				n.setNoticeNo(rs.getInt("noticeNo"));
+				n.setNoticeMemo(rs.getString("noticeMemo"));
+				n.setCreatedate(rs.getString("createdate"));
+				list.add(n);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				dbUtil.close(rs, stmt, conn);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return list;
+	}
+	
+	// loginForm.jsp 검색공지목록
+	public ArrayList<Notice> selectNoticeListByPageWithWord(int beginRow, int rowPerPage, String word) {
+		
+		ArrayList<Notice> list = null;
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		DBUtil dbUtil = new DBUtil();
+		
+		String sql = "SELECT notice_no noticeNo, notice_memo noticeMemo, createdate"
+				+ " FROM notice"
+				+ " WHERE notice_memo LIKE ?"
+				+ " ORDER BY createdate DESC"
+				+ " LIMIT ?,?";		
+		try {
+			conn = dbUtil.getConnection();
+				System.out.println("selectNoticeListByPageWithWord db 접속 확인");			
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, "%"+word+"%");
+			stmt.setInt(2, beginRow);
+			stmt.setInt(3, rowPerPage);			
 			rs = stmt.executeQuery();
 			list = new ArrayList<Notice>();
 			while(rs.next()) {
