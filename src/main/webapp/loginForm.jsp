@@ -63,7 +63,7 @@
     </style> 
 </head>
 
-<body class="h-100">
+<body>
     <!--Preloader start-->
     <div id="preloader">
         <div class="loader">
@@ -80,12 +80,12 @@
     </div>
     
     <!-- 회원 로그인 폼 -->
-    <div class="login-form-bg h-50">
-        <div class="container h-100">
-            <div class="row justify-content-center h-100">
+    <div class="login-form-bg">
+        <div class="container">
+            <div class="row justify-content-center">
                 <div class="col-xl-6">
                     <div class="form-input-content">
-                        <div class="card login-form mb-0">
+                        <div class="card login-form mb-3">
                             <div class="card-body pt-5">
                                 <a class="text-center" href="<%=request.getContextPath()%>/loginForm.jsp"><h4>Login</h4></a>
                                 <form action="<%=request.getContextPath()%>/loginAction.jsp" method="post" class="mt-5 mb-5 login-input">
@@ -105,7 +105,7 @@
                                     </div>
                                     <button type="submit" class="btn login-form__btn submit w-100" id="button_color">Sign In</button>
                                 </form>
-                                <p class="mt-5 login-form__footer">회원이 아니신가요? <a href="<%=request.getContextPath()%>/member/insertMemberForm.jsp" class="text-primary">화원가입</a></p>
+                                <p class="mt-5 login-form__footer">회원이 아니신가요? <a href="<%=request.getContextPath()%>/member/insertMemberForm.jsp" class="text-primary">회원가입</a></p>
                             </div>
                         </div>
                     </div>
