@@ -64,7 +64,7 @@
 								    <div class="form-group">
 								        <input type="password" name="memberPw" class="form-control input-default" placeholder="Enter Password" required>                                       
 								    </div>
-								    <button type="submit" class="btn login-form__btn submit w-100" id="button_color">Sign in</button>
+								    <button type="submit" class="btn login-form__btn submit w-100" id="button_color">로그인</button>
 								</form>
 	            				<p class="mt-5 login-form__footer">이미 회원이라면 <a href="<%=request.getContextPath()%>/loginForm.jsp" class="text-primary">로그인 </a></p>
 	                        </div>

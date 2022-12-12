@@ -103,7 +103,7 @@
                                     <div class="form-group">
                                         <input type="password" name="memberPw" class="form-control input-default" placeholder="Password">
                                     </div>
-                                    <button type="submit" class="btn login-form__btn submit w-100" id="button_color">Sign In</button>
+                                    <button type="submit" class="btn login-form__btn submit w-100" id="button_color">로그인</button>
                                 </form>
                                 <p class="mt-5 login-form__footer">회원이 아니신가요? <a href="<%=request.getContextPath()%>/member/insertMemberForm.jsp" class="text-primary">회원가입</a></p>
                             </div>
