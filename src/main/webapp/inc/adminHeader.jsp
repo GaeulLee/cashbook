@@ -84,6 +84,18 @@
              </li>
              
              <li>
+                 <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                     <i class="icon-graph menu-icon"></i>
+					 <span class="nav-text">통계</span>
+                 </a>
+                 <ul aria-expanded="false">
+                     <li><a href="<%=request.getContextPath()%>/stats/statsListByYear.jsp">년도별</a></li>
+                     <li><a href="<%=request.getContextPath()%>/stats/statsListByMonth.jsp">월별</a></li>
+                     <li><a href="<%=request.getContextPath()%>/stats/statsListByCate.jsp">카테고리별</a></li>                    
+                 </ul>
+             </li>
+             
+             <li>
                  <a href="<%=request.getContextPath()%>/memberNoticeList.jsp" aria-expanded="false">
                     <i class="icon-notebook menu-icon"></i>
 					<span class="nav-text">공지</span>					

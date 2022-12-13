@@ -74,7 +74,7 @@
 <!--Sidebar start-->
 <div class="nk-sidebar">           
      <div class="nk-nav-scroll">
-         <ul class="metismenu" id="menu">
+         <ul class="metismenu" id="menu">                          
              <li>
                  <a href="<%=request.getContextPath()%>/cash/cashList.jsp" aria-expanded="false">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-house-door" viewBox="0 0 16 16">
@@ -82,6 +82,19 @@
 					</svg>
 					<span class="nav-text">Home</span>
                  </a>
+             </li>
+             
+             
+             <li>
+                 <a class="has-arrow" href="javascript:void()" aria-expanded="false">
+                     <i class="icon-graph menu-icon"></i>
+					 <span class="nav-text">통계</span>
+                 </a>
+                 <ul aria-expanded="false">
+                     <li><a href="<%=request.getContextPath()%>/stats/statsListByYear.jsp">년도별</a></li>
+                     <li><a href="<%=request.getContextPath()%>/stats/statsListByMonth.jsp">월별</a></li>
+                     <li><a href="<%=request.getContextPath()%>/stats/statsListByCate.jsp">카테고리별</a></li>                    
+                 </ul>
              </li>
              
              <li>
