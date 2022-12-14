@@ -19,7 +19,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
-	<title>frame</title>
+	<title>updateMemberForm</title>
 	<!-- Custom Stylesheet -->
 	<link href="<%=request.getContextPath()%>/Resources/css/style.css" rel="stylesheet">
 	<link href="<%=request.getContextPath()%>/Resources/css/style.css" rel="stylesheet">
@@ -73,16 +73,14 @@
 	
 		<!--Content body start-->
 		<div class="content-body">
-			<div class="container-fluid">
-			
-				<div class="row">
-				
+			<div class="container-fluid">			
+				<div class="row">				
 					<div class="col">
 						<div class="card">
 							<!-- 본문시작 -->
 							<div class="card-body">
 								<a href="<%=request.getContextPath()%>/member/memberOne.jsp">back</a>
-								<form action="<%=request.getContextPath()%>/member/updateMemberAction.jsp" method="post">
+								<form action="<%=request.getContextPath()%>/member/updateMemberAction.jsp" id="updateForm" method="post">
 									<table class="table table-borderless w-50 mx-auto align-middle">
 										<tr>
 											<th colspan="2">
@@ -114,12 +112,12 @@
 										<tr>
 											<th class="w-50 align-middle">회원 이름</th>
 											<td>
-												<input type="text" name="memberName" value="<%=memberName%>" class="form-control w-75 input-default">
+												<input type="text" name="memberName" id="memberName" value="<%=memberName%>" class="form-control w-75 input-default">
 											</td>
 										</tr>
 										<tr>
 											<td colspan="2" class="text-right">
-												<button type="submit" class="btn mb-1 btn-outline-secondary">수정</button>
+												<button type="button" id="updateBtn" class="btn mb-1 btn-outline-secondary">수정</button>
 											</td>
 										</tr>
 									</table>
@@ -147,6 +145,27 @@
 	<!--Main wrapper end-->
 	
 	<!--Scripts-->
+	<script>
+    	let updateBtn = document.querySelector('#updateBtn');
+    	
+    	updateBtn.addEventListener('click', function(){
+    		// debug
+    		console.log('updateBtn clicked');
+    		
+    		// form check
+    		// memberName
+    		let memberName = document.querySelector('#memberName');
+    		if(memberName.value == ''){
+    			alert('이름을 입력하세요.');
+    			memberName.focus();
+				return;
+    		}
+	
+    		let updateForm = document.querySelector('#updateForm');
+    		updateForm.submit();
+    	});    	
+    </script>
+	
 	<script src="<%=request.getContextPath()%>/Resources/plugins/common/common.min.js"></script>
 	<script src="<%=request.getContextPath()%>/Resources/js/custom.min.js"></script>
 	<script src="<%=request.getContextPath()%>/Resources/js/settings.js"></script>

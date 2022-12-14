@@ -100,7 +100,7 @@
 							<!-- 본문시작 -->
 							<div class="card-body">
 								<a href="<%=request.getContextPath()%>/admin/helpListAll.jsp">back</a>
-								<form action="<%=request.getContextPath()%>/admin/comment/updateCommentAction.jsp" method="post">
+								<form action="<%=request.getContextPath()%>/admin/comment/updateCommentAction.jsp" id="updateForm" method="post">
 									<input type="hidden" name="commentNo" value="<%=oldComment.getCommentNo()%>">
 									<div class="mb-4 h3 text-center" id="font_color">
 										<strong>답변 수정</strong>
@@ -135,12 +135,12 @@
 										<tr>
 											<th class="align-middle">답변 내용</th>
 											<td colspan="3">
-												<textarea name="commentMemo" rows="10" cols="50" placeholder="수정할 답변을 입력해주세요." class="form-control input-default"><%=oldComment.getCommentMemo()%></textarea>
+												<textarea name="commentMemo" id="commentMemo" rows="10" cols="50" placeholder="수정할 답변을 입력해주세요." class="form-control input-default"><%=oldComment.getCommentMemo()%></textarea>
 											</td>
 										</tr>
 										<tr>
 											<td colspan="4" class="text-right">
-												<button type="submit" class="btn btn-outline-secondary">수정</button>
+												<button type="button" id="updateBtn" class="btn btn-outline-secondary">수정</button>
 											</td>
 										</tr>
 									</table>
@@ -166,6 +166,26 @@
 	<!--Main wrapper end-->
 	
 	<!--Scripts-->
+	<script>
+    	let updateBtn = document.querySelector('#updateBtn');    	
+    	updateBtn.addEventListener('click', function(){
+    		// debug
+    		console.log('updateBtn clicked');
+    		
+    		// form check
+    		// commentMemo
+    		let commentMemo = document.querySelector('#commentMemo');
+    		if(commentMemo.value == ''){
+    			alert('답변내용을 입력하세요.');
+    			commentMemo.focus();
+				return;
+    		}
+	
+    		let updateForm = document.querySelector('#updateForm');
+    		updateForm.submit();
+    	});    	
+    </script>
+	
 	<script src="<%=request.getContextPath()%>/Resources/plugins/common/common.min.js"></script>
 	<script src="<%=request.getContextPath()%>/Resources/js/custom.min.js"></script>
 	<script src="<%=request.getContextPath()%>/Resources/js/settings.js"></script>

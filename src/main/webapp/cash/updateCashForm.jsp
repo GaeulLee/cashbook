@@ -116,7 +116,7 @@
 							<!-- 본문시작 -->
 							<div class="card-body">
 								<a href="<%=request.getContextPath()%>/cash/cashDateList.jsp?year=<%=year%>&month=<%=month%>&date=<%=date%>">back</a>
-								<form action="<%=request.getContextPath()%>/cash/updateCashAction.jsp?cashNo=<%=cashNo%>" method="post">
+								<form action="<%=request.getContextPath()%>/cash/updateCashAction.jsp?cashNo=<%=cashNo%>" id="updateForm" method="post">
 									<input type="hidden" name="year" value="<%=year%>">
 									<input type="hidden" name="month" value="<%=month%>">
 									<input type="hidden" name="date" value="<%=date%>">
@@ -170,18 +170,18 @@
 										<tr>
 											<th class="align-middle">금액</th>
 											<td>
-												<input type="number" name="cashPrice" value="<%=oldCash.getCashPrice()%>" class="form-control input-default">
+												<input type="number" name="cashPrice" id="cashPrice" value="<%=oldCash.getCashPrice()%>" class="form-control input-default">
 											</td>
 										</tr>
 										<tr>
 											<th class="align-middle">메모</th>
 											<td>
-												<textarea name="cashMemo" rows="10" cols="50" class="form-control input-default"><%=oldCash.getCashMemo()%></textarea>
+												<textarea name="cashMemo" id="cashMemo" rows="10" cols="50" class="form-control input-default"><%=oldCash.getCashMemo()%></textarea>
 											</td>
 										</tr>
 										<tr>
 											<td colspan="2" class="text-right">
-												<button type="submit" class="btn btn-outline-secondary">수정</button>
+												<button type="button" id="updateBtn" class="btn btn-outline-secondary">수정</button>
 											</td>
 										</tr>
 									</table>
@@ -209,6 +209,35 @@
 	<!--Main wrapper end-->
 	
 	<!--Scripts-->
+	<script>
+    	let updateBtn = document.querySelector('#updateBtn');
+    	
+    	updateBtn.addEventListener('click', function(){
+    		// debug
+    		console.log('updateBtn clicked');
+    		
+    		// form check
+    		// cashPrice
+    		let cashPrice = document.querySelector('#cashPrice');
+    		if(cashPrice.value == ''){
+    			alert('금액을 입력하세요.');
+    			cashPrice.focus();
+				return;
+    		}
+    		
+    		// cashMemo
+    		let cashMemo = document.querySelector('#cashMemo');
+    		if(cashMemo.value == ''){
+    			alert('내역을 입력하세요.');
+    			cashMemo.focus();
+				return;
+    		}
+	
+    		let updateForm = document.querySelector('#updateForm');
+    		updateForm.submit();
+    	});    	
+    </script>
+	
 	<script src="<%=request.getContextPath()%>/Resources/plugins/common/common.min.js"></script>
 	<script src="<%=request.getContextPath()%>/Resources/js/custom.min.js"></script>
 	<script src="<%=request.getContextPath()%>/Resources/js/settings.js"></script>

@@ -121,7 +121,7 @@
 							<div class="card-body">
 								<a href="<%=request.getContextPath()%>/cash/cashList.jsp?year=<%=year%>&month=<%=month-1%>">back</a>
 								<!-- cash 입력 폼 -->
-								<form action="<%=request.getContextPath()%>/cash/insertCashAction.jsp" method="post">
+								<form action="<%=request.getContextPath()%>/cash/insertCashAction.jsp" id="insertForm" method="post">
 									<!-- memberId와 날짜는 hidden 값으로 넘기기 -->
 									<input type="hidden" name="memberId" value="<%=memberId%>">
 									<input type="hidden" name="year" value="<%=year%>">
@@ -170,18 +170,18 @@
 										<tr>
 											<th class="align-middle">금액</th>
 											<td>
-												<input type="number" name="cashPrice" class="form-control input-default">
+												<input type="number" name="cashPrice" id="cashPrice" class="form-control input-default">
 											</td>
 										</tr>
 										<tr>
 											<th class="align-middle">메모</th>
 											<td>
-												<textarea name="cashMemo" rows="3" cols="50" class="form-control input-default"></textarea>
+												<textarea name="cashMemo" id="cashMemo" rows="3" cols="50" class="form-control input-default"></textarea>
 											</td>
 										</tr>
 										<tr>
 											<td colspan="2" class="text-right">
-												<button type="submit" class="btn btn-outline-secondary">추가</button>
+												<button type="button" id="insertBtn" class="btn btn-outline-secondary">추가</button>
 											</td>
 										</tr>
 									</table>
@@ -259,6 +259,35 @@
 	<!--Main wrapper end-->
 	
 	<!--Scripts-->
+	<script>
+    	let insertBtn = document.querySelector('#insertBtn');
+    	
+    	insertBtn.addEventListener('click', function(){
+    		// debug
+    		console.log('insertBtn clicked');
+    		
+    		// form check
+    		// cashPrice
+    		let cashPrice = document.querySelector('#cashPrice');
+    		if(cashPrice.value == ''){
+    			alert('금액을 입력하세요.');
+    			cashPrice.focus();
+				return;
+    		}
+    		
+    		// cashMemo
+    		let cashMemo = document.querySelector('#cashMemo');
+    		if(cashMemo.value == ''){
+    			alert('내역을 입력하세요.');
+    			cashMemo.focus();
+				return;
+    		}
+	
+    		let insertForm = document.querySelector('#insertForm');
+    		insertForm.submit();
+    	});    	
+    </script>
+	
 	<script src="<%=request.getContextPath()%>/Resources/plugins/common/common.min.js"></script>
 	<script src="<%=request.getContextPath()%>/Resources/js/custom.min.js"></script>
 	<script src="<%=request.getContextPath()%>/Resources/js/settings.js"></script>

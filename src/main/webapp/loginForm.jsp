@@ -47,7 +47,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>login</title>
     <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous"> -->
-    <link href="<%=request.getContextPath()%>/Resources/css/style.css" rel="stylesheet">     
+    <link href="<%=request.getContextPath()%>/Resources/css/style.css" rel="stylesheet">
     <style>
     	th{
     		background-color: #ededf8;
@@ -57,7 +57,7 @@
     		color: #9097c4;
     	}
     	
-    	#button_color{
+    	#signinBtn{
     		background-color: #9097c4;
     	}
 		
@@ -100,7 +100,7 @@
                         <div class="card login-form mb-3">
                             <div class="card-body pt-5">
                                 <a class="text-center" href="<%=request.getContextPath()%>/loginForm.jsp"><h4>Login</h4></a>
-                                <form action="<%=request.getContextPath()%>/loginAction.jsp" method="post" class="mt-5 mb-5 login-input">
+                                <form action="<%=request.getContextPath()%>/loginAction.jsp" method="post" id="signinForm" class="mt-5 mb-5 login-input">
                              		<%
 										String msg = request.getParameter("msg");
 										if(msg != null){
@@ -110,12 +110,12 @@
 										}
 									%>
                                     <div class="form-group">
-                                        <input type="text" name="memberId" class="form-control input-default" placeholder="Id">
+                                        <input type="text" name="memberId" id="memberId" class="form-control input-default" placeholder="Id">
                                     </div>
                                     <div class="form-group">
-                                        <input type="password" name="memberPw" class="form-control input-default" placeholder="Password">
+                                        <input type="password" name="memberPw" id="memberPw" class="form-control input-default" placeholder="Password">
                                     </div>
-                                    <button type="submit" class="btn login-form__btn submit w-100" id="button_color">로그인</button>
+                                    <button type="button" class="btn login-form__btn submit w-100" id="signinBtn">로그인</button>
                                 </form>
                                 <p class="mt-5 login-form__footer">회원이 아니신가요? <a href="<%=request.getContextPath()%>/member/insertMemberForm.jsp" class="text-primary">회원가입</a></p>
                             </div>
@@ -124,7 +124,7 @@
                 </div>
             </div>
         </div>
-    </div>
+     </div>
     
      <!-- 공지(5개)목록 페이징 (상세보기 없음 타이틀만 보이게, 댓글 기능) -->
      <div class="col mx-auto mt-2 w-50 h-50">     
@@ -201,10 +201,40 @@
 	<div>
 
     <!--Scripts-->
+    <script>
+    	let signinBtn = document.querySelector('#signinBtn');
+    	
+    	signinBtn.addEventListener('click', function(){
+    		// debug
+    		console.log('signinBtn clicked');
+    		
+    		// form check
+    		// memberId
+    		let memberId = document.querySelector('#memberId');
+    		if(memberId.value == ''){
+    			alert('아이디를 입력하세요.');
+    			memberId.focus(); // 커서 이동
+				return;
+    		}
+    		
+    		// memberPw
+    		let memberPw = document.querySelector('#memberPw');
+    		if(memberPw.value == ''){
+    			alert('비밀번호를 입력하세요.');
+    			memberPw.focus();
+				return;
+    		}
+    		    		
+    		let signinForm = document.querySelector('#signinForm');
+    		signinForm.submit();
+    	});    	
+    </script>
+    
     <script src="<%=request.getContextPath()%>/Resources/plugins/common/common.min.js"></script>
     <script src="<%=request.getContextPath()%>/Resources/js/custom.min.js"></script>
     <script src="<%=request.getContextPath()%>/Resources/js/settings.js"></script>
     <script src="<%=request.getContextPath()%>/Resources/js/gleek.js"></script>
     <script src="<%=request.getContextPath()%>/Resources/js/styleSwitcher.js"></script>
+
 </body>
 </html>

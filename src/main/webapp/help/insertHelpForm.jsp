@@ -81,7 +81,7 @@
 						<div class="card">
 							<!-- 본문시작 -->
 							<div class="card-body">
-								<form action="<%=request.getContextPath()%>/help/insertHelpAction.jsp" method="post">
+								<form action="<%=request.getContextPath()%>/help/insertHelpAction.jsp" id="insertForm" method="post">
 									<input type="hidden" name="memberId" value="<%=memberId%>">
 									<table class="table table-borderless w-75 mx-auto align-middle">
 										<tr>
@@ -102,23 +102,20 @@
 										<tr>
 											<th class="align-middle">문의 내용</th>
 											<td>
-												<textarea name="helpMemo" rows="20" cols=50" placeholder="문의 내용을 입력해주세요." class="form-control input-default"></textarea>
+												<textarea name="helpMemo" id="helpMemo" rows="20" cols=50" placeholder="문의 내용을 입력해주세요." class="form-control input-default"></textarea>
 											</td>
 										</tr>
 										<tr>
 											<td colspan="2" class="text-right">
-												<button type="submit" class="btn btn-outline-secondary">작성</button>
+												<button type="button" id="insertBtn" class="btn btn-outline-secondary">작성</button>
 											</td>
 										</tr>
 									</table>
 								</form>
-
 							</div>
 						</div>
-					</div>
-				    
-				</div>
-			
+					</div>				    
+				</div>			
 			</div>
 		<!-- #/ container -->
 		</div>
@@ -136,6 +133,27 @@
 	<!--Main wrapper end-->
 	
 	<!--Scripts-->
+	<script>
+    	let insertBtn = document.querySelector('#insertBtn');
+    	
+    	insertBtn.addEventListener('click', function(){
+    		// debug
+    		console.log('insertBtn clicked');
+    		
+    		// form check
+    		// helpMemo
+    		let helpMemo = document.querySelector('#helpMemo');
+    		if(helpMemo.value == ''){
+    			alert('문의내용을 입력하세요.');
+    			helpMemo.focus();
+				return;
+    		}
+	
+    		let insertForm = document.querySelector('#insertForm');
+    		insertForm.submit();
+    	});    	
+    </script>
+	
 	<script src="<%=request.getContextPath()%>/Resources/plugins/common/common.min.js"></script>
 	<script src="<%=request.getContextPath()%>/Resources/js/custom.min.js"></script>
 	<script src="<%=request.getContextPath()%>/Resources/js/settings.js"></script>

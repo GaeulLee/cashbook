@@ -15,7 +15,6 @@
 %>
 <!DOCTYPE html>
 <html>
-<html lang="en">
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -84,7 +83,7 @@
 							<!-- 본문시작 -->
 							<div class="card-body">
 								<a href="<%=request.getContextPath()%>/member/memberOne.jsp">back</a>
-								<form action="<%=request.getContextPath()%>/member/updatePwAction.jsp" method="post">
+								<form action="<%=request.getContextPath()%>/member/updatePwAction.jsp" id="updateForm" method="post">
 									<table class="table table-borderless w-50 mx-auto align-middle">
 										<tr>
 											<th colspan="2">
@@ -110,13 +109,19 @@
 										<tr>
 											<th class="w-50 align-middle">현재 PW</th>
 											<td>
-												<input type="password" name="oldPw" class="form-control w-75 input-default">
+												<input type="password" name="oldPw" id="oldPw" class="form-control w-75 input-default">
 											</td>
 										</tr>
 										<tr>
 											<th class="w-50 align-middle">바꿀 PW</th>
 											<td>
-												<input type="password" name="newPw" class="form-control w-75 input-default">
+												<input type="password" name="newPw" id="newPw" class="form-control w-75 input-default">
+											</td>
+										</tr>
+										<tr>
+											<th class="w-50 align-middle">PW 확인</th>
+											<td>
+												<input type="password" id="newPwCheck" class="form-control w-75 input-default">
 											</td>
 										</tr>
 										<tr>
@@ -127,7 +132,7 @@
 										</tr>
 										<tr>
 											<td colspan="2" class="text-right">
-												<button type="submit" class="btn mb-1 btn-outline-secondary">수정</button>
+												<button type="button" id="updateBtn" class="btn mb-1 btn-outline-secondary">수정</button>
 											</td>
 										</tr>
 									</table>
@@ -155,6 +160,49 @@
 	<!--Main wrapper end-->
 	
 	<!--Scripts-->
+	<script>
+    	let updateBtn = document.querySelector('#updateBtn');
+    	
+    	updateBtn.addEventListener('click', function(){
+    		// debug
+    		console.log('updateBtn clicked');
+    		
+    		// form check
+    		// oldPw
+    		let oldPw = document.querySelector('#oldPw');
+    		if(oldPw.value == ''){
+    			alert('현재 비밀번호를 입력하세요.');
+    			oldPw.focus();
+				return;
+    		}
+    		// newPw
+    		let newPw = document.querySelector('#newPw');
+    		if(newPw.value == ''){
+    			alert('바꿀 비밀번호를 입력하세요.');
+    			newPw.focus();
+				return;
+    		}
+    		
+    		// newPwCheck
+    		let newPwCheck = document.querySelector('#newPwCheck');
+    		if(newPwCheck.value == ''){
+    			alert('확인 비밀번호를 입력하세요.');
+    			newPwCheck.focus();
+				return;
+    		}
+    		
+    		// newPw, newPwCheck 일치 확인
+    		if(newPwCheck.value != newPw.value){
+    			alert('바꿀 비밀번호와 확인 비밀번호가 일치하지 않습니다.');
+    			newPwCheck.focus();
+				return;
+    		}
+	
+    		let updateForm = document.querySelector('#updateForm');    		
+    		updateForm.submit();
+    	});    	
+    </script>
+	
 	<script src="<%=request.getContextPath()%>/Resources/plugins/common/common.min.js"></script>
 	<script src="<%=request.getContextPath()%>/Resources/js/custom.min.js"></script>
 	<script src="<%=request.getContextPath()%>/Resources/js/settings.js"></script>
@@ -165,10 +213,6 @@
 	<script src="<%=request.getContextPath()%>/Resources/plugins/moment/moment.min.js"></script>
 	<script src="<%=request.getContextPath()%>/Resources/plugins/fullcalendar/js/fullcalendar.min.js"></script>
 	<script src="<%=request.getContextPath()%>/Resources/js/plugins-init/fullcalendar-init.js"></script>
-
-
-
-	
 
 </body>
 </html>

@@ -78,7 +78,7 @@
                             <div class="card-body">
                             	<a href="<%=request.getContextPath()%>/member/memberOne.jsp">back</a>
                                 <form action="<%=request.getContextPath()%>/member/deleteMemberAction.jsp" method="post">
-									<input type="hidden" name="memberId" value="<%=memberId%>">
+									<input type="hidden" name="memberId" value="<%=memberId%>" id="deleteForm">
 									<table class="table table-borderless w-50 mx-auto align-middle">
 										<tr>
 											<th colspan="2">
@@ -104,12 +104,12 @@
 										<tr>
 											<th class="w-50 text-center align-middle">비밀번호 입력</th>
 											<td>
-												<input type="password" name="memberPw" class="form-control input-default w-75">
+												<input type="password" name="memberPw" id="memberPw" class="form-control input-default w-75">
 											</td>
 										</tr>
 										<tr>
 											<td colspan="2" class="text-right">
-												<button type="submit" class="btn mb-1 btn-outline-secondary">탈퇴</button>
+												<button type="submit" id="deleteBtn" class="btn mb-1 btn-outline-secondary">탈퇴</button>
 											</td>
 										</tr>
 									</table>
@@ -136,6 +136,27 @@
     <!--Main wrapper end-->
    
 	<!--Scripts-->
+	<script>
+    	let deleteBtn = document.querySelector('#deleteBtn');
+    	
+    	deleteBtn.addEventListener('click', function(){
+    		// debug
+    		console.log('deleteBtn clicked');
+    		
+    		// form check    		
+    		// memberPw
+    		let memberPw = document.querySelector('#memberPw');
+    		if(memberPw.value == ''){
+    			alert('비밀번호를 입력하세요.');
+    			memberPw.focus();
+				return;
+    		}
+
+    		let deleteForm = document.querySelector('#deleteForm');
+    		deleteForm.submit();
+    	});    	
+    </script>
+    
     <script src="<%=request.getContextPath()%>/Resources/plugins/common/common.min.js"></script>
     <script src="<%=request.getContextPath()%>/Resources/js/custom.min.js"></script>
     <script src="<%=request.getContextPath()%>/Resources/js/settings.js"></script>

@@ -93,7 +93,7 @@
 								<div class="mb-4 h3 text-center" id="font_color">
 									<strong>멤버 수정</strong>
 								</div>
-								<form action="<%=request.getContextPath()%>/admin/member/updateMemberLevelAction.jsp" method="post">
+								<form action="<%=request.getContextPath()%>/admin/member/updateMemberLevelAction.jsp" id="updateForm" method="post">
 									<table class="table table-borderless w-50 mx-auto">
 										<%
 											String msg = request.getParameter("msg");
@@ -124,21 +124,21 @@
 												if(oldMember.getMemberLevel() == 0){
 											%>
 													<label>
-														<input type="radio" id="memberLevel" name="memberLevel" value="1">관리자
+														<input type="radio" class="memberLevel" name="memberLevel" value="1">관리자
 													</label>
 													&nbsp;
 													<label>
-														<input type="radio" id="memberLevel" name="memberLevel" value="0" checked>회원
+														<input type="radio" class="memberLevel" name="memberLevel" value="0" checked>회원
 													</label>
 											<%	
 												} else {
 											%>
 													<label>
-														<input type="radio" id="memberLevel" name="memberLevel" value="1" checked>관리자
+														<input type="radio" class="memberLevel" name="memberLevel" value="1" checked>관리자
 													</label>
 													&nbsp;
 													<label>
-														<input type="radio" id="memberLevel" name="memberLevel" value="0" >회원
+														<input type="radio" class="memberLevel" name="memberLevel" value="0" >회원
 													</label>
 											<%
 												}
@@ -157,7 +157,7 @@
 										</tr>
 										<tr>
 											<td colspan="2" class="text-right">
-												<button type="submit" class="btn btn-outline-secondary">수정</button>
+												<button type="button" id="updateBtn" class="btn btn-outline-secondary">수정</button>
 											</td>
 										</tr>
 									</table>
@@ -183,6 +183,25 @@
 	<!--Main wrapper end-->
 	
 	<!--Scripts-->
+	<script>
+	let updateBtn = document.querySelector('#updateBtn');
+	updateBtn.addEventListener('click', function(){
+		// debug
+		console.log('updateBtn clicked');
+		
+		// form check
+		let memberLevel = document.querySelectorAll('.memberLevel:checked');
+		if(memberLevel.length != 1){
+			alert('회원 등급을 선택하세요.');
+			memberLevel.focus();
+			return;
+		}
+		
+		let updateForm = document.querySelector('#updateForm');
+		updateForm.submit();
+	});
+	</script>
+	
 	<script src="<%=request.getContextPath()%>/Resources/plugins/common/common.min.js"></script>
 	<script src="<%=request.getContextPath()%>/Resources/js/custom.min.js"></script>
 	<script src="<%=request.getContextPath()%>/Resources/js/settings.js"></script>

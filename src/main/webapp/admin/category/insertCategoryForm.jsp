@@ -85,7 +85,7 @@
 								<div class="mb-4 h3 text-center" id="font_color">
 									<strong>카테고리 추가</strong>
 								</div>
-								<form action="<%=request.getContextPath()%>/admin/category/insertCategoryAction.jsp" method="post">
+								<form action="<%=request.getContextPath()%>/admin/category/insertCategoryAction.jsp" id="insertForm" method="post">
 									<table class="table table-borderless w-50 mx-auto">
 										<%
 											String msg = request.getParameter("msg");
@@ -101,30 +101,27 @@
 											<th class="align-middle">구분</th>
 											<td class="align-middle text-left">
 												<label>
-													<input type="radio" id="categoryKind" name="categoryKind" value="수입"> 수입
+													<input type="radio" class="categoryKind" name="categoryKind" value="수입"> 수입
 												</label>
 												&nbsp;
 												<label>
-													<input type="radio" id="categoryKind" name="categoryKind" value="지출"> 지출
+													<input type="radio" class="categoryKind" name="categoryKind" value="지출"> 지출
 												</label>
 											</td>
 										</tr>
 										<tr>
 											<th class="align-middle">항목</th>
 											<td>
-												<input type="text" name="categoryName" placeholder="카테고리 이름을 적어주세요. ex) 외식, 미용, 가전" class="form-control input-default">
+												<input type="text" name="categoryName" id="categoryName" placeholder="카테고리 이름을 적어주세요. ex) 외식, 미용, 가전" class="form-control input-default">
 											</td>
 										</tr>
 										<tr>
 											<td colspan="2" class="text-right">
-												<button type="submit" class="btn btn-outline-secondary">추가</button>
+												<button type="button" id="insertBtn" class="btn btn-outline-secondary">추가</button>
 											</td>
 										</tr>
 									</table>
-								</form>
-								<div>
-									
-								</div>
+								</form>								
 							</div>
 						</div>
 					</div>				   
@@ -146,6 +143,35 @@
 	<!--Main wrapper end-->
 	
 	<!--Scripts-->
+	<script>
+    	let insertBtn = document.querySelector('#insertBtn');
+    	
+    	insertBtn.addEventListener('click', function(){
+    		// debug
+    		console.log('insertBtn clicked');
+    		
+    		// form check
+    		// categoryKind
+    		let categoryKind = document.querySelectorAll('.categoryKind:checked');
+    		if(categoryKind.length != 1){
+    			alert('카테고리 구분을 선택하세요.');
+    			categoryKind.focus();
+				return;
+    		}
+    		
+    		// categoryName
+    		let categoryName = document.querySelector('#categoryName');
+    		if(categoryName.value == ''){
+    			alert('카테고리 항목을 입력하세요.');
+    			categoryName.focus();
+				return;
+    		}
+	
+    		let insertForm = document.querySelector('#insertForm');
+    		insertForm.submit();
+    	});    	
+    </script>
+	
 	<script src="<%=request.getContextPath()%>/Resources/plugins/common/common.min.js"></script>
 	<script src="<%=request.getContextPath()%>/Resources/js/custom.min.js"></script>
 	<script src="<%=request.getContextPath()%>/Resources/js/settings.js"></script>

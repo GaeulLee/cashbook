@@ -97,7 +97,7 @@
 						<div class="card">
 							<!-- 본문시작 -->
 							<div class="card-body">
-								<form action="<%=request.getContextPath()%>/help/updateHelpAction.jsp" method="post">
+								<form action="<%=request.getContextPath()%>/help/updateHelpAction.jsp" id="updateForm" method="post">
 									<input type="hidden" name="helpNo" value="<%=oldHelp.getHelpNo()%>">
 									<table class="table table-borderless w-75 mx-auto align-middle">
 										<tr>
@@ -118,12 +118,12 @@
 										<tr>
 											<th class="align-middle">문의 내용</th>
 											<td>
-												<textarea name="helpMemo" rows="20" cols="50" placeholder="수정할 문의 내용을 입력해주세요." class="form-control input-default"><%=oldHelp.getHelpMemo()%></textarea>
+												<textarea name="helpMemo" id="helpMemo" rows="20" cols="50" placeholder="수정할 문의 내용을 입력해주세요." class="form-control input-default"><%=oldHelp.getHelpMemo()%></textarea>
 											</td>
 										</tr>
 										<tr>
 											<td colspan="2" class="text-right">
-												<button type="submit" class="btn btn-outline-secondary">수정</button>
+												<button type="button" id="updateBtn" class="btn btn-outline-secondary">수정</button>
 											</td>
 										</tr>
 									</table>
@@ -151,6 +151,27 @@
 	<!--Main wrapper end-->
 	
 	<!--Scripts-->
+	<script>
+    	let updateBtn = document.querySelector('#updateBtn');
+    	
+    	updateBtn.addEventListener('click', function(){
+    		// debug
+    		console.log('updateBtn clicked');
+    		
+    		// form check
+    		// helpMemo
+    		let helpMemo = document.querySelector('#helpMemo');
+    		if(helpMemo.value == ''){
+    			alert('문의내용을 입력하세요.');
+    			helpMemo.focus();
+				return;
+    		}
+	
+    		let updateForm = document.querySelector('#updateForm');
+    		updateForm.submit();
+    	});    	
+    </script>
+	
 	<script src="<%=request.getContextPath()%>/Resources/plugins/common/common.min.js"></script>
 	<script src="<%=request.getContextPath()%>/Resources/js/custom.min.js"></script>
 	<script src="<%=request.getContextPath()%>/Resources/js/settings.js"></script>

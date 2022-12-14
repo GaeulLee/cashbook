@@ -97,7 +97,7 @@
 								<div class="mb-4 h3 text-center" id="font_color">
 									<strong>카테고리 수정</strong>
 								</div>
-								<form action="<%=request.getContextPath()%>/admin/category/updateCategoryAction.jsp" method="post">
+								<form action="<%=request.getContextPath()%>/admin/category/updateCategoryAction.jsp" id="updateForm" method="post">
 									<table class="table table-borderless w-50 mx-auto">
 										<%
 											String msg = request.getParameter("msg");
@@ -148,7 +148,7 @@
 										<tr>
 											<th class="align-middle">항목</th>
 											<td>
-												<input type="text" name="categoryName" value="<%=oldCategory.getCategoryName()%>" placeholder="수정할 카테고리 이름을 적어주세요." class="form-control input-default">
+												<input type="text" name="categoryName" id="categoryName" value="<%=oldCategory.getCategoryName()%>" placeholder="수정할 카테고리 이름을 적어주세요." class="form-control input-default">
 											</td>
 										</tr>
 										<tr>
@@ -157,7 +157,7 @@
 										</tr>
 										<tr>
 											<td colspan="2" class="text-right">
-												<button type="submit" class="btn btn-outline-secondary">수정</button>
+												<button type="button" id="updateBtn" class="btn btn-outline-secondary">수정</button>
 											</td>
 										</tr>
 									</table>
@@ -183,6 +183,26 @@
 	<!--Main wrapper end-->
 	
 	<!--Scripts-->
+	<script>
+    	let updateBtn = document.querySelector('#updateBtn');    	
+    	updateBtn.addEventListener('click', function(){
+    		// debug
+    		console.log('updateBtn clicked');
+    		
+    		// form check
+    		// categoryName
+    		let categoryName = document.querySelector('#categoryName');
+    		if(categoryName.value == ''){
+    			alert('카테고리 항목을 입력하세요.');
+    			categoryName.focus();
+				return;
+    		}
+	
+    		let updateForm = document.querySelector('#updateForm');
+    		updateForm.submit();
+    	});    	
+    </script>
+	
 	<script src="<%=request.getContextPath()%>/Resources/plugins/common/common.min.js"></script>
 	<script src="<%=request.getContextPath()%>/Resources/js/custom.min.js"></script>
 	<script src="<%=request.getContextPath()%>/Resources/js/settings.js"></script>

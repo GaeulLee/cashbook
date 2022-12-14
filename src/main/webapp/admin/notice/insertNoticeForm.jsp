@@ -73,7 +73,7 @@
 								<div class="mb-4 h3 text-center" id="font_color">
 									<strong>공지 추가</strong>
 								</div>
-								<form action="<%=request.getContextPath()%>/admin/notice/insertNoticeAction.jsp" method="post">
+								<form action="<%=request.getContextPath()%>/admin/notice/insertNoticeAction.jsp" id="insertForm" method="post">
 									<table class="table table-borderless w-75 mx-auto">
 										<%
 											String msg = request.getParameter("msg");
@@ -88,12 +88,12 @@
 										<tr>
 											<th class="align-middle">공지 내용</th>
 											<td>
-												<textarea name="noticeMemo" rows="5" cols="70" placeholder="공지할 내용을 입력해주세요." class="form-control input-default"></textarea>
+												<textarea name="noticeMemo" id="noticeMemo" rows="5" cols="70" placeholder="공지할 내용을 입력해주세요." class="form-control input-default"></textarea>
 											</td>
 										</tr>
 										<tr>
 											<td colspan="2" class="text-right">
-												<button type="submit" class="btn btn-outline-secondary">추가</button>
+												<button type="button" id="insertBtn" class="btn btn-outline-secondary">추가</button>
 											</td>
 										</tr>
 									</table>
@@ -119,6 +119,28 @@
 	<!--Main wrapper end-->
 	
 	<!--Scripts-->
+	<script>
+    	let insertBtn = document.querySelector('#insertBtn');
+    	
+    	insertBtn.addEventListener('click', function(){
+    		// debug
+    		console.log('insertBtn clicked');
+    		
+    		// form check
+    		
+    		// noticeMemo
+    		let noticeMemo = document.querySelector('#noticeMemo');
+    		if(noticeMemo.value == ''){
+    			alert('공지 내용을 입력하세요.');
+    			noticeMemo.focus();
+				return;
+    		}
+		
+    		let insertForm = document.querySelector('#insertForm');
+    		insertForm.submit();
+    	});    	
+    </script>
+	
 	<script src="<%=request.getContextPath()%>/Resources/plugins/common/common.min.js"></script>
 	<script src="<%=request.getContextPath()%>/Resources/js/custom.min.js"></script>
 	<script src="<%=request.getContextPath()%>/Resources/js/settings.js"></script>

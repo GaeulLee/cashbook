@@ -20,9 +20,14 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <link href="<%=request.getContextPath()%>/Resources/css/style.css" rel="stylesheet">
     <style>
-    	#button_color{
+    	#font_color{
+    		color: #9097c4;
+    	}
+    	
+    	#insertBtn{
     		background-color: #9097c4;
     	}
+    	
     	@font-face {
 		    font-family: 'Pretendard-Regular';
 		    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
@@ -47,16 +52,22 @@
     </div>
     <!--Preloader end-->
     
+    
+    
     <!-- 회원가입 폼 -->
     <div class="login-form-bg h-100">
         <div class="container h-100">
             <div class="row justify-content-center h-100">
                 <div class="col-xl-6">
                     <div class="form-input-content">
-                        <div class="card login-form mb-0">
+                    	<!-- 타이틀 -->
+					    <div class="h1 text-center mb-3">
+					    	<span id="font_color"><strong>CashBook</strong></span>
+					    </div>
+                        <div class="card login-form mb-0">                        	
                             <div class="card-body pt-5">
-                                <a class="text-center" href="#"> <h4>SignIn</h4></a>
-								<form action="<%=request.getContextPath()%>/member/insertMemberAction.jsp" method="post" class="mt-5 mb-5 login-input">
+                                <a class="text-center" href="#"> <h4>SignUp</h4></a>
+								<form action="<%=request.getContextPath()%>/member/insertMemberAction.jsp" method="post" id="insertForm" class="mt-5 mb-5 login-input">
 									<%
 										String msg = request.getParameter("msg");
 										if(msg != null){
@@ -66,15 +77,15 @@
 										}
 									%>
 								    <div class="form-group">
-										<input type="text" name="memberName" class="form-control input-default" placeholder="Enter Name" required>
+										<input type="text" name="memberName" id="memberName" class="form-control input-default" placeholder="Enter Name" required>
 								    </div>
 								    <div class="form-group">
-								        <input type="text" name="memberId" class="form-control input-default" placeholder="Enter ID" required>
+								        <input type="text" name="memberId" id="memberId" class="form-control input-default" placeholder="Enter ID" required>
 								    </div>
 								    <div class="form-group">
-								        <input type="password" name="memberPw" class="form-control input-default" placeholder="Enter Password" required>                                       
+								        <input type="password" name="memberPw" id="memberPw" class="form-control input-default" placeholder="Enter Password" required>                                       
 								    </div>
-								    <button type="submit" class="btn login-form__btn submit w-100" id="button_color">로그인</button>
+								    <button type="submit" class="btn login-form__btn submit w-100" id="insertBtn">회원가입</button>
 								</form>
 	            				<p class="mt-5 login-form__footer">이미 회원이라면 <a href="<%=request.getContextPath()%>/loginForm.jsp" class="text-primary">로그인 </a></p>
 	                        </div>
@@ -84,7 +95,45 @@
 	        </div>
 	    </div>
 	</div>
-    <!--Scripts*-->
+    <!--Scripts-->
+    <script>
+    	let insertBtn = document.querySelector('#insertBtn');
+    	
+    	insertBtn.addEventListener('click', function(){
+    		// debug
+    		console.log('insertBtn clicked');
+    		
+    		// form check
+    		
+    		// memberName
+    		let memberName = document.querySelector('#memberName');
+    		if(memberName.value == ''){
+    			alert('이름을 입력하세요.');
+    			memberName.focus();
+				return;
+    		}
+    		
+    		// memberId
+    		let memberId = document.querySelector('#memberId');
+    		if(memberId.value == ''){
+    			alert('아이디를 입력하세요.');
+    			memberId.focus();
+				return;
+    		}    		    	
+    		
+    		// memberPw
+    		let memberPw = document.querySelector('#memberPw');
+    		if(memberPw.value == ''){
+    			alert('비밀번호를 입력하세요.');
+    			memberPw.focus();
+				return;
+    		}
+    		    		
+    		let insertForm = document.querySelector('#insertForm');
+    		insertForm.submit();
+    	});    	
+    </script>
+    
     <script src="<%=request.getContextPath()%>/Resources/plugins/common/common.min.js"></script>
     <script src="<%=request.getContextPath()%>/Resources/js/custom.min.js"></script>
     <script src="<%=request.getContextPath()%>/Resources/js/settings.js"></script>
