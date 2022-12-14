@@ -3,6 +3,7 @@
 <%@ page import="vo.*"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.net.*"%>
+<%@ page import="java.text.*" %>
 <%
 	// 달력의 특정 일을 클릭하면 그 날의 수입 지출 목록이 보이게 + 수정 삭제 기능
 	
@@ -39,6 +40,9 @@
 	CashDao cashDao = new CashDao();
 	ArrayList<HashMap<String, Object>> dateList = cashDao.selectCashListByDate(memberId, year, month, date);
 	
+	// 숫자 콤마 포맷
+	DecimalFormat df = new DecimalFormat("###,###");
+	
 	// V
 %>
 <!DOCTYPE html>
@@ -70,6 +74,16 @@
 		
 		#outcome{
 			background-color: pink;
+		}
+		@font-face {
+		    font-family: 'Pretendard-Regular';
+		    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+		    font-weight: 400;
+		    font-style: normal;
+		}
+		
+		* {
+			font-family: 'Pretendard-Regular';
 		}
     </style>
 </head>
@@ -210,7 +224,7 @@
 												}
 											%>	
 											<td><%=(String)m.get("categoryName")%></td>
-											<td><%=(Long)m.get("cashPrice")%></td>
+											<td><%=df.format((Long)m.get("cashPrice"))%>원</td>
 											<td class="w-25 text-left"><%=(String)m.get("cashMemo")%></td>
 											<td><%=(String)m.get("updatedate")%></td>
 											<td><%=(String)m.get("createdate")%></td>

@@ -3,6 +3,7 @@
 <%@ page import="vo.*"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.net.*"%>
+<%@ page import="java.text.*" %>
 <%
 	// Controller : session, request
 	// request : 년, 월
@@ -62,6 +63,9 @@
 	CashDao cashDao = new CashDao();
 	ArrayList<HashMap<String, Object>> list = cashDao.selectCashListByMonth(loginMember.getMemberId(), year, month+1); // month에 +1을 해주어야 함
 
+	// 숫자 콤마 포맷
+	DecimalFormat df = new DecimalFormat("###,###");
+	
 	// View : 달력 출력 + 일별 cash 목록
 %>
 <!DOCTYPE html>
@@ -101,6 +105,16 @@
 		
 		#outcome{
 			background-color: pink;
+		}
+		@font-face {
+		    font-family: 'Pretendard-Regular';
+		    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+		    font-weight: 400;
+		    font-style: normal;
+		}
+		
+		* {
+			font-family: 'Pretendard-Regular';
 		}
     </style>
 </head>
@@ -188,7 +202,7 @@
 																	<%
 																		}
 																	%>	
-																		<span><%=(String)(m.get("categoryName"))%>&nbsp;<%=(Long)(m.get("cashPrice"))%>원</span>
+																		<span><%=(String)(m.get("categoryName"))%>&nbsp;<%=df.format((Long)(m.get("cashPrice")))%>원</span>
 																		<br>												
 																	<%
 																	}

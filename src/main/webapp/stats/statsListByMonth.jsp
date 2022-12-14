@@ -54,6 +54,25 @@
 		#font_color{
 			color: #76838f;
 		}
+		
+		#color_outcome{
+			color: pink;
+		}
+		
+		#color_income{
+			color: skyblue;
+		}
+		
+		@font-face {
+		    font-family: 'Pretendard-Regular';
+		    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+		    font-weight: 400;
+		    font-style: normal;
+		}
+		
+		* {
+			font-family: 'Pretendard-Regular';
+		}
 	</style>
 </head>
 <body>
@@ -105,13 +124,13 @@
 										for(HashMap<String, Object> m : list){
 									%>
 											<tr class="text-center">
-												<td><%=m.get("month")%></td>
-												<td><%=df.format(m.get("outcomeCnt"))%></td>
-												<td><%=df.format(m.get("outcomeSum"))%></td>
-												<td><%=df.format(m.get("outcomeAvg"))%></td>
-												<td><%=df.format(m.get("incomeCnt"))%></td>
-												<td><%=df.format(m.get("incomeSum"))%></td>
-												<td><%=df.format(m.get("incomeAvg"))%></td>
+												<td><%=m.get("month")%>월</td>
+												<td><%=df.format(m.get("outcomeCnt"))%>건</td>
+												<td id="color_outcome"><%=df.format(m.get("outcomeSum"))%>원</td>
+												<td id="color_outcome"><%=df.format(m.get("outcomeAvg"))%>원</td>
+												<td><%=df.format(m.get("incomeCnt"))%>건</td>
+												<td id="color_income"><%=df.format(m.get("incomeSum"))%>원</td>
+												<td id="color_income"><%=df.format(m.get("incomeAvg"))%>원</td>
 											</tr>
 									<%
 										}

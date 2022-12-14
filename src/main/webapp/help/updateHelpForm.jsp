@@ -47,9 +47,19 @@
 	<link href="<%=request.getContextPath()%>/Resources/css/style.css" rel="stylesheet">
 	<link href="<%=request.getContextPath()%>/Resources/css/style.css" rel="stylesheet">
 	<style>
-			th{
-				text-align: center;
-			}
+		th{
+			text-align: center;
+		}
+		@font-face {
+		    font-family: 'Pretendard-Regular';
+		    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+		    font-weight: 400;
+		    font-style: normal;
+		}
+		
+		* {
+			font-family: 'Pretendard-Regular';
+		}
 	</style>
 </head>      
 
