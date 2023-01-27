@@ -110,10 +110,10 @@
 										}
 									%>
                                     <div class="form-group">
-                                        <input type="text" name="memberId" id="memberId" class="form-control input-default" placeholder="Id">
+                                        <input type="text" name="memberId" id="memberId" class="form-control input-default" placeholder="Id" value="goodee">
                                     </div>
                                     <div class="form-group">
-                                        <input type="password" name="memberPw" id="memberPw" class="form-control input-default" placeholder="Password">
+                                        <input type="password" name="memberPw" id="memberPw" class="form-control input-default" placeholder="Password" value="1234">
                                     </div>
                                     <button type="button" class="btn login-form__btn submit w-100" id="signinBtn">로그인</button>
                                 </form>
