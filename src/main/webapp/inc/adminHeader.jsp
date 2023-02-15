@@ -91,7 +91,6 @@
                  <ul aria-expanded="false">
                      <li><a href="<%=request.getContextPath()%>/stats/statsListByYear.jsp">년도별</a></li>
                      <li><a href="<%=request.getContextPath()%>/stats/statsListByMonth.jsp">월별</a></li>
-                     <li><a href="<%=request.getContextPath()%>/stats/statsListByCate.jsp">카테고리별</a></li>                    
                  </ul>
              </li>
              
