@@ -28,12 +28,17 @@
 	NoticeDao noticeDao = new NoticeDao();
 	int cnt = noticeDao.selectNoticeCount(); // 전체 행 구하기
 	int lastPage = cnt/ROW_PER_PAGE; // 마지막 페이지
-	if(lastPage%ROW_PER_PAGE != 0){
+	if(cnt%ROW_PER_PAGE != 0){ //9
 		lastPage++;
 	}
+	
 	if(endPage > lastPage){ // 페이지 목록이 lastPage까지만 보이도록
 		endPage = lastPage;
 	}
+	
+	// System.out.println("lastPage----->"+lastPage);
+	// System.out.println("endPage----->"+endPage);
+	// System.out.println("cnt----->"+cnt);
 	
 	ArrayList<Notice> list = noticeDao.selectNoticeListByPage(beginRow, ROW_PER_PAGE); // 공지 출력
 

@@ -89,7 +89,8 @@ public class CommentDao {
 		
 		String sql = "UPDATE comment SET"
 				+ " comment_memo = ?"
-				+ ", updatedate = now()";
+				+ ", updatedate = now()"
+				+ "WHERE comment_no = ?";
 
 		try {
 			conn = dbUtil.getConnection();
